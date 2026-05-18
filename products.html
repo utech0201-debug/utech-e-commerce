@@ -26,7 +26,6 @@
                     <li><a href="game.html">Games</a></li>
                     <li><a href="laptops.html">Laptops</a></li>
                     <li><a href="hardware.html">Hardware</a></li>
-                    <li><a href="login.html">Login</a></li>
                 </ul>
             </div>
             <div class="search">
@@ -942,3 +941,18 @@
             <p>&copy; 2026 Smiley. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <script src="quickview.js" defer></script>
+    <script src="subscription.js" defer></script>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1205,9 +1205,44 @@ body {
     .srch {
         width: 180px;
     }
+
+    /* Apply main-box background image optimizations to main-container as well */
+    .main-container {
+        min-height: 80vh;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .main-box {
+        min-height: 80vh;
+        background-position: center;
+        background-attachment: scroll;
+    }
+
+    .hero-content {
+        margin: 5vh auto 40px auto;
+        text-align: center;
+        padding: 30px 20px;
+        background: rgba(61, 8, 8, 0.6); /* More transparent background */
+        backdrop-filter: blur(5px);     /* Slightly less blur for mobile */
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .hero-logo {
+        max-width: 200px;
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 440px) {
+    .hero-content h1 {
+        font-size: clamp(1.4rem, 8vw, 2rem);
+    }
+
+    .hero-content p {
+        font-size: clamp(0.85rem, 4vw, 1rem);
+    }
+
     .product-meta {
         flex-direction: column;
         align-items: stretch;
@@ -1224,6 +1259,10 @@ body {
 
     .price {
         margin-bottom: 5px;
+    }
+
+    .hero-logo {
+        max-width: 150px;
     }
 }
 

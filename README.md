@@ -12,12 +12,11 @@ A premium, high-performance storefront for hardware, gaming software, and profes
 - `home.html`: Main landing page with live advertising ticker.
 - `products.html`: Comprehensive catalog for all categories.
 - `hardware.html` & `laptops.html`: Specific hardware landing pages.
-- `login.html`: Secure gateway access (Credentials: `admin` / `admin`).
 - `payment.html`: Encrypted payment gateway interface.
 
 ## Setup & Deployment
 1. Clone the repository.
-2. Open `login.html` in any modern web browser.
+2. Open `home.html` in any modern web browser.
 3. To host via GitHub Pages, go to **Settings > Pages** in your GitHub repository and set the source to the `main` branch.
 
 ---

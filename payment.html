@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARENA JAMS | Secure Checkout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="payment-page-bg">
+        <div class="navbar">
+            <div class="icon">
+                <h2 class="logo">:) SMILEY</h2>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="game.html">Games</a></li>
+                    <li><a href="laptops.html">Laptops</a></li>
+                    <li><a href="hardware.html">Hardware</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <input class="srch" type="search" placeholder="Search portal...">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+
+        <div class="payment-wrapper">
+            
+            <div class="payment-form-side">
+                <a href="products.html" class="back-link">← Continue Shopping</a>
+                <div class="secure-checkout-card">
+                    <span class="checkout-badge">🔒 SECURE ENCRYPTED GATEWAY</span>
+                    <h2>GATEWAY ACCESS</h2>
+                    
+                    <form action="home.html" method="GET" class="checkout-form-element">
+                        <div class="form-section-title">1. ACCOUNT IDENTITY</div>
+                        <div class="input-row-split">
+                            <div class="input-group">
+                                <input type="text" placeholder="First Name" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" placeholder="Email Address for Digital Delivery" required>
+                        </div>
+
+                    <div class="form-section-title">2. SELECT PAYMENT PROTOCOL</div>
+                    <div class="payment-method-nav">
+                        <button type="button" class="method-btn active" data-target="card">Credit Card</button>
+                        <button type="button" class="method-btn" data-target="paypal">PayPal</button>
+                        <button type="button" class="method-btn" data-target="crypto">Crypto</button>
+                        <button type="button" class="method-btn" data-target="momo">Mobile Money</button>
+                    </div>
+
+                    <div id="card-method" class="method-panel active">
+                        <div class="form-section-title">3. CREDIT / DEBIT CARD MAPPING</div>
+                            <div class="input-group">
+                            <input type="text" placeholder="Cardholder Name" required>
+                            </div>
+                            <div class="input-group">
+                            <input type="text" placeholder="Card Number (0000 0000 0000 0000)" maxlength="19" required>
+                        </div>
+                        <div class="input-row-split">
+                            <div class="input-group">
+                                <input type="text" placeholder="MM / YY" maxlength="5" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" placeholder="CVV" maxlength="4" required>
+                            </div>
+                            </div>
+                        </div>
+
+                    <div id="paypal-method" class="method-panel">
+                        <div class="form-section-title">3. PAYPAL AUTHENTICATION</div>
+                        <p style="color: #a0aec0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">Establish secure handshake with PayPal. You will be redirected to the vendor portal to authorize terminal payment credits.</p>
+                    </div>
+
+                    <div id="crypto-method" class="method-panel">
+                        <div class="form-section-title">3. CRYPTOGRAPHIC WALLET MAPPING</div>
+                        <div class="input-group">
+                            <select style="margin-bottom: 16px;">
+                                <option>Bitcoin (BTC)</option>
+                                <option>Ethereum (ETH)</option>
+                                <option>Solana (SOL)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="Digital Wallet Address" required>
+                        </div>
+                    </div>
+
+                    <div id="momo-method" class="method-panel">
+                        <div class="form-section-title">3. MOBILE MONEY HANDSHAKE</div>
+                        <div class="input-group">
+                            <select style="margin-bottom: 16px;">
+                                <option>MTN Mobile Money</option>
+                                <option>Telecel Cash</option>
+                                <option>AirtelTigo Money</option>
+                                <option>Orange Money</option>
+                                <option>M-Pesa</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="Mobile Number (e.g. +233...)" required>
+                        </div>
+                        <p style="color: #a0aec0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">Authorize the push notification prompt on your registered mobile device to finalize terminal debiting.</p>
+                    </div>
+
+                        <button type="submit" class="pay-submit-btn">AUTHORIZE SECURE TRANSACTION</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="order-summary-side">
+                <div class="summary-receipt-box">
+                    <h3>ORDER MANIFEST</h3>
+                    <hr class="summary-divider">
+                    
+                    <div class="manifest-item">
+                        <p class="manifest-name">Selected Terminal Asset</p>
+                        <p class="manifest-value">Pending Verification</p>
+                    </div>
+                    <div class="manifest-item">
+                        <p class="manifest-name">Digital Secure Delivery</p>
+                        <p class="manifest-value neon-cyan-text">FREE / INSTANT</p>
+                    </div>
+                    <div class="manifest-item">
+                        <p class="manifest-name">Regional Service Tax (VAT)</p>
+                        <p class="manifest-value">$0.00</p>
+                    </div>
+
+                    <hr class="summary-divider">
+                    
+                    <div class="manifest-total-row">
+                        <span>TOTAL AMOUNT</span>
+                        <span class="total-price-highlight">Calculated at Step</span>
+                    </div>
+
+                    <div class="secure-guarantee-note">
+                        <p>🛡️ Total protection guarantee. Your payment credentials undergo cryptographic masking via end-to-end transport Layer Security layers before processing validation checkpoints.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="subscription.js" defer></script>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        // Payment Method Switching Logic
+        const methodBtns = document.querySelectorAll('.method-btn');
+        const methodPanels = document.querySelectorAll('.method-panel');
+
+        methodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                methodBtns.forEach(b => b.classList.remove('active'));
+                methodPanels.forEach(p => {
+                    p.classList.remove('active');
+                    p.querySelectorAll('input, select').forEach(input => input.disabled = true);
+                });
+
+                btn.classList.add('active');
+                const activePanel = document.getElementById(`${btn.dataset.target}-method`);
+                activePanel.classList.add('active');
+                activePanel.querySelectorAll('input, select').forEach(input => input.disabled = false);
+            });
+        });
+
+        // Initial setup for inactive panels
+        methodPanels.forEach(p => {
+            if (!p.classList.contains('active')) {
+                p.querySelectorAll('input, select').forEach(input => input.disabled = true);
+            }
+        });
+    </script>
+</body>
+</html>

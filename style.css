@@ -1,0 +1,1874 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f20000;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(images/10.jpg);
+}
+.navbar{
+    width: 100%;
+    min-height: 80px;
+    background-color: #0c827e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 5%;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo{
+    color: #00ff66;
+    font-weight: bold;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(22px, 5vw, 32px);
+}
+
+.menu{
+    display: flex;
+}
+
+.menu ul{
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.menu ul li{
+    margin: 0;
+}
+
+.menu ul li a{
+    text-decoration: none;
+    color: #0dfb11;
+    font-weight: 600;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    transition: 0.3s ease;
+    padding-bottom: 5px;
+}
+
+.menu ul li a:hover{
+    color: white;
+}
+
+.active-page {
+    color: #ffffff !important;
+    position: relative;
+}
+
+.active-page::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #00ff66;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 10px 0;
+}
+
+.srch {
+    font-family: 'Inter', system-ui, sans-serif;
+    width: 160px;
+    height: 35px;
+    background: transparent;
+    border: 1px solid #0dfb11;
+    color: #fff;
+    border-right: none;
+    font-size: 16px;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    transition: width 0.3s ease;
+    outline: none;
+}
+
+.srch::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+.srch:focus {
+    border-color: #ffffff;
+    width: 200px;
+}
+
+.btn {
+    min-width: 80px;
+    height: 40px;
+    background: #0dfb11;
+    border: 1px solid #0dfb11;
+    color: #0c827e;
+    font-weight: bold;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    padding: 0 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: #ffffff;
+    color: #0c827e;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger Menu Icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+    transition: 0.3s;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #0dfb11;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Navbar Dropdown Functionality */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #0c827e; /* Matches navbar theme */
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    z-index: 1000;
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 3px solid #0dfb11;
+}
+
+.dropdown-content li {
+    margin-left: 0 !important; /* Removes the side margin used in the main navbar */
+    width: 100%;
+}
+
+.dropdown-content li a {
+    display: block;
+    padding: 15px 20px;
+    font-size: 18px !important;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.hero-content {
+    max-width: 400px;
+    margin: 10vh 5% 50px 5%;
+    padding: 40px;
+    background: rgba(61, 8, 8, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+.hero-content h1 {
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    margin-bottom: 12px;
+    color: #000000;
+}
+
+.hero-content p {
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    color: #000000;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background-color: #00ff66; /* Matching your green accent */
+    color: #000000;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3);
+}
+
+.cta-btn:hover {
+    background-color: #00cc52;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 255, 102, 0.5);
+}
+
+.cta-btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.footer {
+    background-color: #0b131a; 
+    color: #ffffff;
+    padding: 60px 8% 30px 8%;
+    font-family: 'Inter', system-ui, sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.footer-desc {
+    max-width: 400px;
+}
+
+.footer-desc h3 {
+    color: #00ff66; /* Matching your bright green logo/accent color */
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.footer-desc p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #94a3b8; /* Refined soft gray */
+}
+
+.footer-links h4 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    display: inline-block;
+}
+
+.footer-links ul li a:hover {
+    color: #00ff66; /* Matching green hover effect */
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #2d3748;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+.billboard-container {
+    background-color: #0e8388; /* Matches your current teal color */
+    overflow: hidden;
+    white-space: nowrap;      /* Keeps all text on a single line */
+    padding: 35px 0;
+    display: flex;
+    width: 100%;
+}
+
+.billboard-track {
+    display: flex;
+    width: max-content;
+    /* Adjust '30s' (30 seconds) to make it crawl faster or slower */
+    animation: continuous-scroll 30s linear infinite;
+}
+
+.billboard-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 100%;
+    gap: 60px; /* Space between each text statement */
+    padding-right: 60px; /* Matches the gap to ensure the loop spacing is perfect */
+}
+
+.billboard-content span {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 700;
+    font-family: sans-serif;
+    color: #00ff66; /* Dark text to contrast the teal */
+}
+
+/* The magic keyframe that resets seamlessly */
+@keyframes continuous-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Shifts exactly half of the track (the first block) before resetting */
+        transform: translateX(-50%);
+    }
+}
+
+.hero-logo {
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;  /* Makes sure the image doesn't warp or stretch */
+    margin-bottom: 20px;  /* Adds clean spacing between the logo and "Welcome to Smiley" */
+    border-radius: 8px;   /* Optional: adds smooth rounded corners if your image is square */
+}
+
+
+
+/* Base Section Layout */
+.shop-section {
+    background-color: #0b131a; /* Dark sleek background color matching your theme */
+    padding: 60px 8%;
+    font-family: sans-serif;
+}
+
+.section-title {
+    color: #00ff66; /* Vibrant accent color */
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+/* Responsive CSS Grid Container */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 20px;
+    width: 100%;
+}
+
+/* Individual Product Cards */
+.product-card {
+    background-color: #111e29; /* Contrast card panel */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 255, 102, 0.15);
+    border-color: rgba(0, 255, 102, 0.4);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Card Media Header Wrapper */
+.product-img-container {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background-color: #060b0f;
+    position: relative;
+}
+
+.product-img-container img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+/* Overlay Product Badges */
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #ff3333;
+    color: #ffffff;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+/* Inner Description Info Compartments */
+.product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    color: #ffffff;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    margin: 0 0 10px 0;
+}
+
+.product-info p {
+    color: #94a3b8;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    line-height: 1.5;
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    height: 4.5em;
+    margin-bottom: 18px;
+}
+
+/* Footer Element Configuration Inside Card */
+.product-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 14px;
+    gap: 10px;
+}
+
+.price {
+    color: #ffffff;
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    font-weight: 700;
+}
+
+.buy-btn {
+    background-color: #00ff66;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    padding: 10px 22px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.buy-btn:hover {
+    background-color: #00cc52;
+    transform: scale(1.05);
+}
+
+.buy-btn:active {
+    transform: scale(0.98);
+}
+
+.quickview-btn {
+    background: transparent;
+    color: #00ff66;
+    border: 1px solid #00ff66;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.quickview-btn:hover {
+    background: rgba(0, 255, 102, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Modal System Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: none; /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-container {
+    background: #111e29;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 255, 102, 0.15);
+    animation: modalScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    line-height: 1;
+}
+
+@keyframes modalScale {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .modal-container { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+}
+
+/* Modal Gallery Navigation */
+.gallery-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 15px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.gallery-btn-nav {
+    background: rgba(17, 30, 41, 0.8);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    color: #00ff66;
+    font-size: 1.8rem;
+    cursor: pointer;
+    pointer-events: auto;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.gallery-btn-nav:hover {
+    background: #00ff66;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+}
+
+.main-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f20000;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(NarutoImages/12.jpg);
+}
+
+.main-box {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f20000;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(NarutoImages/11.jpeg);
+}
+
+.product-info p {
+    min-height: 72px; /* Gives all descriptions the exact same vertical footprint */
+    margin-bottom: 15px;
+}
+
+/* Individual Game Details Page Layout */
+.game-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Splitting the screen columns evenly */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: sans-serif;
+    color: #000000;
+}
+
+/* --- LEFT COLUMN: MEDIA VIEW --- */
+.game-media-side {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-preview-box {
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.main-preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.thumbnail-row .thumb {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.thumbnail-row .thumb:hover,
+.thumbnail-row .thumb.active {
+    opacity: 1;
+    border-color: #00ff66; /* Vibrant green pointer highlight */
+}
+
+/* --- RIGHT COLUMN: INFO & SPEC PANELS --- */
+.game-details-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-tag {
+    color: #00ff66;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.game-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    letter-spacing: 0.5px;
+}
+
+.game-description {
+    color: #a0aec0;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+/* Purchase Control Container Box */
+.purchase-card {
+    background: #111e29;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.price-display {
+    font-size: 2.2rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.price-display .currency {
+    color: #00ff66;
+    font-size: 1.5rem;
+}
+
+.status-badge {
+    background-color: rgba(0, 255, 102, 0.1);
+    color: #00ff66;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+/* Interactive Action Triggers */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-primary-buy {
+    flex: 1;
+    background-color: #00ff66;
+    color: #000000;
+    border: none;
+    padding: 16px;
+    font-weight: 800;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 255, 102, 0.2);
+}
+
+.btn-primary-buy:hover {
+    background-color: #00cc52;
+}
+
+.btn-secondary-cart {
+    flex: 1;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-cart:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: #ffffff;
+}
+
+/* Dark Spec Sheet Data Layout */
+.specifications-box {
+    background: rgba(17, 30, 41, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.specifications-box h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+}
+
+.spec-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.spec-table td {
+    padding: 8px 0;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+.spec-table td:first-child {
+    width: 110px;
+    color: #a0aec0;
+}
+
+.spec-table td:last-child {
+    color: #ffffff;
+}
+
+/* --- WELCOME DASHBOARD SCREEN STYLES --- */
+/* --- ARENA JAMS CENTERING WELCOME LANDING PAGE --- */
+
+.simple-welcome-container {
+    width: 100%;
+    min-height: 100vh;
+    
+    /* Applies your 4.jpg background asset with an even, dimming dark vignette overlay */
+    background: linear-gradient(rgba(11, 19, 26, 0.75), rgba(11, 19, 26, 0.75)), 
+                url("NarutoImages/4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+    /* Perfect absolute center alignment tools */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* Minimal translucent text wrapper module */
+.welcome-action-box {
+    text-align: center;
+    padding: 20px;
+    color: #ffffff;
+}
+
+.welcome-heading {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 0 0 10px 0;
+    opacity: 0.9;
+}
+
+.welcome-subtext {
+    color: #a0aec0;
+    font-size: 1rem;
+    margin: 0 0 40px 0;
+    letter-spacing: 0.5px;
+}
+
+/* The Huge Interactive Landing Button Asset */
+.huge-enter-btn {
+    display: inline-block;
+    background-color: transparent;
+    color: #00ff66; /* Vibrant branding accent green */
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    letter-spacing: 3px;
+    
+    /* Generous dimensions for massive presence */
+    padding: 18px 40px;
+    border: 3px solid #00ff66;
+    border-radius: 50px; /* Completely rounded pill-style outline */
+    
+    /* Smooth style morph timing settings */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+}
+
+/* High-Impact Hover/Active State Interaction Rules */
+.huge-enter-btn:hover {
+    background-color: #00ff66;
+    color: #000000; /* Flips text to solid high contrast black */
+    transform: scale(1.05); /* Subtle smooth expanding pop effect */
+    
+    /* Intense retro arcade emission glow style */
+    box-shadow: 0 0 30px rgba(0, 255, 102, 0.6), 
+                0 0 60px rgba(0, 255, 102, 0.3);
+}
+
+/* --- CENTRAL PORTAL LOGIN LAYOUTS --- */
+
+/* --- CENTRAL PORTAL LOGIN LAYOUTS --- */
+
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    /* Uses the background asset with a subtle balance mask */
+    background: linear-gradient(90deg, rgba(11, 19, 26, 0.85), rgba(11, 19, 26, 0.4)), url("NarutoImages/4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: flex-start; /* Aligns card to the left */
+    align-items: center;
+    padding-left: 10%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Floating back navigation link button */
+.back-home-btn {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+    z-index: 10;
+}
+
+.back-home-btn:hover {
+    color: #00ff66; /* Changes to vibrant accent green on hover */
+}
+
+/* Translucent Dark UI Card Form Box */
+.login-box {
+    background: rgba(17, 30, 41, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 45px 40px;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.login-box h2 {
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+/* Form Input Configurations */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: rgba(11, 19, 26, 0.8);
+    border: 1px solid #2d3748;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: #00ff66; /* Vibrant glowing border track when active */
+}
+
+/* Glowing Neon Green Submit Trigger Button */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #00ff66;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #00cc52;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 102, 0.4);
+}
+
+.btn-primary-buy:active {
+    transform: translateY(0);
+}
+
+/* Card Link Footer Controls */
+.login-footer {
+    margin-top: 25px;
+}
+
+.login-footer p {
+    color: #cbd5e0;
+    font-size: 0.9rem;
+    margin: 8px 0;
+}
+
+.login-footer a {
+    color: #00ff66;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.login-footer .forgot-pass {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    font-weight: normal;
+}
+
+.login-footer .forgot-pass:hover {
+    color: #ffffff;
+}
+
+/* --- ARENA JAMS ULTIMATE PREMIUM MARQUEE BILLBOARD --- */
+
+.billboard-arcade-box {
+    background: linear-gradient(135deg, rgba(19, 15, 38, 0.95), rgba(10, 7, 20, 0.98));
+    border-top: 4px solid #ff007f; /* Upper Neon Hot Pink Bar Line */
+    border-bottom: 4px solid #00f0ff; /* Bottom Cyberpunk Cyan Bar Line */
+    padding: 30px 0;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 -10px 35px rgba(255, 0, 127, 0.15), 
+                0 10px 35px rgba(0, 240, 255, 0.15);
+    margin-top: 60px;
+    margin-bottom: 0; /* Snaps flat directly against your footer container */
+}
+
+.billboard-container {
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    width: 100%;
+}
+
+.billboard-track {
+    display: flex;
+    width: max-content;
+    animation: arena-jams-scroll-engine 28s linear infinite;
+}
+
+.billboard-content {
+    display: flex;
+    align-items: center;
+    min-width: 100%;
+    gap: 40px;
+    padding-right: 40px;
+}
+
+/* Individual Showcase Card Chassis Blocks */
+.ad-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+/* Highly Interactive Cyber Glow Hover Animations */
+.ad-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: #00f0ff;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 240, 255, 0.25);
+}
+
+/* Force Square High-Definition Art Framing Constraints */
+.ad-item img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.ad-item:hover img {
+    border-color: #ff007f;
+}
+
+/* Arena Jams Clean Product Typography Layout Profiles */
+.ad-item span {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Freezes timeline progression safely when cursor focuses the asset link line */
+.billboard-arcade-box:hover .billboard-track {
+    animation-play-state: paused;
+}
+
+/* GPU Hardware Accelerated Linear Matrix Tracking Vector Loop Keyframes */
+@keyframes arena-jams-scroll-engine {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+/* --- GLOBAL RESPONSIVE MEDIA QUERIES --- */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 5%;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        text-align: center;
+        flex-wrap: wrap;
+    }
+
+    .menu {
+        width: 100%;
+        width: 100%;
+        display: block;
+    }
+
+    .menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+
+    .search {
+        width: 100%;
+        justify-content: center;
+        padding: 5px 0;
+    }
+
+    .srch {
+        width: 180px;
+    }
+}
+
+@media (max-width: 440px) {
+    .product-meta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .quickview-btn, 
+    .buy-btn {
+        width: 100%;
+        margin: 0;
+        display: block;
+    }
+
+    .price {
+        margin-bottom: 5px;
+    }
+}
+
+/* High-contrast visibility override for the Products page hero text */
+.main-box .hero-content,
+.main-box .hero-content h1,
+.main-box .hero-content p {
+    color: #00ff66;
+}
+
+/* Specifically change hero text color to red for the Games page */
+.main-container .hero-content,
+.main-container .hero-content h1,
+.main-container .hero-content p {
+    color: #ff0000;
+}
+
+/* Specifically change hero text color to white for the Home page */
+.main .hero-content,
+.main .hero-content h1,
+.main .hero-content p {
+    color: #ffffff;
+}
+
+/* --- LIVE ADVERTISING BILLBOARD POLISH --- */
+.live-billboard {
+    background: #000000;
+    border-top: 2px solid #00ff66;
+    border-bottom: 2px solid #00ff66;
+    padding: 15px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+.live-billboard:hover .ticker-wrapper {
+    animation-play-state: paused;
+}
+
+.ticker-wrapper {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding-right: 80px;
+}
+
+.ticker-content span {
+    color: #00ff66;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+}
+
+.live-tag {
+    background: #ff0000;
+    color: #ffffff !important;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem !important;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Social Media Icons Styling */
+.social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #94a3b8;
+}
+
+.social-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.social-icon:hover {
+    background: #00ff66;
+    color: #000000;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 102, 0.3);
+    border-color: #00ff66;
+}
+
+/* Gallery Fade Animation */
+@keyframes galleryFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: galleryFadeIn 0.4s ease-out;
+}
+
+/* Refined Modal Content Styling */
+.product-info-modal {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.product-info-modal h3 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 0;
+}
+
+.modal-main-specs p {
+    font-size: 1rem;
+    color: #a0aec0;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.modal-specs-section h4 {
+    color: #00ff66;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.modal-footer-meta {
+    margin-top: auto;
+    border-top: 1px solid #2d3748;
+    padding-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Styling for Recommended Specs Section in Modal */
+.modal-specs-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #2d3748;
+}
+
+/* --- NEW SUBSCRIPTION POPUP STYLES --- */
+/* Popup Background Overlay Matrix */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(6, 11, 15, 0.85); /* Matches your dark background */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* Forces popup to stay above all other elements */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* Active State Trigger */
+.popup-overlay.show-popup {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Central Glassmorphic Interface Card */
+.popup-card {
+    overflow: hidden;
+    border: 2px solid #00ff66; /* Glowing green outline matching SMILEY branding */
+    box-shadow: 0 0 30px rgba(0, 255, 102, 0.25);
+    padding: 40px 30px;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 440px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.popup-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(17, 30, 41, 0.85), rgba(17, 30, 41, 0.85)), 
+                url("images/12.jpg") no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    transition: transform 0.8s ease;
+}
+
+.popup-card:hover::before {
+    transform: scale(1.05);
+}
+
+.popup-overlay.show-popup .popup-card {
+    transform: scale(1);
+}
+
+/* Close Button Style */
+.popup-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.popup-close-btn:hover {
+    color: #ff3333; /* Hot alert color on hover */
+}
+
+.popup-badge {
+    display: inline-block;
+    background-color: #ff3333;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.popup-card h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.popup-card p {
+    color: #94a3b8;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Responsive Input & Button Components */
+#popupForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#subscriberEmail {
+    width: 100%;
+    padding: 14px;
+    background: #060b0f;
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    border-radius: 6px;
+    color: #fff;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.sub-input:focus,
+#subscriberEmail:focus {
+    border-color: #00ff66;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+.popup-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #00ff66;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.popup-submit-btn:hover {
+    background-color: #00cc52;
+    box-shadow: 0 5px 15px rgba(0, 255, 102, 0.4);
+}
+
+/* Modal Thumbnails Styling */
+.modal-thumbnails {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 0 15px; /* Add some padding to prevent thumbnails from touching edges */
+    overflow-x: auto; /* Allow horizontal scrolling if many thumbnails */
+    padding-bottom: 10px; /* Space for scrollbar */
+}
+
+.modal-thumbnail-item {
+    width: 60px; /* Fixed width for thumbnails */
+    height: 60px; /* Fixed height for thumbnails */
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.modal-thumbnail-item:hover {
+    opacity: 1;
+    border-color: rgba(0, 255, 102, 0.5);
+}
+
+.modal-thumbnail-item.active {
+    opacity: 1;
+    border-color: #00ff66; /* Highlight active thumbnail */
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+}
+
+/* Adjust product-img-container in modal for thumbnails */
+.modal-container .product-img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px; /* Space between main image and thumbnails */
+}
+
+.modal-container .product-img-container img#modalImg {
+    width: 100%;
+    height: auto; /* Allow image to scale naturally */
+    max-height: 400px; /* Max height for main image */
+    object-fit: contain; /* Ensure entire image is visible */
+}
+
+@media (max-width: 768px) {
+    .modal-container .product-img-container img#modalImg {
+        max-height: 300px;
+    }
+    .modal-thumbnails {
+        justify-content: flex-start; /* Align thumbnails to start on small screens */
+    }
+}
+/* --- ARENA JAMS CYBERPUNK SECURE PAYMENT SHEET --- */
+
+.payment-wrapper {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr; /* Form sits broad on left, summary crisp on right */
+    gap: 40px;
+    max-width: 1200px;
+    width: 90%;
+    margin: 50px auto;
+    font-family: sans-serif;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    color: #00ff66;
+    transform: translateX(-5px);
+}
+
+/* Left Form Box Customizations */
+.secure-checkout-card {
+    background: rgba(11, 19, 26, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid #00f0ff; /* Glowing Cyber Cyan Border */
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), 
+                inset 0 0 15px rgba(0, 240, 255, 0.05);
+    padding: 40px;
+    border-radius: 14px;
+}
+
+.checkout-badge {
+    color: #00f0ff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.secure-checkout-card h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 0 0 35px 0;
+    text-transform: uppercase;
+}
+
+.form-section-title {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+/* Payment Method Selection UI */
+.payment-method-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.method-btn {
+    flex: 1;
+    min-width: 100px;
+    background: rgba(6, 11, 15, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 6px;
+    color: #a0aec0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.method-btn:hover {
+    border-color: #00f0ff;
+    color: #ffffff;
+}
+
+.method-btn.active {
+    border-color: #00f0ff;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+}
+
+.method-panel {
+    display: none;
+}
+
+.method-panel.active {
+    display: block;
+    animation: panelFade 0.4s ease;
+}
+
+@keyframes panelFade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid splits for dual inputs like First/Last name or MM/YY/CVV */
+.input-row-split {
+    display: flex;
+    gap: 15px;
+}
+
+.input-row-split .input-group {
+    flex: 1;
+}
+
+.checkout-form-element .input-group {
+    margin-bottom: 16px;
+}
+
+.checkout-form-element .input-group input,
+.checkout-form-element .input-group select {
+    width: 100%;
+    padding: 15px 18px;
+    background-color: #060b0f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.checkout-form-element .input-group input:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+/* Big Cyber Authorize Trigger Action Button */
+.pay-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #ff007f; /* Hot Pink Primary Operational Trigger Button */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 30px;
+    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+}
+
+.pay-submit-btn:hover {
+    background-color: #e60072;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5);
+}
+
+/* Right Panel Order Manifest Customizations */
+.summary-receipt-box {
+    background-color: #111e29;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.summary-receipt-box h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.summary-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 20px 0;
+}
+
+.manifest-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.manifest-name {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.manifest-value {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.neon-cyan-text {
+    color: #00f0ff !important;
+}
+
+.manifest-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.manifest-total-row span:first-child {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    color: #a0aec0;
+}
+
+.total-price-highlight {
+    font-size: 1.4rem;
+    color: #ff007f;
+    letter-spacing: 0.5px;
+}
+
+.secure-guarantee-note {
+    background-color: rgba(0, 240, 255, 0.03);
+    border: 1px dashed rgba(0, 240, 255, 0.2);
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+.secure-guarantee-note p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #cbd5e0;
+}
+
+/* Responsive Collapse Engine Rule for Mobile Screens */
+@media (max-width: 850px) {
+    .payment-wrapper {
+        grid-template-columns: 1fr; /* Drops columns symmetrically to a vertical single stack layout */
+        gap: 30px;
+    }
+}
+
+.payment-page-bg {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgba(11, 19, 26, 0.7), rgba(11, 19, 26, 0.7)), url("NarutoImages/4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+}

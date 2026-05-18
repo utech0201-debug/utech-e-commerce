@@ -1563,18 +1563,6 @@ body {
     color: #ff3333; /* Hot alert color on hover */
 }
 
-.popup-badge {
-    display: inline-block;
-    background-color: #ff3333;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
 .popup-card h2 {
     color: #ffffff;
     font-size: 1.8rem;
@@ -1588,31 +1576,6 @@ body {
     font-size: 0.92rem;
     line-height: 1.6;
     margin-bottom: 25px;
-}
-
-/* Responsive Input & Button Components */
-#popupForm {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-#subscriberEmail {
-    width: 100%;
-    padding: 14px;
-    background: #060b0f;
-    border: 1px solid rgba(0, 255, 102, 0.3);
-    border-radius: 6px;
-    color: #fff;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-    transition: border-color 0.3s ease;
-}
-
-.sub-input:focus,
-#subscriberEmail:focus {
-    border-color: #00ff66;
-    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
 }
 
 .popup-submit-btn {

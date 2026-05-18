@@ -18,7 +18,10 @@ const revealImage = (img) => {
 
 // Initial load for static images present in the DOM
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.lazy-load-img').forEach(revealImage);
+    const staticImgs = document.getElementsByClassName('lazy-load-img');
+    for (let i = 0; i < staticImgs.length; i++) {
+        revealImage(staticImgs[i]);
+    }
 });
 
 // Listen for load events in capture phase to handle dynamic src changes
@@ -31,11 +34,26 @@ document.addEventListener('load', (e) => {
 
 // Watch for newly added nodes to the DOM (e.g., when a modal is injected or content is loaded via AJAX)
 // This ensures that any dynamically added images also get the lazy-load treatment.
-new MutationObserver((mutations) => {
-    mutations.forEach(m => m.addedNodes.forEach(node => {
-        if (node.nodeType === 1) {
-            if (node.classList.contains('lazy-load-img')) revealImage(node);
-            node.querySelectorAll('.lazy-load-img').forEach(revealImage);
+const observer = new MutationObserver((mutations) => {
+    for (let i = 0; i < mutations.length; i++) {
+        const addedNodes = mutations[i].addedNodes;
+        for (let j = 0; j < addedNodes.length; j++) {
+            const node = addedNodes[j];
+            if (node.nodeType !== 1) continue;
+
+            // Check the node itself
+            if (node.classList.contains('lazy-load-img') && node.complete) {
+                node.classList.add('loaded');
+            }
+            
+            // Search descendants using the faster getElementsByClassName
+            const nested = node.getElementsByClassName('lazy-load-img');
+            for (let k = 0; k < nested.length; k++) {
+                if (nested[k].complete) nested[k].classList.add('loaded');
+            }
+            // Non-complete images are automatically handled by the global capture listener
         }
-    }));
-}).observe(document.body, { childList: true, subtree: true });
+    }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });

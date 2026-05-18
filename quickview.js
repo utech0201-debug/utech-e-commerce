@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     const modal = document.getElementById('quickViewModal');
-    const subscriptionPopup = document.getElementById('subscriptionPopup'); // Get reference to subscription popup
 
     // Inject Coming Soon Popup HTML
     const comingSoonPopupHTML = `
@@ -52,11 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to manage body scroll based on active modals/popups
     const manageBodyScroll = () => {
+        const modal = document.getElementById('quickViewModal');
+        const comingSoonPopup = document.getElementById('comingSoonPopup');
+
         const quickViewActive = modal.classList.contains('active');
-        const subscriptionActive = subscriptionPopup && subscriptionPopup.classList.contains('show-popup');
         const comingSoonActive = comingSoonPopup && comingSoonPopup.classList.contains('show-popup');
 
-        if (quickViewActive || subscriptionActive || comingSoonActive) {
+        if (quickViewActive || comingSoonActive) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'auto';

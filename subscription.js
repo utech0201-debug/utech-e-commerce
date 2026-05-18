@@ -1,4 +1,21 @@
 window.addEventListener('DOMContentLoaded', () => {
+    // Get references to other potential modals/popups
+    const quickViewModal = document.getElementById('quickViewModal');
+    const comingSoonPopup = document.getElementById('comingSoonPopup');
+
+    // Helper function to manage body scroll based on active modals/popups
+    const manageBodyScroll = () => {
+        const quickViewActive = quickViewModal && quickViewModal.classList.contains('active');
+        const subscriptionActive = document.getElementById('subscriptionPopup').classList.contains('show-popup');
+        const comingSoonActive = comingSoonPopup && comingSoonPopup.classList.contains('show-popup');
+
+        if (quickViewActive || subscriptionActive || comingSoonActive) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    };
+
     // Construct Modal HTML
     const subscriptionPopupHTML = `
     <div id="subscriptionPopup" class="popup-overlay">
@@ -22,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         if (!sessionStorage.getItem('smil3y_sub_shown')) {
             document.getElementById('subscriptionPopup').classList.add('show-popup');
-            document.body.style.overflow = 'hidden';
+            manageBodyScroll();
         }
     }, 1500); 
 });
@@ -30,9 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // Close Popup Mechanics
 window.closePopup = function() {
     document.getElementById('subscriptionPopup').classList.remove('show-popup');
-    if (!document.querySelector('.modal-overlay.active')) {
-        document.body.style.overflow = 'auto';
-    }
+    manageBodyScroll();
     sessionStorage.setItem('smil3y_sub_shown', 'true');
 };
 

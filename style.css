@@ -430,7 +430,7 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     background-color: #0b131a;
-    position: relative;
+    position: relative; /* Ensure z-index works correctly */
     overflow: hidden;
 }
 

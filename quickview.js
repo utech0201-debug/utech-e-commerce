@@ -33,6 +33,43 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     const modal = document.getElementById('quickViewModal');
+    const subscriptionPopup = document.getElementById('subscriptionPopup'); // Get reference to subscription popup
+
+    // Inject Coming Soon Popup HTML
+    const comingSoonPopupHTML = `
+    <div id="comingSoonPopup" class="popup-overlay">
+        <div class="popup-card">
+            <button class="popup-close-btn" id="closeComingSoonPopupBtn">&times;</button>
+            <h2 id="comingSoonTitle">Coming Soon!</h2>
+            <p id="comingSoonMsg">This feature is currently under development. Stay tuned for exciting updates!</p>
+            <button class="popup-submit-btn" onclick="closeComingSoonPopup()">Got It!</button>
+        </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', comingSoonPopupHTML);
+
+    const comingSoonPopup = document.getElementById('comingSoonPopup');
+    const closeComingSoonPopupBtn = document.getElementById('closeComingSoonPopupBtn');
+
+    // Helper function to manage body scroll based on active modals/popups
+    const manageBodyScroll = () => {
+        const quickViewActive = modal.classList.contains('active');
+        const subscriptionActive = subscriptionPopup && subscriptionPopup.classList.contains('show-popup');
+        const comingSoonActive = comingSoonPopup && comingSoonPopup.classList.contains('show-popup');
+
+        if (quickViewActive || subscriptionActive || comingSoonActive) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    };
+
+    const showComingSoonPopup = (title, message) => {
+        document.getElementById('comingSoonTitle').innerText = title || "Coming Soon!";
+        document.getElementById('comingSoonMsg').innerText = message || "This feature is currently under development. Stay tuned for exciting updates!";
+        comingSoonPopup.classList.add('show-popup');
+        manageBodyScroll();
+    };
+
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
     const modalSpecs = document.getElementById('modalSpecs');
@@ -80,6 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const recommendedSpecs = card.getAttribute('data-recommended-specs');
             const galleryData = card.getAttribute('data-gallery');
             const mainImg = card.querySelector('img').getAttribute('src');
+
+            // Retrieve dynamic coming soon content
+            const comingSoonTitle = card.getAttribute('data-coming-soon-title');
+            const comingSoonMsg = card.getAttribute('data-coming-soon-msg');
             
             currentGallery = galleryData ? galleryData.split(',') : [mainImg];
             // Trim whitespace from image paths
@@ -99,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             modalBuyBtn.setAttribute('href', buyLink);
+            
+            // Transfer coming soon data to modal buy button for persistence
+            modalBuyBtn.setAttribute('data-coming-soon-title', comingSoonTitle || '');
+            modalBuyBtn.setAttribute('data-coming-soon-msg', comingSoonMsg || '');
 
             // Render thumbnails
             modalThumbnailsContainer.innerHTML = ''; // Clear previous thumbnails
@@ -116,19 +161,35 @@ document.addEventListener('DOMContentLoaded', () => {
             updateModalImage();
 
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
+            manageBodyScroll();
+        } else if (e.target.classList.contains('buy-btn')) {
+            e.preventDefault(); // Prevent default navigation
+            const target = e.target;
+            const card = target.closest('.product-card');
+            // Check button attributes first (for modal usage), then fallback to parent card
+            const title = target.getAttribute('data-coming-soon-title') || (card && card.getAttribute('data-coming-soon-title'));
+            const msg = target.getAttribute('data-coming-soon-msg') || (card && card.getAttribute('data-coming-soon-msg'));
+            showComingSoonPopup(title, msg);
         }
     });
 
     nextBtn.onclick = () => { currentIndex = (currentIndex + 1) % currentGallery.length; updateModalImage(); };
     prevBtn.onclick = () => { currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length; updateModalImage(); };
-    const closeModal = () => { 
-        modal.classList.remove('active'); 
-        // Only re-enable scroll if no other modals are active
-        if (!document.querySelector('.modal-overlay.active') && !document.querySelector('.popup-overlay.show-popup')) {
-            document.body.style.overflow = 'auto';
-        }
+    
+    const closeModal = () => {
+        modal.classList.remove('active');
+        manageBodyScroll();
     };
     closeBtn.onclick = closeModal;
-    window.onclick = (e) => { if (e.target == modal) closeModal(); };
+
+    window.closeComingSoonPopup = function() { // Made global for onclick attribute in HTML
+        comingSoonPopup.classList.remove('show-popup');
+        manageBodyScroll();
+    };
+    closeComingSoonPopupBtn.onclick = window.closeComingSoonPopup;
+
+    window.onclick = (e) => {
+        if (e.target === modal) closeModal();
+        if (e.target === comingSoonPopup) window.closeComingSoonPopup();
+    };
 });

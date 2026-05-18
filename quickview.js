@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div id="quickViewModal" class="modal-overlay">
         <div class="modal-container">
             <button class="modal-close" aria-label="Close modal">&times;</button>
-            <div class="product-img-container">
-                <img id="modalImg" src="" alt="Product Preview">
+            <div class="img-skeleton-container">
+                <img id="modalImg" class="lazy-load-img" src="" alt="Product Preview" loading="lazy" width="300" height="200">
                 <div class="gallery-controls">
                     <button id="prevImg" class="gallery-btn-nav" aria-label="Previous image">&lsaquo;</button>
                     <button id="nextImg" class="gallery-btn-nav" aria-label="Next image">&rsaquo;</button>

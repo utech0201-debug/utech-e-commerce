@@ -3,943 +3,947 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore our extensive catalog of gaming software, consoles, and professional business laptops.">
-    <title>:) SMILEY | Products</title>
 
-    <!-- PRELOADING: Critical Hero for Products Page -->
-    <link rel="preload" as="image" href="NarutoImages/11.jpeg">
+    <title>UTECH Store | Shop</title>
 
-    <link rel="icon" type="image/x-icon" href="images/1.png">
+    <meta
+        name="description"
+        content="Shop gaming, consoles, laptops and technology hardware from UTECH."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="main-box">
-        <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">:) SMILEY</h2>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="products.html" class="active-page">Products</a></li>
-                    <li><a href="game.html">Games</a></li>
-                    <li><a href="laptops.html">Laptops</a></li>
-                    <li><a href="hardware.html">Hardware</a></li>
-                </ul>
-            </div>
-            <div class="search">
-                <input class="srch" type="search" placeholder="Type to search">
-                <button class="btn">Search</button>
-            </div>
+
+<header class="site-header">
+    <div class="navbar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">U</span>
+            <span class="brand-name">UTECH</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html" class="active">Shop</a>
+            <a href="game.html">Games</a>
+            <a href="hardware.html">Consoles</a>
+            <a href="laptops.html">Laptops</a>
+            <a href="hardware.html">Hardware</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="search-trigger" id="searchTrigger" aria-label="Search">
+                Search
+            </button>
+
+            <a href="payment.html" class="cart-link">
+                Cart
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                ☰
+            </button>
         </div>
-        
-        <div class="hero-content">
-            <img src="images/12.jpg" alt="Brand Logo" class="hero-logo">
-            <h1>Welcome to Smiley</h1>
-            <p>Discover bold designs, seamless systems, and creative solutions built just for you.</p>
-            <a href="#shop" class="cta-btn">Get Started Now</a>
-        </div>
+
     </div>
-         <section class="shop-section" id="shop">
-        <h2 class="section-title">GAMING SOFTWARES FOR SALE</h2>
-        
-        <div class="product-grid">
-            <div class="product-card" 
-                 data-coming-soon-title="Legacy Restock" 
-                 data-coming-soon-msg="The physical collectors edition is currently restocking. Pre-orders open next week!">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/1.jpg" alt="Naruto Shippuden" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Hot</span>
-                </div>
-                <div class="product-info">
-                    <h3>Naruto Shippuden Universe</h3>
-                    <p>Immerse yourself in the ultimate anime ninja fighter. Featuring epic cross-generation boss battles, mastered jutsu techniques, and an massive roster from the Storm series universe.</p>
-                    <div class="product-meta">
-                        <span class="price">$19.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
+</header>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/2.jpg" alt="Marvel's Avengers Spider-Man" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Spider-Man - Avengers Edition</h3>
-                    <p>Swing into high-stakes action with Marvel's iconic web-slinger. Team up with the Avengers in a cinematic open-world experience featuring fluid combat and web-zipping mechanics.</p>
-                    <div class="product-meta">
-                        <span class="price">$14.50</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/3.jpg" alt="Marvel's Avengers Team" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3>Marvel's Avengers Team</h3>
-                    <p>Assemble your squad of legendary heroes. Combine unique superhero abilities, unlock powerful combat gear, and defend the Earth from technological threats in cooperative team campaigns.</p>
-                    <div class="product-meta">
-                        <span class="price">$29.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
+<main>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/10.jpg" alt="Naruto Sage Mode" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Naruto Sage Mode Optimizer</h3>
-                    <p>Unleash the supreme power of Sage Mode. Guide Naruto through high-intensity training arcs, unlock legendary frog kata techniques, and defend the hidden leaf village from destruction.</p>
-                    <div class="product-meta">
-                        <span class="price">$9.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
+    <!-- SHOP HERO -->
+    <section class="shop-hero">
+        <div class="shop-hero-content">
+            <span class="eyebrow">UTECH STORE</span>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/8.jpg" alt="Nezha Demon Form" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Sale</span>
-                </div>
-                <div class="product-info">
-                    <h3>Nezha Demon Form Suite</h3>
-                    <p>Step into a mythical dark-fantasy epic inspired by eastern folklore. Master destructive fiery spear combinations, unlock demonic transformation states, and battle ancient mythical deities.</p>
-                    <div class="product-meta">
-                        <span class="price">$24.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
+            <h1>
+                Explore the
+                <span>Technology.</span>
+            </h1>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/9.jpg" alt="Nezha II Legend" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Nezha II Legend</h3>
-                    <p>The legendary trial continues. Explore stunning tactical environments, channel divine lotus energies, and engage in fast-paced hack-and-slash action against massive boss armies.</p>
-                    <div class="product-meta">
-                        <span class="price">$12.00</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/5.jpg" alt="eFootball Pro Simulator" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Popular</span>
-                </div>
-                <div class="product-info">
-                    <h3>eFootball Pro Simulator</h3>
-                    <p>Experience ultra-realistic, pitch-side football dynamics. Take control of globally licensed clubs, master real-time ball physics, and compete in the official high-stakes 2026 Championship league.</p>
-                    <div class="product-meta">
-                        <span class="price">$15.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/6.jpg" alt="MX vs ATV All Out" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>MX vs ATV Velocity Engine</h3>
-                    <p>Tear up the off-road tracks in high-octane racing modules. Drifting through muddy custom trails, execute wild aerial freestyle stunts, and tune dirt bikes and ATVs for peak velocity performance.</p>
-                    <div class="product-meta">
-                        <span class="price">$5.50</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/7.jpg" alt="GTA 5 Script Hook" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Grand Theft Auto V Script Injector</h3>
-                    <p>Return to the sprawling sun-soaked metropolis of Los Santos. Navigate high-stakes street-level heists, massive open-world crimes, and custom chaotic sandbox modifications.</p>
-                    <div class="product-meta">
-                        <span class="price">$9.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/4.jpg" alt="Need for Speed The Run" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3>Need for Speed Run-Time Guard</h3>
-                    <p>An intense, coast-to-coast race across America where the stakes couldn't be higher. Avoid aggressive police pursuits, drift tight mountain passes, and outrun rival drivers at any cost.</p>
-                    <div class="product-meta">
-                        <span class="price">$22.00</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
+            <p>
+                Gaming software, consoles, laptops and technology hardware
+                built for people who love powerful digital experiences.
+            </p>
         </div>
     </section>
 
+
+    <!-- SHOP CONTROLS -->
     <section class="shop-section">
-    <h2 class="section-title">GAMING CONSOLES & HARDWARE</h2>
-    <div class="product-grid">
-        <!-- 1. PlayStation 5 (Slim / Disc Edition) -->
-        <article class="product-card" data-recommended-specs="Resolution: 4K @ 60fps, Storage: 1TB SSD, Features: Ray Tracing, HDR">
-            <div class="img-skeleton-container">
-                <img src="consoles/PlayStation 5.jpg" alt="PlayStation 5" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Flagship</span>
+
+        <div class="shop-toolbar">
+
+            <div>
+                <span class="section-kicker">STORE</span>
+                <h2>All Products</h2>
             </div>
-            <div class="product-info">
-                <h3>PlayStation 5 (Slim / Disc Edition)</h3>
-                <p>Sony flagship featuring ultra-fast loading and ray-tracing.<br>
-                    CPU: 8-core AMD Zen 2 CPU at up to 3.5GHz<br>
-                    GPU: Custom AMD RDNA 2 (10.28 TFLOPs)<br>
-                    Memory: 16GB GDDR6<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$499.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+
+            <div class="shop-search">
+                <input
+                    type="search"
+                    id="productSearch"
+                    placeholder="Search products..."
+                    aria-label="Search products"
+                >
+            </div>
+
+        </div>
+
+
+        <!-- CATEGORY FILTERS -->
+        <div class="category-filters" id="categoryFilters">
+
+            <button class="filter-btn active" data-category="all">
+                All
+            </button>
+
+            <button class="filter-btn" data-category="games">
+                Games
+            </button>
+
+            <button class="filter-btn" data-category="consoles">
+                Consoles
+            </button>
+
+            <button class="filter-btn" data-category="laptops">
+                Laptops
+            </button>
+
+            <button class="filter-btn" data-category="hardware">
+                Hardware
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT GRID -->
+        <div class="shop-product-grid" id="productGrid">
+
+
+            <!-- PLAYSTATION 5 -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="PlayStation 5"
+            >
+
+                <div class="product-image">
+                    <img
+                        src="consoles/PlayStation 5.jpg"
+                        alt="PlayStation 5"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">FLAGSHIP</span>
                 </div>
-            </div>
-        </article>
 
-        <!-- 2. Xbox Series X -->
-        <article class="product-card" data-recommended-specs="Resolution: True 4K @ 60fps, Storage: 1TB SSD, Features: Ray Tracing, HDR, Quick Resume">
-            <div class="img-skeleton-container">
-                <img src="consoles/Xbox Series X.jpg" alt="Xbox Series X" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Powerhouse</span>
-            </div>
-            <div class="product-info">
-                <h3>Xbox Series X</h3>
-                <p>Microsoft's most powerful native 4K gaming hardware build.<br>
-                    CPU: 8-core AMD Zen 2 CPU at up to 3.8GHz<br>
-                    GPU: Custom AMD RDNA 2 (12.15 TFLOPs)<br>
-                    Memory: 16GB GDDR6<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$499.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>PlayStation 5</h3>
+
+                    <p>
+                        Next-generation gaming console with ultra-fast SSD
+                        and immersive 4K gaming.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$499.99</strong>
+
+                        <div class="product-actions">
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 3. Nintendo Switch (OLED Model) -->
-        <article class="product-card" data-recommended-specs="Handheld: 7-inch OLED, TV Mode: 1080p, Storage: 64GB + MicroSD, Features: Detachable Joy-Cons">
-            <div class="img-skeleton-container">
-                <img src="consoles/Nintendo Switch (OLED Model).jpg" alt="Nintendo Switch OLED" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">OLED</span>
-            </div>
-            <div class="product-info">
-                <h3>Nintendo Switch (OLED Model)</h3>
-                <p>Premium hybrid console with a vibrant OLED screen upgrade.<br>
-                    Processor: Nvidia Custom Tegra processor<br>
-                    Memory: 4GB LPDDR4 RAM<br>
-                    Storage: 64GB Flash (Expandable via MicroSD)<br>
-                    Display: 7-inch multi-touch OLED screen
-                </p>
-                <div class="product-meta">
-                    <span class="price">$349.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- XBOX SERIES X -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="Xbox Series X"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="consoles/Xbox Series X.jpg"
+                        alt="Xbox Series X"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">POWERHOUSE</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 4. PlayStation 5 Pro -->
-        <article class="product-card" data-recommended-specs="Resolution: 4K @ 120fps (upscaled), Storage: 2TB SSD, Features: Enhanced Ray Tracing, PSSR AI Upscaling">
-            <div class="img-skeleton-container">
-                <img src="consoles/PlayStation 5 Pro.jpg" alt="PlayStation 5 Pro" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Elite</span>
-            </div>
-            <div class="product-info">
-                <h3>PlayStation 5 Pro</h3>
-                <p>Built for enhanced ray tracing and AI upscaling via PSSR.<br>
-                    CPU: 8-core AMD Zen 2 (up to 3.85GHz)<br>
-                    GPU: Upgraded RDNA Architecture (16.7 TFLOPs)<br>
-                    Memory: 16GB GDDR6 + 2GB DDR5<br>
-                    Storage: 2TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$699.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>Xbox Series X</h3>
+
+                    <p>
+                        Powerful 4K gaming console designed for fast,
+                        high-performance gameplay.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$499.99</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 5. Xbox Series S (1TB Carbon Black) -->
-        <article class="product-card" data-recommended-specs="Resolution: 1440p @ 120fps, Storage: 1TB SSD, Features: All-Digital, Quick Resume">
-            <div class="img-skeleton-container">
-                <img src="consoles/Xbox Series S (1TB Carbon Black).jpg" alt="Xbox Series S" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Compact</span>
-            </div>
-            <div class="product-info">
-                <h3>Xbox Series S (1TB Carbon Black)</h3>
-                <p>All-digital entry point into modern gaming with extra storage.<br>
-                    CPU: 8-core AMD Zen 2 CPU at 3.6GHz<br>
-                    GPU: Custom RDNA 2 (4 TFLOPs)<br>
-                    Memory: 10GB GDDR6 RAM<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$349.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- NINTENDO SWITCH -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="Nintendo Switch OLED"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="consoles/Nintendo Switch (OLED Model).jpg"
+                        alt="Nintendo Switch OLED"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">OLED</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 6. Steam Deck OLED (512GB Build) -->
-        <article class="product-card" data-recommended-specs="Display: 7.4-inch HDR OLED (90Hz), Storage: 512GB SSD, Battery: 50Whr, OS: SteamOS">
-            <div class="img-skeleton-container">
-                <img src="consoles/Steam Deck OLED (512GB Build).jpg" alt="Steam Deck OLED" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Handheld PC</span>
-            </div>
-            <div class="product-info">
-                <h3>Steam Deck OLED (512GB Build)</h3>
-                <p>Valve’s portable PC-gaming handheld running SteamOS.<br>
-                    APU: AMD "Sephiroth" (6nm Processor)<br>
-                    Memory: 16GB LPDDR5 RAM<br>
-                    Storage: 512GB NVMe PCIe Gen 4 SSD<br>
-                    Display: 7.4-inch HDR OLED (90Hz)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$549.00</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>Nintendo Switch OLED</h3>
+
+                    <p>
+                        Portable and home gaming with a vibrant OLED
+                        display.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$349.99</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 7. ASUS ROG Ally X -->
-        <article class="product-card" data-recommended-specs="Display: 7-inch FHD IPS (120Hz), Storage: 1TB SSD, Battery: 80Whr, OS: Windows 11">
-            <div class="img-skeleton-container">
-                <img src="consoles/ASUS ROG Ally X.jpg" alt="ASUS ROG Ally X" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Premium</span>
-            </div>
-            <div class="product-info">
-                <h3>ASUS ROG Ally X</h3>
-                <p>High-end Windows-based handheld capable of running AAA titles.<br>
-                    APU: AMD Ryzen Z1 Extreme (8 cores/16 threads)<br>
-                    Memory: 24GB LPDDR5X RAM<br>
-                    Storage: 1TB NVMe PCIe 4.0 SSD<br>
-                    Battery: 80Whr High-Capacity Battery
-                </p>
-                <div class="product-meta">
-                    <span class="price">$799.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- PS5 PRO -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="PlayStation 5 Pro"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="consoles/PlayStation 5 Pro.jpg"
+                        alt="PlayStation 5 Pro"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">ELITE</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 8. Nintendo Switch Lite -->
-        <article class="product-card" data-recommended-specs="Display: 5.5-inch LCD, Storage: 32GB + MicroSD, Features: Handheld Only, Integrated Controls">
-            <div class="img-skeleton-container">
-                <img src="consoles/Nintendo Switch Lite.jpg" alt="Nintendo Switch Lite" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Ultra-Portable</span>
-            </div>
-            <div class="product-info">
-                <h3>Nintendo Switch Lite</h3>
-                <p>Dedicated handheld device built strictly for mobile gameplay.<br>
-                    Processor: Nvidia Custom Tegra processor<br>
-                    Memory: 4GB LPDDR4 RAM<br>
-                    Storage: 32GB internal flash memory<br>
-                    Display: 5.5-inch LCD touchscreen
-                </p>
-                <div class="product-meta">
-                    <span class="price">$199.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>PlayStation 5 Pro</h3>
+
+                    <p>
+                        Enhanced PlayStation performance for demanding
+                        next-generation gaming.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$699.99</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 9. Analogue Pocket -->
-        <article class="product-card" data-recommended-specs="Display: 3.5-inch LCD (1600x1440), Features: FPGA Hardware, Multi-Cartridge Support">
-            <div class="img-skeleton-container">
-                <img src="consoles/Analogue Pocket.jpg" alt="Analogue Pocket" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Retro</span>
-            </div>
-            <div class="product-info">
-                <h3>Analogue Pocket</h3>
-                <p>Luxury system designed for retro hardware preservation.<br>
-                    HW: Dual FPGA chips (Cyclone V and IV)<br>
-                    Support: GB, GBC, and GBA cartridges<br>
-                    Display: 3.5-inch LCD (1600 x 1440, 615 ppi)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$219.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- STEAM DECK -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="Steam Deck OLED"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="consoles/Steam Deck OLED (512GB Build).jpg"
+                        alt="Steam Deck OLED"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">HANDHELD PC</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 10. Sega Genesis Mini 2 -->
-        <article class="product-card" data-recommended-specs="Library: 60 Classic Titles, Output: HDMI (720p/480p), Features: 6-Button Controller">
-            <div class="img-skeleton-container">
-                <img src="consoles/Sega Genesis Mini 2.jpg" alt="Sega Genesis Mini 2" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Micro</span>
-            </div>
-            <div class="product-info">
-                <h3>Sega Genesis Mini 2</h3>
-                <p>Plug-and-play revival preloaded with classic 16-bit titles.<br>
-                    Library: 60 Classic Titles (Genesis & Sega CD)<br>
-                    Output: HDMI (720p/480p output options)<br>
-                    Controller: 1 wired 6-button control pad
-                </p>
-                <div class="product-meta">
-                    <span class="price">$99.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>Steam Deck OLED</h3>
+
+                    <p>
+                        Portable PC gaming with an immersive OLED display
+                        and 512GB storage.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$549.00</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
-    </div>
-</section>
 
- <section class="shop-section">
-    <h2 class="section-title">PROFESSIONAL & BUSINESS LAPTOPS</h2>
-    <div class="product-grid">
-        <!-- 1. Lenovo ThinkPad X1 Carbon (Gen 12) -->
-        <article class="product-card" data-gallery="laptops/Lenovo ThinkPad X1 Carbon (Gen 12).jpg,images/thinkpad-x1.jpg" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core Ultra 7, RAM: 32GB, Storage: 1TB SSD, Display: 14.0 OLED 2.8K">
-            <div class="img-skeleton-container">
-                <img src="laptops/Lenovo ThinkPad X1 Carbon (Gen 12).jpg" alt="Lenovo ThinkPad X1 Carbon" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Executive</span>
-            </div>
-            <div class="product-info">
-                <h3>Lenovo ThinkPad X1 Carbon (Gen 12)</h3>
-                <p>The gold standard for executive and business travel.<br>
-                    Processor: Intel Core Ultra 7 155H<br>
-                    Memory: 32GB LPDDR5X RAM<br>
-                    Storage: 1TB NVMe PCIe Gen 4 SSD<br>
-                    Display: 14.0" 2.8K OLED, Anti-Glare
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,899</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- ROG ALLY -->
+            <article
+                class="shop-product-card"
+                data-category="consoles"
+                data-name="ASUS ROG Ally X"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="consoles/ASUS ROG Ally X.jpg"
+                        alt="ASUS ROG Ally X"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">PREMIUM</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 2. Lenovo ThinkPad X280 -->
-        <article class="product-card" data-recommended-specs="OS: Windows 10 Pro, CPU: Intel Core i5/i7 (8th Gen), RAM: 8/16GB, Storage: 256/512GB SSD, Display: 12.5 FHD IPS">
-            <div class="img-skeleton-container">
-                <img src="laptops/Lenovo ThinkPad X280.jpg" alt="Lenovo ThinkPad X280" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Classic</span>
-            </div>
-            <div class="product-info">
-                <h3>Lenovo ThinkPad X280</h3>
-                <p>An ultra-portable classic for mobile labs and diagnostics.<br>
-                    Processor: Intel Core i5 / i7<br>
-                    Memory: 8GB or 16GB DDR4 RAM<br>
-                    Storage: 256GB / 512GB NVMe SSD<br>
-                    Display: 12.5" FHD IPS, Anti-Glare
-                </p>
-                <div class="product-meta">
-                    <span class="price">$180</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Consoles
+                    </span>
+
+                    <h3>ASUS ROG Ally X</h3>
+
+                    <p>
+                        High-performance Windows handheld built for
+                        portable PC gaming.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$799.99</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 3. HP EliteBook 840 G10 -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core i7 (13th Gen), RAM: 16GB (upgradable), Storage: 512GB SSD, Display: 14.0 WUXGA IPS">
-            <div class="img-skeleton-container">
-                <img src="laptops/HP EliteBook 840 G10.jpg" alt="HP EliteBook 840 G10" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Corporate</span>
-            </div>
-            <div class="product-info">
-                <h3>HP EliteBook 840 G10</h3>
-                <p>A premium corporate mainstay featuring excellent serviceability.<br>
-                    Processor: Intel Core i7-1360P<br>
-                    Memory: 16GB DDR5 RAM (Upgradable)<br>
-                    Storage: 512GB NVMe PCIe SSD<br>
-                    Display: 14.0" WUXGA IPS, 400 nits
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,249</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- LENOVO LEGION -->
+            <article
+                class="shop-product-card"
+                data-category="laptops"
+                data-name="Lenovo Legion Pro 5i 2026"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="laptops/gamingLaptops/Lenovo Legion Pro 5i (2026).jpg"
+                        alt="Lenovo Legion Pro 5i"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">GAMING</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 4. Dell Latitude 7440 -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core i7 vPro (13th Gen), RAM: 16GB, Storage: 512GB SSD, Display: 14.0 FHD+ IPS">
-            <div class="img-skeleton-container">
-                <img src="laptops/Dell Latitude 7440.jpg" alt="Dell Latitude 7440" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Enterprise</span>
-            </div>
-            <div class="product-info">
-                <h3>Dell Latitude 7440</h3>
-                <p>Built for enterprise fleet deployments with strong security.<br>
-                    Processor: Intel Core i7-1365U vPro<br>
-                    Memory: 16GB LPDDR5 RAM<br>
-                    Storage: 512GB PCIe NVMe SSD<br>
-                    Display: 14.0" FHD+ IPS, ComfortView Plus
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,399</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Laptops
+                    </span>
+
+                    <h3>Lenovo Legion Pro 5i</h3>
+
+                    <p>
+                        Performance gaming laptop designed for demanding
+                        games and creative workloads.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$1,899.00</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 5. MacBook Pro 14-inch (M3 Pro) -->
-        <article class="product-card" data-recommended-specs="OS: macOS, CPU: Apple M3 Pro (11-Core), RAM: 18GB Unified, Storage: 512GB SSD, Display: 14.2 Liquid Retina XDR">
-            <div class="img-skeleton-container">
-                <img src="laptops/MacBook Pro 14 (M3 Pro).jpg" alt="MacBook Pro 14-inch M3 Pro" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Creator</span>
-            </div>
-            <div class="product-info">
-                <h3>MacBook Pro 14 (M3 Pro)</h3>
-                <p>The premier choice for developers and Unix environments.<br>
-                    Processor: Apple M3 Pro chip (11‑Core)<br>
-                    Memory: 18GB Unified Memory<br>
-                    Storage: 512GB Ultra-fast Storage<br>
-                    Display: 14.2" Liquid Retina XDR (120Hz)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,999</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- ASUS ROG -->
+            <article
+                class="shop-product-card"
+                data-category="laptops"
+                data-name="ASUS ROG Zephyrus G14"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="laptops/gamingLaptops/ASUS ROG Zephyrus G14 .jpg"
+                        alt="ASUS ROG Zephyrus G14"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">CREATOR</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 6. ASUS ExpertBook B9 OLED -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core i7 (13th Gen), RAM: 32GB, Storage: 1TB SSD, Display: 14.0 WQXGA+ OLED">
-            <div class="img-skeleton-container">
-                <img src="laptops/ASUS ExpertBook B9 OLED.jpg" alt="ASUS ExpertBook B9" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Ultra-Light</span>
-            </div>
-            <div class="product-info">
-                <h3>ASUS ExpertBook B9 OLED</h3>
-                <p>Feather-light chassis built for extreme mobility.<br>
-                    Processor: Intel Core i7-1355U<br>
-                    Memory: 32GB LPDDR5 RAM<br>
-                    Storage: 1TB NVMe PCIe 4.0 SSD<br>
-                    Display: 14.0" WQXGA+ OLED, 16:10
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,699</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Laptops
+                    </span>
+
+                    <h3>ASUS ROG Zephyrus G14</h3>
+
+                    <p>
+                        Compact premium laptop built for gaming,
+                        development and creative work.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$1,799.00</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 7. Framework Laptop 13 (Factory Clean Build) -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 / Linux, CPU: AMD Ryzen 7 7840U, RAM: 16GB (swappable), Storage: 512GB SSD, Display: 13.5 Matte (3:2)">
-            <div class="img-skeleton-container">
-                <img src="laptops/Framework Laptop 13.jpg" alt="Framework Laptop 13" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Modular</span>
-            </div>
-            <div class="product-info">
-                <h3>Framework Laptop 13</h3>
-                <p>Highly customizable modular business machine.<br>
-                    Processor: AMD Ryzen 7 7840U<br>
-                    Memory: 16GB DDR5 RAM (Swappable)<br>
-                    Storage: 512GB NVMe SSD<br>
-                    Display: 13.5" Matte Display (3:2 Aspect)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,049</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- HP OMEN -->
+            <article
+                class="shop-product-card"
+                data-category="laptops"
+                data-name="HP Omen Transcend 14"
+            >
+
+                <div class="product-image">
+
+                    <img
+                        src="laptops/gamingLaptops/HP Omen Transcend 14.jpg"
+                        alt="HP Omen Transcend 14"
+                        loading="lazy"
+                    >
+
+                    <span class="product-badge">PERFORMANCE</span>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 8. Microsoft Surface Laptop 6 for Business -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core Ultra 5 vPro, RAM: 16GB, Storage: 256GB Removable SSD, Display: 13.5 PixelSense Touch">
-            <div class="img-skeleton-container">
-                <img src="laptops/Surface Laptop 6 for Business.jpg" alt="Surface Laptop 6" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Touch</span>
-            </div>
-            <div class="product-info">
-                <h3>Surface Laptop 6 for Business</h3>
-                <p>Tailored for cloud suites and touch interfaces.<br>
-                    Processor: Intel Core Ultra 5 135U vPro<br>
-                    Memory: 16GB LPDDR5X RAM<br>
-                    Storage: 256GB Removable Gen 4 SSD<br>
-                    Display: 13.5" PixelSense Touch Display
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,199</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Laptops
+                    </span>
+
+                    <h3>HP Omen Transcend 14</h3>
+
+                    <p>
+                        Slim gaming laptop combining portability with
+                        serious performance.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>$1,599.00</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Quick View
+                            </button>
+
+                            <a href="payment.html" class="buy-button">
+                                Buy
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 9. Lenovo ThinkPad E14 (Gen 6) -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: AMD Ryzen 5 7535U, RAM: 16GB, Storage: 512GB SSD, Display: 14.0 WUXGA IPS">
-            <div class="img-skeleton-container">
-                <img src="laptops/Lenovo ThinkPad E14 (Gen 6).jpg" alt="Lenovo ThinkPad E14" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Value</span>
-            </div>
-            <div class="product-info">
-                <h3>Lenovo ThinkPad E14 (Gen 6)</h3>
-                <p>Excellent budget-friendly professional workhorse.<br>
-                    Processor: AMD Ryzen 5 7535U<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 512GB PCIe Gen 4 SSD<br>
-                    Display: 14.0" WUXGA IPS, Anti-Glare
-                </p>
-                <div class="product-meta">
-                    <span class="price">$699</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- RASPBERRY PI -->
+            <article
+                class="shop-product-card"
+                data-category="hardware"
+                data-name="Raspberry Pi 5"
+            >
+
+                <div class="product-image hardware-placeholder">
+                    <div>
+                        <span>RPI</span>
+                        <strong>5</strong>
+                    </div>
+
+                    <span class="product-badge">DIY TECH</span>
                 </div>
-            </div>
-        </article>
 
-        <!-- 10. Dell Precision 3480 Mobile Workstation -->
-        <article class="product-card" data-recommended-specs="OS: Windows 11 Pro, CPU: Intel Core i7 (13th Gen), RAM: 16GB, Storage: 512GB SSD, GPU: NVIDIA RTX A500, Display: 14.0 FHD IPS">
-            <div class="img-skeleton-container">
-                <img src="laptops/Dell Precision 3480.jpg" alt="Dell Precision 3480" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Workstation</span>
-            </div>
-            <div class="product-info">
-                <h3>Dell Precision 3480</h3>
-                <p>Entry-level powerhouse for VMs and CAD software.<br>
-                    Processor: Intel Core i7-1360P<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 512GB PCIe NVMe SSD<br>
-                    Display: 14.0" FHD IPS, Anti-Glare
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,150</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Hardware
+                    </span>
+
+                    <h3>Raspberry Pi 5</h3>
+
+                    <p>
+                        Compact computing platform for projects,
+                        automation, learning and experimentation.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>Coming Soon</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
-    </div>
-</section>
+
+            </article>
 
 
-<section class="shop-section">
-    <h2 class="section-title">GAMING LAPTOPS</h2>
-    <div class="product-grid">
-        <!-- 1. Lenovo Legion Pro 5i (2026) -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Lenovo Legion Pro 5i (2026).jpg" alt="Lenovo Legion Pro 5i (2026)" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Top Rated</span>
-            </div>
-            <div class="product-info">
-                <h3>Lenovo Legion Pro 5i (2026)</h3>
-                <p>
-                    Processor: Intel Core i7-14700HX<br>
-                    Graphics: NVIDIA GeForce RTX 4070 (8GB VRAM)<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 16" QHD+ (2560 x 1600), 240Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,499</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            <!-- PC COMPONENTS -->
+            <article
+                class="shop-product-card"
+                data-category="hardware"
+                data-name="PC Components"
+            >
+
+                <div class="product-image hardware-placeholder">
+                    <div>
+                        <span>PC</span>
+                        <strong>HW</strong>
+                    </div>
+
+                    <span class="product-badge">UPGRADE</span>
                 </div>
-            </div>
-        </article>
 
-        <!-- 2. ASUS ROG Zephyrus G14 (2025/2026) -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/ASUS ROG Zephyrus G14 .jpg" alt="ASUS ROG Zephyrus G14" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">OLED</span>
-            </div>
-            <div class="product-info">
-                <h3>ASUS ROG Zephyrus G14 (2025/2026)</h3>
-                <p>
-                    Processor: AMD Ryzen 9 8945HS<br>
-                    Graphics: NVIDIA GeForce RTX 4070 (8GB VRAM)<br>
-                    Memory: 32GB LPDDR5X RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 14" ROG Nebula OLED (2880 x 1800), 120Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,999</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Hardware
+                    </span>
+
+                    <h3>PC Components</h3>
+
+                    <p>
+                        Components for building and upgrading powerful
+                        desktop systems.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>Coming Soon</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 3. Acer Predator Helios 16 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Acer Predator Helios 16.jpg" alt="Acer Predator Helios 16" class="lazy-load-img" loading="lazy" width="300" height="200">
-            </div>
-            <div class="product-info">
-                <h3>Acer Predator Helios 16</h3>
-                <p>
-                    Processor: Intel Core i9-14900HX<br>
-                    Graphics: NVIDIA GeForce RTX 4080 (12GB VRAM)<br>
-                    Memory: 32GB DDR5 RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 16" WQXGA (2560 x 1600) Mini-LED, 250Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$2,299</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+            </article>
+
+
+            <!-- PERIPHERALS -->
+            <article
+                class="shop-product-card"
+                data-category="hardware"
+                data-name="Gaming Peripherals"
+            >
+
+                <div class="product-image hardware-placeholder">
+                    <div>
+                        <span>GAME</span>
+                        <strong>IO</strong>
+                    </div>
+
+                    <span class="product-badge">GEAR</span>
                 </div>
-            </div>
-        </article>
 
-        <!-- 4. Razer Blade 16 (2026) -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Razer Blade 16 (2026).jpg" alt="Razer Blade 16 (2026)" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Ultimate</span>
-            </div>
-            <div class="product-info">
-                <h3>Razer Blade 16 (2026)</h3>
-                <p>
-                    Processor: Intel Core i9-14900HX<br>
-                    Graphics: NVIDIA GeForce RTX 4090 (16GB VRAM)<br>
-                    Memory: 32GB DDR5 RAM<br>
-                    Storage: 2TB NVMe SSD<br>
-                    Display: 16" QHD+ OLED (2560 x 1600), 240Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$4,199</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
+                <div class="product-info">
+
+                    <span class="product-category">
+                        Hardware
+                    </span>
+
+                    <h3>Gaming Peripherals</h3>
+
+                    <p>
+                        Keyboards, mice, headsets and accessories for
+                        your gaming setup.
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <strong>Coming Soon</strong>
+
+                        <div class="product-actions">
+
+                            <button class="quick-view">
+                                Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </article>
 
-        <!-- 5. HP Omen Transcend 14 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/HP Omen Transcend 14.jpg" alt="HP Omen Transcend 14" class="lazy-load-img" loading="lazy" width="300" height="200">
-            </div>
-            <div class="product-info">
-                <h3>HP Omen Transcend 14</h3>
-                <p>
-                    Processor: Intel Core Ultra 7 155H<br>
-                    Graphics: NVIDIA GeForce RTX 4060 (8GB VRAM)<br>
-                    Memory: 16GB LPDDR5X RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 14" 2.8K OLED (2880 x 1800), 120Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,450</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+            </article>
 
-        <!-- 6. MSI Cyborg 15 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/MSI Cyborg 15.jpg" alt="MSI Cyborg 15" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Value</span>
-            </div>
-            <div class="product-info">
-                <h3>MSI Cyborg 15</h3>
-                <p>
-                    Processor: Intel Core i7-13620H<br>
-                    Graphics: NVIDIA GeForce RTX 4060 (8GB VRAM)<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 512GB NVMe SSD<br>
-                    Display: 15.6" Full HD (1920 x 1080) IPS, 144Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$899</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        </div>
 
-        <!-- 7. ASUS TUF Gaming A15 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/ASUS TUF Gaming A15.jpg" alt="ASUS TUF Gaming A15" class="lazy-load-img" loading="lazy" width="300" height="200">
-            </div>
-            <div class="product-info">
-                <h3>ASUS TUF Gaming A15</h3>
-                <p>
-                    Processor: AMD Ryzen 7 7735HS<br>
-                    Graphics: NVIDIA GeForce RTX 4050 (6GB VRAM)<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 512GB NVMe SSD<br>
-                    Display: 15.6" Full HD (1920 x 1080), 144Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$799</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
 
-        <!-- 8. Gigabyte Aorus 16X -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Gigabyte Aorus 16X.jpg" alt="Gigabyte Aorus 16X" class="lazy-load-img" loading="lazy" width="300" height="200">
-            </div>
-            <div class="product-info">
-                <h3>Gigabyte Aorus 16X</h3>
-                <p>
-                    Processor: Intel Core i7-14650HX<br>
-                    Graphics: NVIDIA GeForce RTX 4070 (8GB VRAM)<br>
-                    Memory: 16GB DDR5 RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 16" WQXGA (2560 x 1600), 165Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,299</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <!-- NO RESULTS -->
+        <div class="no-results" id="noResults">
+            <h3>No products found</h3>
+            <p>
+                Try another search term or choose a different category.
+            </p>
+        </div>
 
-        <!-- 9. Alienware m16 R2 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Alienware m16 R2.jpg" alt="Alienware m16 R2" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Sale</span>
-            </div>
-            <div class="product-info">
-                <h3>Alienware m16 R2</h3>
-                <p>
-                    Processor: Intel Core Ultra 9 185H<br>
-                    Graphics: NVIDIA GeForce RTX 4070 (8GB VRAM)<br>
-                    Memory: 32GB DDR5 RAM<br>
-                    Storage: 1TB NVMe SSD<br>
-                    Display: 16" QHD+ (2560 x 1600), 240Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$1,849</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+    </section>
 
-        <!-- 10. Lenovo LOQ 15 -->
-        <article class="product-card">
-            <div class="img-skeleton-container">
-                <img src="laptops/gamingLaptops/Lenovo LOQ 15.jpg" alt="Lenovo LOQ 15" class="lazy-load-img" loading="lazy" width="300" height="200">
-            </div>
-            <div class="product-info">
-                <h3>Lenovo LOQ 15</h3>
-                <p>
-                    Processor: AMD Ryzen 5 7640HS<br>
-                    Graphics: NVIDIA GeForce RTX 4050 (6GB VRAM)<br>
-                    Memory: 8GB DDR5 RAM (Upgradable)<br>
-                    Storage: 512GB NVMe SSD<br>
-                    Display: 15.6" Full HD (1920 x 1080) IPS, 144Hz
-                </p>
-                <div class="product-meta">
-                    <span class="price">$699</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
-    </div>
-</section>
+</main>
 
-<footer class="footer">
-        <div class="footer-content">
-            <div class="footer-desc">
-                <h3>:) SMILEY</h3>
-                <p>Engineering the next generation of digital systems and bold visual experiences. Precision hardware and optimized software for the modern professional.</p>
-            </div>
-            <div class="footer-links">
+
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            <a href="index.html" class="brand">
+                <span class="brand-mark">U</span>
+                <span class="brand-name">UTECH</span>
+            </a>
+
+            <p>
+                Technology, Gaming & Digital Systems.
+            </p>
+        </div>
+
+        <div class="footer-links">
+
+            <div>
                 <h4>Store</h4>
-                <ul>
-                    <li><a href="laptops.html">Laptops</a></li>
-                    <li><a href="hardware.html">Hardware</a></li>
-                    <li><a href="game.html">Games</a></li>
-                </ul>
+                <a href="products.html">Shop</a>
+                <a href="game.html">Games</a>
+                <a href="hardware.html">Consoles</a>
+                <a href="laptops.html">Laptops</a>
             </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
+
+            <div>
+                <h4>UTECH</h4>
+                <a href="index.html">Home</a>
+                <a href="payment.html">Checkout</a>
             </div>
-            <div class="footer-links">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-                    </a>
-                </div>
-            </div>
+
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Smiley. All Rights Reserved.</p>
-        </div>
-    </footer>
 
-    <script src="quickview.js" defer></script>
-    <script src="image-loader.js" defer></script>
+    </div>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const menu = document.querySelector('.menu');
+    <div class="footer-bottom">
+        <span>© 2026 UTECH. All rights reserved.</span>
+        <span>Built by UTECH.</span>
+    </div>
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            menu.classList.toggle('active');
+</footer>
+
+
+<script>
+
+    const productSearch = document.getElementById("productSearch");
+    const productGrid = document.getElementById("productGrid");
+    const noResults = document.getElementById("noResults");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const products = document.querySelectorAll(".shop-product-card");
+
+    let activeCategory = "all";
+
+    function filterProducts() {
+
+        const searchTerm =
+            productSearch.value.toLowerCase().trim();
+
+        let visibleProducts = 0;
+
+        products.forEach(product => {
+
+            const category =
+                product.dataset.category;
+
+            const name =
+                product.dataset.name.toLowerCase();
+
+            const description =
+                product.querySelector("p")
+                    ?.textContent
+                    .toLowerCase() || "";
+
+            const matchesCategory =
+                activeCategory === "all" ||
+                category === activeCategory;
+
+            const matchesSearch =
+                name.includes(searchTerm) ||
+                description.includes(searchTerm);
+
+            if (matchesCategory && matchesSearch) {
+
+                product.style.display = "";
+
+                visibleProducts++;
+
+            } else {
+
+                product.style.display = "none";
+
+            }
+
         });
-    </script>
+
+        noResults.style.display =
+            visibleProducts === 0 ? "block" : "none";
+    }
+
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            filterButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            activeCategory =
+                button.dataset.category;
+
+            filterProducts();
+
+        });
+
+    });
+
+
+    productSearch.addEventListener(
+        "input",
+        filterProducts
+    );
+
+
+    // Mobile navigation
+    const menuToggle =
+        document.getElementById("menuToggle");
+
+    const navLinks =
+        document.querySelector(".nav-links");
+
+    if (menuToggle) {
+
+        menuToggle.addEventListener("click", () => {
+
+            navLinks.classList.toggle("open");
+
+        });
+
+    }
+
+
+    // Search button focuses the product search
+    const searchTrigger =
+        document.getElementById("searchTrigger");
+
+    if (searchTrigger) {
+
+        searchTrigger.addEventListener("click", () => {
+
+            productSearch.focus();
+
+            window.scrollTo({
+                top: productSearch.offsetTop - 120,
+                behavior: "smooth"
+            });
+
+        });
+
+    }
+
+</script>
+
 </body>
 </html>

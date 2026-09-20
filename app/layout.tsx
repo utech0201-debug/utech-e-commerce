@@ -3,6 +3,7 @@ import "./globals.css";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { CartProvider } from "@/components/cart/CartProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "UTECH Store | Gaming • Hardware • Technology",
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <CartProvider>
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
-        </CartProvider>
+        <ThemeProvider>
+          <CartProvider>
+            <SiteHeader />
+            <main>{children}</main>
+            <SiteFooter />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

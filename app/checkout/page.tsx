@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
 
 export default function Checkout() {
-  const { items, subtotal } = useCart();
+  const { items, subtotal, clear } = useCart();
+  const router = useRouter();
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
-  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!items.length) {
     return (
@@ -24,17 +27,53 @@ export default function Checkout() {
     );
   }
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(formData.get("name") || ""),
+          email: String(formData.get("email") || ""),
+          phone: String(formData.get("phone") || ""),
+          address: String(formData.get("address") || ""),
+          city: String(formData.get("city") || ""),
+          country: String(formData.get("country") || ""),
+          items,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Could not create your order.");
+      }
+
+      clear();
+      router.push(`/checkout/success?order=${encodeURIComponent(result.orderId)}`);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Could not create your order.");
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section className="section">
       <div className="container">
         <span className="eyebrow">CHECKOUT</span>
         <h1 className="section-title">Complete Your Order</h1>
         <p className="section-copy">
-          Enter your delivery details, review your order, then continue to payment.
+          Enter your delivery details to create your order securely.
         </p>
 
         <div className="checkout-layout">
-          <form className="checkout-form" onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}>
+          <form className="checkout-form" onSubmit={handleSubmit}>
             <div className="checkout-card">
               <h2>Contact details</h2>
               <div className="form-grid">
@@ -56,23 +95,22 @@ export default function Checkout() {
             <div className="checkout-card">
               <h2>Payment</h2>
               <div className="payment-placeholder">
-                <strong>Secure payment integration</strong>
+                <strong>Order creation is live</strong>
                 <p>
-                  The storefront is ready for payment-provider integration. Card and
-                  Mobile Money processing will be connected once the payment provider
-                  credentials are configured.
+                  Your order will be saved securely first. Payment provider integration
+                  will be connected in the next step.
                 </p>
               </div>
             </div>
 
-            {submitted && (
-              <p className="checkout-notice" role="status">
-                Your details are validated. Payment processing is the next integration step.
+            {error && (
+              <p className="checkout-notice" role="alert">
+                {error}
               </p>
             )}
 
-            <button className="button button-primary" type="submit" disabled title="Enable after payment provider configuration">
-              Continue to Payment
+            <button className="button button-primary" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating Order..." : "Create Order"}
             </button>
           </form>
 

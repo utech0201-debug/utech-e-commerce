@@ -246,3 +246,41 @@ img { max-width: 100%; }
   .game-product-card .product-image { height: 340px; }
   .games-bottom-card { padding: 28px; }
 }
+
+.game-image-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(37, 99, 235, 0.24), transparent 42%),
+    linear-gradient(145deg, #0B1F3A, #123A63);
+  color: #fff;
+}
+
+.game-image-fallback-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 16px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.game-image-fallback strong {
+  max-width: 220px;
+  font-size: .95rem;
+}
+
+.game-image-fallback small {
+  color: rgba(255,255,255,.62);
+  font-size: .65rem;
+  letter-spacing: .12em;
+}

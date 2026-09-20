@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "./ProductCard";
 import type { Product, ProductCategory } from "@/data/products";
 
@@ -12,9 +13,42 @@ const filters: Array<{ label: string; value: "all" | ProductCategory }> = [
   { label: "Hardware", value: "hardware" },
 ];
 
-export default function ShopExplorer({ products }: { products: Product[] }) {
-  const [query, setQuery] = useState("");
+export default function ShopExplorer({
+  products,
+  initialQuery = "",
+}: {
+  products: Product[];
+  initialQuery?: string;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState<"all" | ProductCategory>("all");
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const currentQuery = searchParams.get("query") ?? "";
+      const nextQuery = query.trim();
+
+      if (currentQuery === nextQuery) return;
+
+      const params = new URLSearchParams(searchParams.toString());
+      if (nextQuery) {
+        params.set("query", nextQuery);
+      } else {
+        params.delete("query");
+      }
+
+      router.replace(`${pathname}?${params.toString()}`);
+    }, 300);
+
+    return () => window.clearTimeout(timer);
+  }, [pathname, query, router, searchParams]);
 
   const visibleProducts = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -60,7 +94,9 @@ export default function ShopExplorer({ products }: { products: Product[] }) {
       </div>
 
       <p className="results-count">
-        Showing {visibleProducts.length} {visibleProducts.length === 1 ? "product" : "products"}
+        {query.trim()
+          ? <>Showing {visibleProducts.length} {visibleProducts.length === 1 ? "product" : "products"} for <strong>“{query.trim()}”</strong></>
+          : <>Showing {visibleProducts.length} {visibleProducts.length === 1 ? "product" : "products"}</>}
       </p>
 
       {visibleProducts.length ? (
@@ -73,6 +109,16 @@ export default function ShopExplorer({ products }: { products: Product[] }) {
         <div className="empty-results">
           <h2>No products found.</h2>
           <p>Try another search or choose a different category.</p>
+          {query.trim() && (
+            <button
+              type="button"
+              className="button button-secondary"
+              style={{ marginTop: 18 }}
+              onClick={() => setQuery("")}
+            >
+              Clear Search
+            </button>
+          )}
         </div>
       )}
     </>

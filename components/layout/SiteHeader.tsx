@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Search, ShoppingCart, Menu, X } from "lucide-react";
+import { Moon, Search, ShoppingCart, Menu, Sun, X } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import styles from "./SiteHeader.module.css";
 
 const links = [
@@ -22,6 +23,7 @@ export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const { count } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
 
   function submitSearch(event: FormEvent<HTMLFormElement>) {
@@ -53,13 +55,23 @@ export default function SiteHeader() {
 
         <div className="nav-actions">
           <button
-            className="search-toggle"
+            className="icon-button search-toggle"
             type="button"
             aria-label={searchOpen ? "Close product search" : "Open product search"}
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen((value) => !value)}
           >
             {searchOpen ? <X size={19} /> : <Search size={19} />}
+          </button>
+
+          <button
+            className="icon-button theme-toggle"
+            type="button"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
           <Link href="/cart" className="cart-button" aria-label="Shopping cart">

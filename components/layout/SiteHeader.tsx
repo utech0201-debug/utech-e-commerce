@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
-import { FormEvent, useState } from "react";
+import type { FormEvent } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
 import styles from "./SiteHeader.module.css";

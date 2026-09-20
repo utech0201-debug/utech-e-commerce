@@ -1,5 +1,15 @@
+import { Suspense } from "react";
 import ShopExplorer from "@/components/shop/ShopExplorer";
 import { products } from "@/data/products";
+
+function ShopExplorerFallback() {
+  return (
+    <div className="empty-results" aria-live="polite">
+      <h2>Loading products…</h2>
+      <p>Preparing the UTECH Store catalog.</p>
+    </div>
+  );
+}
 
 export default function Shop() {
   return (
@@ -11,7 +21,9 @@ export default function Shop() {
           Gaming, consoles and powerful laptops for work and play.
         </p>
         <div style={{ marginTop: 40 }}>
-          <ShopExplorer products={products} />
+          <Suspense fallback={<ShopExplorerFallback />}>
+            <ShopExplorer products={products} />
+          </Suspense>
         </div>
       </div>
     </section>

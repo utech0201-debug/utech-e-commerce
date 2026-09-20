@@ -23,12 +23,13 @@ export default function ShopExplorer({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(initialQuery);
+  const urlQuery = searchParams.get("query") ?? "";
+  const [query, setQuery] = useState(initialQuery || urlQuery);
   const [category, setCategory] = useState<"all" | ProductCategory>("all");
 
   useEffect(() => {
-    setQuery(initialQuery);
-  }, [initialQuery]);
+    setQuery(initialQuery || urlQuery);
+  }, [initialQuery, urlQuery]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -44,7 +45,8 @@ export default function ShopExplorer({
         params.delete("query");
       }
 
-      router.replace(`${pathname}?${params.toString()}`);
+      const queryString = params.toString();
+      router.replace(queryString ? `${pathname}?${queryString}` : pathname);
     }, 300);
 
     return () => window.clearTimeout(timer);

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/data/products";
 import AddToCart from "./AddToCart";
@@ -12,10 +13,11 @@ export default function ProductCard({ product }: { product: Product }) {
         {isGame ? (
           <GameProductImage src={product.image} alt={product.name} />
         ) : (
-          <img
+          <Image
             src={product.image}
             alt={product.name}
-            loading="lazy"
+            fill
+            sizes="(max-width:700px) 100vw, (max-width:1000px) 50vw, 33vw"
           />
         )}
         {isGame && <span className="game-card-badge">DIGITAL GAME</span>}

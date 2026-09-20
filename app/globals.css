@@ -667,3 +667,77 @@ html[data-theme="dark"] .site-footer .footer-brand span {
   background: #ffffff;
   color: #0b1f3a;
 }
+
+html[data-theme="dark"] .games-hero {
+  background: #0a1220;
+}
+
+html[data-theme="dark"] .games-hero-copy {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .games-hero-copy .eyebrow {
+  color: #93c5fd;
+}
+
+html[data-theme="dark"] .games-hero-copy h1 {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .games-hero-copy h1 span {
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .games-hero-copy p {
+  color: #d7e4f2;
+}
+
+html[data-theme="dark"] .games-hero-card {
+  background: #0f1b2d;
+  border-color: #26364d;
+}
+
+html[data-theme="dark"] .games-hero-console {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .games-hero-console span {
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .games-hero-console small {
+  color: #a9b8ca;
+}
+
+html[data-theme="dark"] .games-hero-stats {
+  border-top-color: #26364d;
+}
+
+html[data-theme="dark"] .games-hero-stats strong {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .games-hero-stats span {
+  color: #a9b8ca;
+}
+
+html[data-theme="dark"] .games-library {
+  background: #0b1525;
+}
+
+html[data-theme="dark"] .games-bottom-cta {
+  background: #0a1220;
+}
+
+html[data-theme="dark"] .games-bottom-card {
+  background: #0f1b2d;
+  border-color: #26364d;
+}
+
+html[data-theme="dark"] .games-bottom-card h2 {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .games-bottom-card p {
+  color: #a9b8ca;
+}

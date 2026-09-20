@@ -758,3 +758,33 @@ html[data-theme="dark"] .featured-section .section-title {
 html[data-theme="dark"] .featured-section .eyebrow {
   color: #93c5fd;
 }
+
+
+/* Footer theme refinements */
+html[data-theme="dark"] .site-footer {
+  background: #050b14;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .footer-grid p,
+html[data-theme="dark"] .footer-grid > div:not(:first-child) a {
+  color: #a9b8ca;
+}
+
+html[data-theme="dark"] .footer-grid > div:not(:first-child) a:hover {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .footer-bottom {
+  border-top-color: rgba(255,255,255,.12);
+  color: #8fa3ba;
+}
+
+html[data-theme="dark"] .footer-brand {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .footer-brand span {
+  background: #2563eb;
+  color: #ffffff;
+}

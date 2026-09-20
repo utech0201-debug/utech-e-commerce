@@ -1,5 +1,3 @@
-"use client";
-
 import { ImageResponse } from "next/og";
 
 export const size = { width: 512, height: 512 };

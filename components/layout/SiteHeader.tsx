@@ -5,6 +5,7 @@ import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
+import styles from "./SiteHeader.module.css";
 
 const links = [
   ["Home", "/"],
@@ -26,14 +27,14 @@ export default function SiteHeader() {
     event.preventDefault();
     const term = query.trim();
 
-    if (!term) {
-      router.push("/shop");
-      return;
-    }
-
     setOpen(false);
     setSearchOpen(false);
-    router.push(`/shop?query=${encodeURIComponent(term)}`);
+
+    if (term) {
+      router.push(`/shop?query=${encodeURIComponent(term)}`);
+    } else {
+      router.push("/shop");
+    }
   }
 
   return (
@@ -72,8 +73,8 @@ export default function SiteHeader() {
       </div>
 
       {searchOpen && (
-        <div className="global-search-panel">
-          <form className="global-search-form" onSubmit={submitSearch}>
+        <div className={styles.panel}>
+          <form className={styles.form} onSubmit={submitSearch}>
             <Search size={19} aria-hidden="true" />
             <input
               autoFocus

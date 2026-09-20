@@ -741,3 +741,20 @@ html[data-theme="dark"] .games-bottom-card h2 {
 html[data-theme="dark"] .games-bottom-card p {
   color: #a9b8ca;
 }
+
+
+.featured-section {
+  background: #f5f7fa;
+}
+
+html[data-theme="dark"] .featured-section {
+  background: #0b1525;
+}
+
+html[data-theme="dark"] .featured-section .section-title {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .featured-section .eyebrow {
+  color: #93c5fd;
+}

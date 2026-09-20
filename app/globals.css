@@ -640,3 +640,30 @@ html[data-theme="dark"] .form input {
 html[data-theme="dark"] .panel > p {
   color: #a9b8ca;
 }
+
+
+html[data-theme="dark"] .hero-panel,
+html[data-theme="dark"] .button-primary,
+html[data-theme="dark"] .add-button,
+html[data-theme="dark"] .games-bottom-card {
+  background: #123a63;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .button-primary:hover,
+html[data-theme="dark"] .add-button:hover {
+  background: #2563eb;
+}
+
+html[data-theme="dark"] .hero-panel span {
+  color: #a9c7e4;
+}
+
+html[data-theme="dark"] .hero-panel p {
+  color: #d7e4f2;
+}
+
+html[data-theme="dark"] .site-footer .footer-brand span {
+  background: #ffffff;
+  color: #0b1f3a;
+}

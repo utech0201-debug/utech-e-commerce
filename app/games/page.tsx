@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { products } from "@/data/products";
 import GamesExplorer from "@/components/games/GamesExplorer";
+import ComingSoonGames from "@/components/games/ComingSoonGames";
 
 export default function GamesPage() {
   const games = products.filter((product) => product.category === "games");
@@ -44,6 +45,8 @@ export default function GamesPage() {
           <GamesExplorer games={games} />
         </div>
       </section>
+
+      <ComingSoonGames />
 
       {featured && (
         <section className="games-bottom-cta">

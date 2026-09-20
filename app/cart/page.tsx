@@ -1,0 +1,1 @@
+import CartClient from "@/components/cart/CartClient"; export default function Cart(){return <section className="section"><div className="container"><span className="eyebrow">CART</span><h1 className="section-title">Your Shopping Cart</h1><div style={{marginTop:40}}><CartClient/></div></div></section>}

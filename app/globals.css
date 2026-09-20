@@ -135,8 +135,12 @@ img { max-width: 100%; }
   .menu-button { display: grid; }
   .product-grid, .category-grid { grid-template-columns: 1fr; }
   .shop-toolbar { grid-template-columns: 1fr; }
+  .checkout-layout { grid-template-columns: 1fr; }
+  .checkout-summary { position: static; }
   .filter-list { justify-content: flex-start; }
   .detail-image { min-height: 360px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid label.full { grid-column: auto; }
   .cart-item { grid-template-columns: 70px 1fr; }
   .cart-thumb { width: 70px; height: 70px; }
   .qty { grid-column: 2; }

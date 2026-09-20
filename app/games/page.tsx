@@ -1,45 +1,41 @@
-const categories = [
-  {
-    title: "PC Games",
-    description: "A growing selection of PC titles and gaming experiences.",
-  },
-  {
-    title: "Console Games",
-    description: "Games for PlayStation, Xbox and Nintendo platforms.",
-  },
-  {
-    title: "Digital Gaming",
-    description: "Digital products and gaming services will be added here.",
-  },
-];
+import ProductCard from "@/components/shop/ProductCard";
+import { products } from "@/data/products";
+
+const filters = ["All Games", "Action", "Adventure", "Sports", "Racing", "Fighting"];
 
 export default function GamesPage() {
+  const games = products.filter((product) => product.category === "games");
+
   return (
     <section className="section">
       <div className="container">
-        <span className="eyebrow">GAMES</span>
-        <h1 className="section-title">Level Up Your Library</h1>
+        <span className="eyebrow">UTECH GAMING</span>
+        <h1 className="section-title">PLAY. COMPETE. EXPERIENCE.</h1>
         <p className="section-copy">
-          Discover games and digital gaming products coming to UTECH Store.
-          We are building this section out next.
+          Browse the UTECH gaming library and add your software games directly to your cart.
         </p>
 
-        <div
-          className="product-grid"
-          style={{ marginTop: 40 }}
-        >
-          {categories.map((category) => (
-            <article
-              key={category.title}
-              className="checkout-card"
-              style={{ minHeight: 220 }}
-            >
-              <span className="eyebrow">COMING SOON</span>
-              <h2 style={{ marginTop: 14 }}>{category.title}</h2>
-              <p className="section-copy" style={{ marginTop: 10 }}>
-                {category.description}
-              </p>
-            </article>
+        <div className="shop-toolbar" style={{ marginTop: 32 }}>
+          <div>
+            <span className="section-kicker">GAME LIBRARY</span>
+            <h2>Available Games</h2>
+          </div>
+          <div className="shop-search">
+            <input type="search" placeholder="Search games..." aria-label="Search games" />
+          </div>
+        </div>
+
+        <div className="category-filters" style={{ marginTop: 20 }}>
+          {filters.map((filter) => (
+            <button key={filter} className="filter-btn" type="button">
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        <div className="product-grid" style={{ marginTop: 40 }}>
+          {games.map((game) => (
+            <ProductCard key={game.id} product={game} />
           ))}
         </div>
       </div>

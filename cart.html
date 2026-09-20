@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>UTECH Store | Cart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .cart-page {
+            min-height: 70vh;
+            padding: 80px 0 100px;
+        }
+
+        .cart-header {
+            width: min(100% - 40px, var(--max-width));
+            margin: 0 auto 45px;
+        }
+
+        .cart-eyebrow {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cart-header h1 {
+            margin: 0;
+            font-size: clamp(32px, 5vw, 56px);
+            letter-spacing: -1px;
+        }
+
+        .cart-layout {
+            width: min(100% - 40px, var(--max-width));
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 340px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .cart-items {
+            display: grid;
+            gap: 16px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr) auto;
+            gap: 22px;
+            align-items: center;
+            padding: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .cart-item-image {
+            width: 110px;
+            height: 110px;
+            overflow: hidden;
+            background: var(--surface-2);
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cart-item-category {
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .cart-item-details h3 {
+            margin: 7px 0 8px;
+            font-size: 18px;
+        }
+
+        .cart-item-price {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+        }
+
+        .quantity-btn {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .quantity-btn:hover {
+            color: var(--accent);
+        }
+
+        .quantity-controls span {
+            min-width: 30px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .cart-item-total {
+            min-width: 85px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .remove-cart-item {
+            border: 0;
+            background: transparent;
+            color: #7d8992;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .remove-cart-item:hover {
+            color: #ff6b6b;
+        }
+
+        .cart-summary {
+            position: sticky;
+            top: 100px;
+            padding: 26px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .cart-summary h2 {
+            margin: 0 0 24px;
+            font-size: 18px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .summary-row strong {
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .cart-actions {
+            display: grid;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .cart-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 12px 18px;
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: #020603;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .cart-action:hover {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+        }
+
+        .cart-action.secondary {
+            border-color: var(--border);
+            background: transparent;
+            color: var(--text);
+        }
+
+        .cart-action.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .empty-cart {
+            width: min(100% - 40px, 700px);
+            margin: 0 auto;
+            padding: 70px 30px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .empty-cart-icon {
+            margin-bottom: 20px;
+            color: var(--accent);
+            font-size: 42px;
+        }
+
+        .empty-cart h2 {
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+
+        .empty-cart p {
+            margin: 0 auto 28px;
+            max-width: 480px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .empty-cart a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: #020603;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .cart-notice {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 1000;
+            padding: 14px 18px;
+            background: var(--accent);
+            color: #020603;
+            font-size: 12px;
+            font-weight: 700;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: .2s ease;
+        }
+
+        .cart-notice.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cart-page {
+                padding-top: 55px;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px minmax(0, 1fr);
+                gap: 15px;
+            }
+
+            .cart-item-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .cart-item-controls {
+                grid-column: 1 / -1;
+                justify-content: space-between;
+                padding-top: 12px;
+                border-top: 1px solid var(--border);
+            }
+
+            .cart-item-total {
+                text-align: left;
+            }
+
+            .cart-summary {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">U</span>
+            <span class="brand-name">UTECH</span>
+        </a>
+
+        <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="menu" id="main-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-actions">
+            <button class="search-trigger" type="button" aria-label="Search">
+                Search
+            </button>
+
+            <a href="cart.html" class="cart-link active-page">
+                Cart
+                <span class="cart-count" hidden>0</span>
+            </a>
+        </div>
+
+    </nav>
+</header>
+
+<main class="cart-page">
+
+    <div class="cart-header">
+        <span class="cart-eyebrow">UTECH Store</span>
+        <h1>YOUR CART</h1>
+    </div>
+
+    <div id="emptyCart" class="empty-cart" hidden>
+        <div class="empty-cart-icon">🛒</div>
+        <h2>Your cart is empty</h2>
+        <p>
+            You haven't added anything yet.
+            Explore the UTECH Store and find something worth adding.
+        </p>
+        <a href="products.html">Continue Shopping</a>
+    </div>
+
+    <div id="cartContent" class="cart-layout" hidden>
+
+        <section>
+            <div id="cartItems" class="cart-items"></div>
+        </section>
+
+        <aside class="cart-summary">
+            <h2>ORDER SUMMARY</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="cartSubtotal">$0.00</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Calculated at checkout</span>
+            </div>
+
+            <div class="cart-actions">
+                <a href="payment.html" class="cart-action">
+                    Proceed to Checkout
+                </a>
+
+                <a href="products.html" class="cart-action secondary">
+                    Continue Shopping
+                </a>
+            </div>
+        </aside>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+            <a href="index.html" class="brand">
+                <span class="brand-mark">U</span>
+                <span class="brand-name">UTECH</span>
+            </a>
+            <p>
+                Gaming, hardware and technology
+                for the next generation.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Store</h4>
+            <ul>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>UTECH</h4>
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.html">Support</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 UTECH. All rights reserved.</span>
+        <span>Gaming • Hardware • Technology</span>
+    </div>
+
+</footer>
+
+<script src="cart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const menu = document.getElementById("main-menu");
+
+        if (hamburger && menu) {
+            hamburger.addEventListener("click", () => {
+                const active = menu.classList.toggle("active");
+                hamburger.setAttribute("aria-expanded", active);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

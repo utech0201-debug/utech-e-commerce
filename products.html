@@ -24,37 +24,48 @@
 <body>
 
 <header class="site-header">
-    <div class="navbar">
+    <nav class="navbar">
 
         <a href="index.html" class="brand">
             <span class="brand-mark">U</span>
             <span class="brand-name">UTECH</span>
         </a>
 
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="products.html" class="active">Shop</a>
-            <a href="game.html">Games</a>
-            <a href="hardware.html">Consoles</a>
-            <a href="laptops.html">Laptops</a>
-            <a href="hardware.html">Hardware</a>
-        </nav>
+        <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="menu" id="main-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active-page">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
 
         <div class="nav-actions">
-            <button class="search-trigger" id="searchTrigger" aria-label="Search">
+            <button class="search-trigger" type="button" aria-label="Search">
                 Search
             </button>
 
-            <a href="payment.html" class="cart-link">
+            <a href="cart.html" class="cart-link">
                 Cart
+                <span class="cart-count" hidden>0</span>
             </a>
-
-            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
-                ☰
-            </button>
         </div>
 
-    </div>
+    </nav>
 </header>
 
 
@@ -134,7 +145,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="PlayStation 5"
+                data-name="PlayStation 5" data-price="499.99" data-image="consoles/PlayStation 5.jpg"
             >
 
                 <div class="product-image">
@@ -169,9 +180,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
                         </div>
 
                     </div>
@@ -185,7 +194,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="Xbox Series X"
+                data-name="Xbox Series X" data-price="499.99" data-image="consoles/Xbox Series X.jpg"
             >
 
                 <div class="product-image">
@@ -223,9 +232,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -240,7 +247,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="Nintendo Switch OLED"
+                data-name="Nintendo Switch OLED" data-price="349.99" data-image="consoles/Nintendo Switch (OLED Model).jpg"
             >
 
                 <div class="product-image">
@@ -278,9 +285,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -295,7 +300,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="PlayStation 5 Pro"
+                data-name="PlayStation 5 Pro" data-price="699.99" data-image="consoles/PlayStation 5 Pro.jpg"
             >
 
                 <div class="product-image">
@@ -333,9 +338,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -350,7 +353,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="Steam Deck OLED"
+                data-name="Steam Deck OLED" data-price="549.00" data-image="consoles/Steam Deck OLED (512GB Build).jpg"
             >
 
                 <div class="product-image">
@@ -388,9 +391,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -405,7 +406,7 @@
             <article
                 class="shop-product-card"
                 data-category="consoles"
-                data-name="ASUS ROG Ally X"
+                data-name="ASUS ROG Ally X" data-price="799.99" data-image="consoles/ASUS ROG Ally X.jpg"
             >
 
                 <div class="product-image">
@@ -443,9 +444,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -460,7 +459,7 @@
             <article
                 class="shop-product-card"
                 data-category="laptops"
-                data-name="Lenovo Legion Pro 5i 2026"
+                data-name="Lenovo Legion Pro 5i 2026" data-price="1899.00" data-image="laptops/gamingLaptops/Lenovo Legion Pro 5i (2026).jpg"
             >
 
                 <div class="product-image">
@@ -498,9 +497,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -515,7 +512,7 @@
             <article
                 class="shop-product-card"
                 data-category="laptops"
-                data-name="ASUS ROG Zephyrus G14"
+                data-name="ASUS ROG Zephyrus G14" data-price="1799.00" data-image="laptops/gamingLaptops/ASUS ROG Zephyrus G14 .jpg"
             >
 
                 <div class="product-image">
@@ -553,9 +550,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -570,7 +565,7 @@
             <article
                 class="shop-product-card"
                 data-category="laptops"
-                data-name="HP Omen Transcend 14"
+                data-name="HP Omen Transcend 14" data-price="1599.00" data-image="laptops/gamingLaptops/HP Omen Transcend 14.jpg"
             >
 
                 <div class="product-image">
@@ -608,9 +603,7 @@
                                 Quick View
                             </button>
 
-                            <a href="payment.html" class="buy-button">
-                                Buy
-                            </a>
+                            <button type="button" class="buy-button">Add to Cart</button>
 
                         </div>
 
@@ -780,9 +773,9 @@
 </main>
 
 
-<footer class="site-footer">
+<footer class="footer">
 
-    <div class="footer-inner">
+    <div class="footer-content">
 
         <div class="footer-brand">
             <a href="index.html" class="brand">
@@ -791,33 +784,36 @@
             </a>
 
             <p>
-                Technology, Gaming & Digital Systems.
+                Gaming, hardware and technology
+                for the next generation.
             </p>
         </div>
 
-        <div class="footer-links">
+        <div class="footer-column">
+            <h4>Store</h4>
+            <ul>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
 
-            <div>
-                <h4>Store</h4>
-                <a href="products.html">Shop</a>
-                <a href="game.html">Games</a>
-                <a href="hardware.html">Consoles</a>
-                <a href="laptops.html">Laptops</a>
-            </div>
-
-            <div>
-                <h4>UTECH</h4>
-                <a href="index.html">Home</a>
-                <a href="payment.html">Checkout</a>
-            </div>
-
+        <div class="footer-column">
+            <h4>UTECH</h4>
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.html">Support</a></li>
+            </ul>
         </div>
 
     </div>
 
     <div class="footer-bottom">
         <span>© 2026 UTECH. All rights reserved.</span>
-        <span>Built by UTECH.</span>
+        <span>Gaming • Hardware • Technology</span>
     </div>
 
 </footer>
@@ -907,24 +903,30 @@
 
 
     // Mobile navigation
-    const menuToggle =
-        document.getElementById("menuToggle");
+   const hamburger =
+       document.getElementById("hamburger");
 
-    const navLinks =
-        document.querySelector(".nav-links");
+   const menu =
+       document.getElementById("main-menu");
 
-    if (menuToggle) {
+   if (hamburger) {
+       hamburger.addEventListener("click", () => {
 
-        menuToggle.addEventListener("click", () => {
+           const isOpen =
+               hamburger.classList.toggle("active");
 
-            navLinks.classList.toggle("open");
+           menu?.classList.toggle("active");
 
-        });
+           hamburger.setAttribute(
+               "aria-expanded",
+               String(isOpen)
+           );
 
-    }
+       });
+   }
 
 
-    // Search button focuses the product search
+   // Search button focuses the product search
     const searchTrigger =
         document.getElementById("searchTrigger");
 
@@ -945,5 +947,6 @@
 
 </script>
 
+    <script src="cart.js"></script>
 </body>
 </html>

@@ -3,261 +3,1104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover bold designs and creative gaming solutions built just for you.">
-    <title>:) SMILEY | Games</title>
-    <link rel="icon" type="image/x-icon" href="images/1.png">
+
+    <title>UTECH Games | Gaming Software & Digital Experiences</title>
+
+    <meta
+        name="description"
+        content="Explore the UTECH gaming collection — games, digital experiences and gaming technology."
+    >
+
+    <link rel="icon" type="image/x-icon" href="images/Utech.ico">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="main-container">
-        <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">:) SMILEY</h2>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="game.html" class="active-page">Games</a></li>
-                    <li><a href="laptops.html">Laptops</a></li>
-                    <li><a href="hardware.html">Hardware</a></li>
-                </ul>
-            </div>
-            <div class="search">
-                <input class="srch" type="search" placeholder="Type to search">
-                <button class="btn">Search</button>
-            </div>
+
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">U</span>
+            <span class="brand-name">UTECH</span>
+        </a>
+
+        <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="menu" id="main-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html" class="active-page">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
         </div>
-        
-        <div class="hero-content">
-            <img src="images/12.jpg" alt="Brand Logo" class="hero-logo">
-            <h1>Welcome to Smiley</h1>
-            <p>Discover bold designs, seamless systems, and creative solutions built just for you.</p>
-            <a href="game.html" class="cta-btn">Explore Features</a>
+
+        <div class="nav-actions">
+            <button
+                class="search-trigger"
+                type="button"
+                aria-label="Search"
+            >
+                Search
+            </button>
+
+            <a href="cart.html" class="cart-link">
+                Cart
+                <span class="cart-count" hidden>0</span>
+            </a>
         </div>
-    </div>
-         <section class="shop-section">
-        <h2 class="section-title">GAMING SOFTWARE FOR SALE</h2>
-        
-        <div class="product-grid">
-            <div class="product-card"
-                 data-coming-soon-title="Server Maintenance" 
-                 data-coming-soon-msg="The Naruto Universe servers are undergoing maintenance. Digital keys will be available in 4 hours.">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/1.jpg" alt="Naruto Shippuden" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Hot</span>
-                </div>
-                <div class="product-info">
-                    <h3>Naruto Shippuden Universe</h3>
-                    <p>Immerse yourself in the ultimate anime ninja fighter. Featuring epic cross-generation boss battles, mastered jutsu techniques, and an massive roster from the Storm series universe.</p>
-                    <div class="product-meta">
-                        <span class="price">$19.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
+
+    </nav>
+</header>
+
+
+<main>
+
+    <!-- GAMES HERO -->
+
+    <section class="games-hero">
+
+        <div class="games-hero-content">
+
+            <span class="eyebrow">
+                UTECH GAMING
+            </span>
+
+            <h1>
+                PLAY.
+                <span>COMPETE.</span>
+                <br>
+                EXPERIENCE.
+            </h1>
+
+            <p>
+                Discover gaming experiences built around action,
+                competition, adventure and the technology that
+                powers them.
+            </p>
+
+            <div class="games-hero-actions">
+
+                <a
+                    href="#game-library"
+                    class="primary-button"
+                >
+                    Explore Games
+                </a>
+
+                <a
+                    href="hardware.html"
+                    class="secondary-button"
+                >
+                    Gaming Hardware
+                </a>
+
             </div>
 
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/2.jpg" alt="Marvel's Avengers Spider-Man" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Spider-Man - Avengers Edition</h3>
-                    <p>Swing into high-stakes action with Marvel's iconic web-slinger. Team up with the Avengers in a cinematic open-world experience featuring fluid combat and web-zipping mechanics.</p>
-                    <div class="product-meta">
-                        <span class="price">$14.50</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/3.jpg" alt="Marvel's Avengers Team" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3>Marvel's Avengers Team</h3>
-                    <p>Assemble your squad of legendary heroes. Combine unique superhero abilities, unlock powerful combat gear, and defend the Earth from technological threats in cooperative team campaigns.</p>
-                    <div class="product-meta">
-                        <span class="price">$29.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/10.jpg" alt="Naruto Sage Mode" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Naruto Sage Mode Optimizer</h3>
-                    <p>Unleash the supreme power of Sage Mode. Guide Naruto through high-intensity training arcs, unlock legendary frog kata techniques, and defend the hidden leaf village from destruction.</p>
-                    <div class="product-meta">
-                        <span class="price">$9.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/8.jpg" alt="Nezha Demon Form" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Sale</span>
-                </div>
-                <div class="product-info">
-                    <h3>Nezha Demon Form Suite</h3>
-                    <p>Step into a mythical dark-fantasy epic inspired by eastern folklore. Master destructive fiery spear combinations, unlock demonic transformation states, and battle ancient mythical deities.</p>
-                    <div class="product-meta">
-                        <span class="price">$24.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/9.jpg" alt="Nezha II Legend" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Nezha II Legend</h3>
-                    <p>The legendary trial continues. Explore stunning tactical environments, channel divine lotus energies, and engage in fast-paced hack-and-slash action against massive boss armies.</p>
-                    <div class="product-meta">
-                        <span class="price">$12.00</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/5.jpg" alt="eFootball Pro Simulator" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">Popular</span>
-                </div>
-                <div class="product-info">
-                    <h3>eFootball Pro Simulator</h3>
-                    <p>Experience ultra-realistic, pitch-side football dynamics. Take control of globally licensed clubs, master real-time ball physics, and compete in the official high-stakes 2026 Championship league.</p>
-                    <div class="product-meta">
-                        <span class="price">$15.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/6.jpg" alt="MX vs ATV All Out" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>MX vs ATV Velocity Engine</h3>
-                    <p>Tear up the off-road tracks in high-octane racing modules. Drifting through muddy custom trails, execute wild aerial freestyle stunts, and tune dirt bikes and ATVs for peak velocity performance.</p>
-                    <div class="product-meta">
-                        <span class="price">$5.50</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/7.jpg" alt="GTA 5 Script Hook" class="lazy-load-img" loading="lazy" width="300" height="200">
-                </div>
-                <div class="product-info">
-                    <h3>Grand Theft Auto V Script Injector</h3>
-                    <p>Return to the sprawling sun-soaked metropolis of Los Santos. Navigate high-stakes street-level heists, massive open-world crimes, and custom chaotic sandbox modifications.</p>
-                    <div class="product-meta">
-                        <span class="price">$9.99</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="img-skeleton-container">
-                    <img src="NarutoImages/4.jpg" alt="Need for Speed The Run" class="lazy-load-img" loading="lazy" width="300" height="200">
-                    <span class="badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3>Need for Speed Run-Time Guard</h3>
-                    <p>An intense, coast-to-coast race across America where the stakes couldn't be higher. Avoid aggressive police pursuits, drift tight mountain passes, and outrun rival drivers at any cost.</p>
-                    <div class="product-meta">
-                        <span class="price">$22.00</span>
-                        <button class="quickview-btn">Quick View</button>
-                        <a href="payment.html" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <div class="games-hero-visual">
+
+            <div class="games-system-card">
+
+                <span class="system-label">
+                    UTECH GAMING SYSTEM
+                </span>
+
+                <div class="system-core">
+                    U
+                </div>
+
+                <div class="system-lines">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    GAMING SYSTEM ONLINE
+
+                </div>
+
+            </div>
+
+        </div>
+
     </section>
 
-    <script src="quickview.js" defer></script>
-    <script src="image-loader.js" defer></script>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-desc">
-                <h3>:) SMILEY</h3>
-                <p>Engineering the next generation of digital systems and bold visual experiences. Precision hardware and optimized software for the modern professional.</p>
+    <!-- GAME LIBRARY -->
+
+    <section
+        class="games-section"
+        id="game-library"
+    >
+
+        <div class="games-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    GAME LIBRARY
+                </span>
+
+                <h2>
+                    Explore the Collection
+                </h2>
+
             </div>
-            <div class="footer-links">
-                <h4>Store</h4>
-                <ul>
-                    <li><a href="laptops.html">Laptops</a></li>
-                    <li><a href="hardware.html">Hardware</a></li>
-                    <li><a href="game.html">Games</a></li>
-                </ul>
+
+            <div class="games-search">
+
+                <input
+                    type="search"
+                    id="gameSearch"
+                    placeholder="Search games..."
+                    aria-label="Search games"
+                >
+
             </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-                    </a>
+
+        </div>
+
+
+        <!-- GAME FILTERS -->
+
+        <div
+            class="game-filters"
+            id="gameFilters"
+        >
+
+            <button
+                class="game-filter active"
+                data-genre="all"
+                type="button"
+            >
+                All Games
+            </button>
+
+            <button
+                class="game-filter"
+                data-genre="action"
+                type="button"
+            >
+                Action
+            </button>
+
+            <button
+                class="game-filter"
+                data-genre="adventure"
+                type="button"
+            >
+                Adventure
+            </button>
+
+            <button
+                class="game-filter"
+                data-genre="sports"
+                type="button"
+            >
+                Sports
+            </button>
+
+            <button
+                class="game-filter"
+                data-genre="racing"
+                type="button"
+            >
+                Racing
+            </button>
+
+            <button
+                class="game-filter"
+                data-genre="fighting"
+                type="button"
+            >
+                Fighting
+            </button>
+
+        </div>
+
+
+        <!-- GAME GRID -->
+
+        <div
+            class="games-grid"
+            id="gamesGrid"
+        >
+
+
+            <!-- GAME 1 -->
+
+            <article
+                class="game-card"
+                data-genre="action"
+                data-name="Naruto Shippuden"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/1.jpg"
+                        alt="Naruto Shippuden"
+                        loading="lazy"
+                    >
+
+                    <span class="game-badge">
+                        FEATURED
+                    </span>
+
                 </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Smiley. All Rights Reserved.</p>
-        </div>
-    </footer>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const menu = document.querySelector('.menu');
+                <div class="game-card-body">
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            menu.classList.toggle('active');
+                    <span class="game-type">
+                        ACTION
+                    </span>
+
+                    <h3>
+                        Naruto Shippuden
+                    </h3>
+
+                    <p>
+                        Enter an intense ninja universe filled
+                        with fast combat, powerful techniques and
+                        legendary battles.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $19.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 2 -->
+
+            <article
+                class="game-card"
+                data-genre="action"
+                data-name="Spider-Man"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/2.jpg"
+                        alt="Spider-Man"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        ACTION
+                    </span>
+
+                    <h3>
+                        Spider-Man
+                    </h3>
+
+                    <p>
+                        Swing through a cinematic superhero
+                        experience packed with fast movement and
+                        intense combat.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $14.50
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 3 -->
+
+            <article
+                class="game-card"
+                data-genre="fighting"
+                data-name="Marvel Avengers"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/3.jpg"
+                        alt="Marvel Avengers"
+                        loading="lazy"
+                    >
+
+                    <span class="game-badge">
+                        NEW
+                    </span>
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        FIGHTING
+                    </span>
+
+                    <h3>
+                        Marvel Avengers
+                    </h3>
+
+                    <p>
+                        Assemble powerful heroes and take on
+                        challenging enemies through action-packed
+                        missions.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $29.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 4 -->
+
+            <article
+                class="game-card"
+                data-genre="action"
+                data-name="Naruto Sage Mode"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/10.jpg"
+                        alt="Naruto Sage Mode"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        ACTION
+                    </span>
+
+                    <h3>
+                        Naruto Sage Mode
+                    </h3>
+
+                    <p>
+                        Master powerful techniques and face
+                        increasingly challenging battles in the
+                        ninja world.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $9.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 5 -->
+
+            <article
+                class="game-card"
+                data-genre="adventure"
+                data-name="Nezha"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/8.jpg"
+                        alt="Nezha"
+                        loading="lazy"
+                    >
+
+                    <span class="game-badge">
+                        SALE
+                    </span>
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        ADVENTURE
+                    </span>
+
+                    <h3>
+                        Nezha
+                    </h3>
+
+                    <p>
+                        Explore a mythological world filled with
+                        powerful enemies, transformations and
+                        spectacular battles.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $24.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 6 -->
+
+            <article
+                class="game-card"
+                data-genre="adventure"
+                data-name="Nezha Legend"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/9.jpg"
+                        alt="Nezha Legend"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        ADVENTURE
+                    </span>
+
+                    <h3>
+                        Nezha Legend
+                    </h3>
+
+                    <p>
+                        Continue the legendary adventure through
+                        tactical environments and powerful boss
+                        encounters.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $12.00
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 7 -->
+
+            <article
+                class="game-card"
+                data-genre="sports"
+                data-name="eFootball"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/5.jpg"
+                        alt="eFootball"
+                        loading="lazy"
+                    >
+
+                    <span class="game-badge">
+                        POPULAR
+                    </span>
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        SPORTS
+                    </span>
+
+                    <h3>
+                        eFootball
+                    </h3>
+
+                    <p>
+                        Experience competitive digital football
+                        with fast gameplay, tactical control and
+                        intense matches.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $15.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 8 -->
+
+            <article
+                class="game-card"
+                data-genre="racing"
+                data-name="MX vs ATV"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/6.jpg"
+                        alt="MX vs ATV"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        RACING
+                    </span>
+
+                    <h3>
+                        MX vs ATV
+                    </h3>
+
+                    <p>
+                        Tear through off-road tracks, master
+                        aerial stunts and push powerful bikes and
+                        ATVs to the limit.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $5.50
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 9 -->
+
+            <article
+                class="game-card"
+                data-genre="action"
+                data-name="Grand Theft Auto V"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/7.jpg"
+                        alt="Grand Theft Auto V"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        ACTION
+                    </span>
+
+                    <h3>
+                        Grand Theft Auto V
+                    </h3>
+
+                    <p>
+                        Explore a massive open-world environment
+                        filled with missions, vehicles and
+                        unpredictable action.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $9.99
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME 10 -->
+
+            <article
+                class="game-card"
+                data-genre="racing"
+                data-name="Need for Speed"
+            >
+
+                <div class="game-card-image">
+
+                    <img
+                        src="NarutoImages/4.jpg"
+                        alt="Need for Speed"
+                        loading="lazy"
+                    >
+
+                    <span class="game-badge">
+                        NEW
+                    </span>
+
+                </div>
+
+                <div class="game-card-body">
+
+                    <span class="game-type">
+                        RACING
+                    </span>
+
+                    <h3>
+                        Need for Speed
+                    </h3>
+
+                    <p>
+                        Push high-performance cars through
+                        high-speed races, challenging roads and
+                        intense pursuits.
+                    </p>
+
+                    <div class="game-card-footer">
+
+                        <strong>
+                            $22.00
+                        </strong>
+
+                        <a
+                            href="payment.html"
+                            class="game-buy"
+                        >
+                            Buy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            class="games-empty"
+            id="gamesEmpty"
+        >
+
+            <h3>
+                No games found
+            </h3>
+
+            <p>
+                Try another search term or choose another genre.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- GAMING CTA -->
+
+    <section class="gaming-cta">
+
+        <div>
+
+            <span class="section-kicker">
+                BUILD YOUR SETUP
+            </span>
+
+            <h2>
+                Your games need
+                <span>the right hardware.</span>
+            </h2>
+
+            <p>
+                Explore consoles, gaming laptops and technology
+                hardware designed to power your experience.
+            </p>
+
+        </div>
+
+        <a
+            href="hardware.html"
+            class="primary-button"
+        >
+            Explore Hardware
+        </a>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="index.html" class="brand">
+                <span class="brand-mark">U</span>
+                <span class="brand-name">UTECH</span>
+            </a>
+
+            <p>
+                Gaming, hardware and technology
+                for the next generation.
+            </p>
+
+        </div>
+
+        <div class="footer-column">
+            <h4>Store</h4>
+
+            <ul>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>UTECH</h4>
+
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.html">Support</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 UTECH. All rights reserved.
+        </span>
+
+        <span>
+            Gaming • Hardware • Technology
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+    const gameSearch =
+        document.getElementById("gameSearch");
+
+    const gameCards =
+        document.querySelectorAll(".game-card");
+
+    const gameFilters =
+        document.querySelectorAll(".game-filter");
+
+    const gamesEmpty =
+        document.getElementById("gamesEmpty");
+
+    let activeGenre = "all";
+
+
+    function filterGames() {
+
+        const searchTerm =
+            gameSearch.value
+                .toLowerCase()
+                .trim();
+
+        let visibleGames = 0;
+
+
+        gameCards.forEach(card => {
+
+            const genre =
+                card.dataset.genre;
+
+            const name =
+                card.dataset.name
+                    .toLowerCase();
+
+            const description =
+                card.querySelector("p")
+                    ?.textContent
+                    .toLowerCase() || "";
+
+
+            const genreMatch =
+                activeGenre === "all" ||
+                genre === activeGenre;
+
+
+            const searchMatch =
+                name.includes(searchTerm) ||
+                description.includes(searchTerm);
+
+
+            if (genreMatch && searchMatch) {
+
+                card.style.display = "";
+
+                visibleGames++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
         });
-    </script>
+
+
+        gamesEmpty.style.display =
+            visibleGames === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+    gameFilters.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                gameFilters.forEach(btn => {
+
+                    btn.classList.remove("active");
+
+                });
+
+
+                button.classList.add("active");
+
+                activeGenre =
+                    button.dataset.genre;
+
+                filterGames();
+
+            }
+        );
+
+    });
+
+
+    gameSearch.addEventListener(
+        "input",
+        filterGames
+    );
+
+
+    // Mobile navigation
+
+    const menuToggle =
+        document.getElementById("menuToggle");
+
+    const navLinks =
+        document.querySelector(".nav-links");
+
+
+    if (menuToggle) {
+
+        menuToggle.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle("open");
+
+            }
+        );
+
+    }
+
+
+    // Header search focuses game search
+
+    const searchTrigger =
+        document.getElementById("searchTrigger");
+
+
+    if (searchTrigger) {
+
+        searchTrigger.addEventListener(
+            "click",
+            () => {
+
+                gameSearch.focus();
+
+                window.scrollTo({
+
+                    top:
+                        gameSearch.offsetTop - 120,
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            }
+        );
+
+    }
+
+</script>
+
+    <script src="cart.js"></script>
 
 </body>
 </html>

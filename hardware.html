@@ -1,323 +1,686 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Current-generation gaming consoles and portable handheld PC hardware.">
-    <title>:) SMILEY | Hardware & Consoles</title>
-    <link rel="icon" type="image/x-icon" href="images/1.png">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UTECH gaming consoles and hardware — Gaming, Hardware & Technology.">
+  <title>UTECH Hardware | Consoles • Gaming • Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="navbar">
-        <div class="icon">
-            <h2 class="logo">:) SMILEY</h2>
-        </div>
-        <div class="hamburger" id="hamburger">
+
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">U</span>
+            <span class="brand-name">UTECH</span>
+        </a>
+
+        <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
             <span></span>
             <span></span>
             <span></span>
-        </div>
-        <div class="menu">
+        </button>
+
+        <div class="menu" id="main-menu">
             <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
                 <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html" class="active-page">Consoles</a></li>
                 <li><a href="laptops.html">Laptops</a></li>
-                <li><a href="hardware.html" class="active-page">Hardware</a></li>
-                <li class="dropdown">
-                    <a href="#">Brands</a>
-                    <ul class="dropdown-content">
-                        <li><a href="#">Sony</a></li>
-                        <li><a href="#">Microsoft</a></li>
-                        <li><a href="#">Nintendo</a></li>
-                    </ul>
-                </li>
+                <li><a href="hardware.html">Hardware</a></li>
             </ul>
         </div>
-        <div class="search">
-            <input class="srch" type="search" placeholder="Search systems...">
-            <button class="btn">Search</button>
+
+        <div class="nav-actions">
+            <button
+                class="search-trigger"
+                type="button"
+                aria-label="Search"
+            >
+                Search
+            </button>
+
+            <a href="cart.html" class="cart-link">
+                Cart
+                <span class="cart-count" hidden>0</span>
+            </a>
         </div>
+
+    </nav>
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+  <section class="hardware-hero">
+
+    <div class="hardware-hero-content">
+
+      <span class="hardware-eyebrow">UTECH HARDWARE</span>
+
+      <h1>
+        POWER YOUR
+        <span>PLAY.</span>
+      </h1>
+
+      <p>
+        Explore gaming consoles, handheld systems and technology built
+        for serious gaming, entertainment and next-level digital experiences.
+      </p>
+
+      <div class="hardware-hero-actions">
+        <a href="#consoles" class="primary-button">Explore Consoles</a>
+        <a href="#hardware-categories" class="secondary-button">Browse Hardware</a>
+      </div>
+
     </div>
 
-    
-    <section class="shop-section">
-    <h2 class="section-title">GAMING CONSOLES & HARDWARE</h2>
-    <div class="product-grid">
-        <!-- 1. PlayStation 5 (Slim / Disc Edition) -->
-        <article class="product-card" data-recommended-specs="Resolution: 4K @ 60fps, Storage: 1TB SSD, Features: Ray Tracing, HDR">
-            <div class="img-skeleton-container">
-                <img src="consoles/PlayStation 5.jpg" alt="PlayStation 5" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Flagship</span>
-            </div>
-            <div class="product-info">
-                <h3>PlayStation 5 (Slim / Disc Edition)</h3>
-                <p>Sony flagship featuring ultra-fast loading and ray-tracing.<br>
-                    CPU: 8-core AMD Zen 2 CPU at up to 3.5GHz<br>
-                    GPU: Custom AMD RDNA 2 (10.28 TFLOPs)<br>
-                    Memory: 16GB GDDR6<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$499.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+    <div class="hardware-hero-visual">
 
-        <!-- 2. Xbox Series X -->
-        <article class="product-card" data-recommended-specs="Resolution: True 4K @ 60fps, Storage: 1TB SSD, Features: Ray Tracing, HDR, Quick Resume">
-            <div class="img-skeleton-container">
-                <img src="consoles/Xbox Series X.jpg" alt="Xbox Series X" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Powerhouse</span>
-            </div>
-            <div class="product-info">
-                <h3>Xbox Series X</h3>
-                <p>Microsoft's most powerful native 4K gaming hardware build.<br>
-                    CPU: 8-core AMD Zen 2 CPU at up to 3.8GHz<br>
-                    GPU: Custom AMD RDNA 2 (12.15 TFLOPs)<br>
-                    Memory: 16GB GDDR6<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$499.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+      <div class="hardware-system-card">
 
-        <!-- 3. Nintendo Switch (OLED Model) -->
-        <article class="product-card" data-recommended-specs="Handheld: 7-inch OLED, TV Mode: 1080p, Storage: 64GB + MicroSD, Features: Detachable Joy-Cons">
-            <div class="img-skeleton-container">
-                <img src="consoles/Nintendo Switch (OLED Model).jpg" alt="Nintendo Switch OLED" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">OLED</span>
-            </div>
-            <div class="product-info">
-                <h3>Nintendo Switch (OLED Model)</h3>
-                <p>Premium hybrid console with a vibrant OLED screen upgrade.<br>
-                    Processor: Nvidia Custom Tegra processor<br>
-                    Memory: 4GB LPDDR4 RAM<br>
-                    Storage: 64GB Flash (Expandable via MicroSD)<br>
-                    Display: 7-inch multi-touch OLED screen
-                </p>
-                <div class="product-meta">
-                    <span class="price">$349.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <div class="hardware-label">UTECH HARDWARE SYSTEM</div>
 
-        <!-- 4. PlayStation 5 Pro -->
-        <article class="product-card" data-recommended-specs="Resolution: 4K @ 120fps (upscaled), Storage: 2TB SSD, Features: Enhanced Ray Tracing, PSSR AI Upscaling">
-            <div class="img-skeleton-container">
-                <img src="consoles/PlayStation 5 Pro.jpg" alt="PlayStation 5 Pro" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Elite</span>
-            </div>
-            <div class="product-info">
-                <h3>PlayStation 5 Pro</h3>
-                <p>Built for enhanced ray tracing and AI upscaling via PSSR.<br>
-                    CPU: 8-core AMD Zen 2 (up to 3.85GHz)<br>
-                    GPU: Upgraded RDNA Architecture (16.7 TFLOPs)<br>
-                    Memory: 16GB GDDR6 + 2GB DDR5<br>
-                    Storage: 2TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$699.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <div class="hardware-core">
+          <span>U</span>
+        </div>
 
-        <!-- 5. Xbox Series S (1TB Carbon Black) -->
-        <article class="product-card" data-recommended-specs="Resolution: 1440p @ 120fps, Storage: 1TB SSD, Features: All-Digital, Quick Resume">
-            <div class="img-skeleton-container">
-                <img src="consoles/Xbox Series S (1TB Carbon Black).jpg" alt="Xbox Series S" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Compact</span>
-            </div>
-            <div class="product-info">
-                <h3>Xbox Series S (1TB Carbon Black)</h3>
-                <p>All-digital entry point into modern gaming with extra storage.<br>
-                    CPU: 8-core AMD Zen 2 CPU at 3.6GHz<br>
-                    GPU: Custom RDNA 2 (4 TFLOPs)<br>
-                    Memory: 10GB GDDR6 RAM<br>
-                    Storage: 1TB Custom NVMe SSD
-                </p>
-                <div class="product-meta">
-                    <span class="price">$349.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <div class="hardware-ring ring-one"></div>
+        <div class="hardware-ring ring-two"></div>
+        <div class="hardware-ring ring-three"></div>
 
-        <!-- 6. Steam Deck OLED (512GB Build) -->
-        <article class="product-card" data-recommended-specs="Display: 7.4-inch HDR OLED (90Hz), Storage: 512GB SSD, Battery: 50Whr, OS: SteamOS">
-            <div class="img-skeleton-container">
-                <img src="consoles/Steam Deck OLED (512GB Build).jpg" alt="Steam Deck OLED" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Handheld PC</span>
-            </div>
-            <div class="product-info">
-                <h3>Steam Deck OLED (512GB Build)</h3>
-                <p>Valve’s portable PC-gaming handheld running SteamOS.<br>
-                    APU: AMD "Sephiroth" (6nm Processor)<br>
-                    Memory: 16GB LPDDR5 RAM<br>
-                    Storage: 512GB NVMe PCIe Gen 4 SSD<br>
-                    Display: 7.4-inch HDR OLED (90Hz)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$549.00</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <div class="hardware-spec">
+          <span>STATUS</span>
+          <strong>READY</strong>
+        </div>
 
-        <!-- 7. ASUS ROG Ally X -->
-        <article class="product-card" data-recommended-specs="Display: 7-inch FHD IPS (120Hz), Storage: 1TB SSD, Battery: 80Whr, OS: Windows 11">
-            <div class="img-skeleton-container">
-                <img src="consoles/ASUS ROG Ally X.jpg" alt="ASUS ROG Ally X" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Premium</span>
-            </div>
-            <div class="product-info">
-                <h3>ASUS ROG Ally X</h3>
-                <p>High-end Windows-based handheld capable of running AAA titles.<br>
-                    APU: AMD Ryzen Z1 Extreme (8 cores/16 threads)<br>
-                    Memory: 24GB LPDDR5X RAM<br>
-                    Storage: 1TB NVMe PCIe 4.0 SSD<br>
-                    Battery: 80Whr High-Capacity Battery
-                </p>
-                <div class="product-meta">
-                    <span class="price">$799.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+        <div class="hardware-spec hardware-spec-right">
+          <span>MODE</span>
+          <strong>GAMING</strong>
+        </div>
 
-        <!-- 8. Nintendo Switch Lite -->
-        <article class="product-card" data-recommended-specs="Display: 5.5-inch LCD, Storage: 32GB + MicroSD, Features: Handheld Only, Integrated Controls">
-            <div class="img-skeleton-container">
-                <img src="consoles/Nintendo Switch Lite.jpg" alt="Nintendo Switch Lite" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Ultra-Portable</span>
-            </div>
-            <div class="product-info">
-                <h3>Nintendo Switch Lite</h3>
-                <p>Dedicated handheld device built strictly for mobile gameplay.<br>
-                    Processor: Nvidia Custom Tegra processor<br>
-                    Memory: 4GB LPDDR4 RAM<br>
-                    Storage: 32GB internal flash memory<br>
-                    Display: 5.5-inch LCD touchscreen
-                </p>
-                <div class="product-meta">
-                    <span class="price">$199.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
+      </div>
 
-        <!-- 9. Analogue Pocket -->
-        <article class="product-card" data-recommended-specs="Display: 3.5-inch LCD (1600x1440), Features: FPGA Hardware, Multi-Cartridge Support">
-            <div class="img-skeleton-container">
-                <img src="consoles/Analogue Pocket.jpg" alt="Analogue Pocket" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Retro</span>
-            </div>
-            <div class="product-info">
-                <h3>Analogue Pocket</h3>
-                <p>Luxury system designed for retro hardware preservation.<br>
-                    HW: Dual FPGA chips (Cyclone V and IV)<br>
-                    Support: GB, GBC, and GBA cartridges<br>
-                    Display: 3.5-inch LCD (1600 x 1440, 615 ppi)
-                </p>
-                <div class="product-meta">
-                    <span class="price">$219.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- 10. Sega Genesis Mini 2 -->
-        <article class="product-card" data-recommended-specs="Library: 60 Classic Titles, Output: HDMI (720p/480p), Features: 6-Button Controller">
-            <div class="img-skeleton-container">
-                <img src="consoles/Sega Genesis Mini 2.jpg" alt="Sega Genesis Mini 2" class="lazy-load-img" loading="lazy" width="300" height="200">
-                <span class="badge">Micro</span>
-            </div>
-            <div class="product-info">
-                <h3>Sega Genesis Mini 2</h3>
-                <p>Plug-and-play revival preloaded with classic 16-bit titles.<br>
-                    Library: 60 Classic Titles (Genesis & Sega CD)<br>
-                    Output: HDMI (720p/480p output options)<br>
-                    Controller: 1 wired 6-button control pad
-                </p>
-                <div class="product-meta">
-                    <span class="price">$99.99</span>
-                    <button class="quickview-btn">Quick View</button>
-                    <a href="payment.html" class="buy-btn">Buy Now</a>
-                </div>
-            </div>
-        </article>
     </div>
-</section>
 
-    <script src="quickview.js" defer></script>
-    <script src="image-loader.js" defer></script>
+  </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-desc">
-                <h3>:) SMILEY</h3>
-                <p>Engineering the next generation of digital systems and bold visual experiences. Precision hardware and optimized software for the modern professional.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Store</h4>
-                <ul>
-                    <li><a href="laptops.html">Laptops</a></li>
-                    <li><a href="hardware.html">Hardware</a></li>
-                    <li><a href="game.html">Games</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-                    </a>
-                </div>
-            </div>
+
+  <!-- CATEGORIES -->
+  <section class="hardware-categories" id="hardware-categories">
+
+    <div class="section-heading">
+      <div>
+        <span class="section-eyebrow">HARDWARE ECOSYSTEM</span>
+        <h2>Build Your Setup.</h2>
+        <p>
+          From consoles to peripherals, build a setup that fits your world.
+        </p>
+      </div>
+    </div>
+
+    <div class="hardware-category-grid">
+
+      <a href="#consoles" class="hardware-category-card">
+        <div class="category-icon">▣</div>
+        <div>
+          <span>01</span>
+          <h3>Gaming Consoles</h3>
+          <p>PlayStation, Xbox, Nintendo and more.</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Smiley. All Rights Reserved.</p>
+      </a>
+
+      <a href="laptops.html" class="hardware-category-card">
+        <div class="category-icon">▤</div>
+        <div>
+          <span>02</span>
+          <h3>Gaming Laptops</h3>
+          <p>Portable performance for serious gaming.</p>
         </div>
-    </footer>
+      </a>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const menu = document.querySelector('.menu');
+      <a href="#peripherals" class="hardware-category-card">
+        <div class="category-icon">⌁</div>
+        <div>
+          <span>03</span>
+          <h3>Peripherals</h3>
+          <p>Controllers, keyboards, mice and more.</p>
+        </div>
+      </a>
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            menu.classList.toggle('active');
-        });
-    </script>
+      <a href="#components" class="hardware-category-card">
+        <div class="category-icon">◈</div>
+        <div>
+          <span>04</span>
+          <h3>PC Components</h3>
+          <p>Upgrade the hardware behind your system.</p>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONSOLES -->
+  <section class="hardware-section" id="consoles">
+
+    <div class="section-heading hardware-section-heading">
+
+      <div>
+        <span class="section-eyebrow">GAMING CONSOLES</span>
+        <h2>Choose Your Platform.</h2>
+        <p>
+          Discover current-generation consoles and portable gaming systems.
+        </p>
+      </div>
+
+      <div class="hardware-search">
+        <input
+          type="search"
+          id="hardwareSearch"
+          placeholder="Search hardware..."
+          aria-label="Search hardware"
+        >
+      </div>
+
+    </div>
+
+
+    <div class="hardware-filters">
+
+      <button class="hardware-filter active" data-filter="all">
+        All
+      </button>
+
+      <button class="hardware-filter" data-filter="playstation">
+        PlayStation
+      </button>
+
+      <button class="hardware-filter" data-filter="xbox">
+        Xbox
+      </button>
+
+      <button class="hardware-filter" data-filter="nintendo">
+        Nintendo
+      </button>
+
+      <button class="hardware-filter" data-filter="handheld">
+        Handheld
+      </button>
+
+    </div>
+
+
+    <div class="hardware-grid" id="hardwareGrid">
+
+      <article class="hardware-card" data-category="playstation">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/PlayStation 5.jpg"
+            alt="PlayStation 5"
+            loading="lazy"
+          >
+          <span class="hardware-badge">PLAYSTATION</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Console</span>
+          <h3>PlayStation 5</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$499.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="xbox">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Xbox Series X.jpg"
+            alt="Xbox Series X"
+            loading="lazy"
+          >
+          <span class="hardware-badge">XBOX</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Console</span>
+          <h3>Xbox Series X</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$499.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="nintendo">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Nintendo Switch (OLED Model).jpg"
+            alt="Nintendo Switch OLED Model"
+            loading="lazy"
+          >
+          <span class="hardware-badge">NINTENDO</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Hybrid Console</span>
+          <h3>Nintendo Switch OLED</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$349.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="playstation">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/PlayStation 5 Pro.jpg"
+            alt="PlayStation 5 Pro"
+            loading="lazy"
+          >
+          <span class="hardware-badge">PS5 PRO</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Premium Console</span>
+          <h3>PlayStation 5 Pro</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$699.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="xbox">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Xbox Series S (1TB Carbon Black).jpg"
+            alt="Xbox Series S 1TB Carbon Black"
+            loading="lazy"
+          >
+          <span class="hardware-badge">XBOX</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Compact Console</span>
+          <h3>Xbox Series S 1TB</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$349.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="handheld">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Steam Deck OLED (512GB Build).jpg"
+            alt="Steam Deck OLED"
+            loading="lazy"
+          >
+          <span class="hardware-badge">HANDHELD</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Portable PC</span>
+          <h3>Steam Deck OLED</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$549.00</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="handheld">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/ASUS ROG Ally X.jpg"
+            alt="ASUS ROG Ally X"
+            loading="lazy"
+          >
+          <span class="hardware-badge">HANDHELD</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Gaming Handheld</span>
+          <h3>ASUS ROG Ally X</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$799.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="nintendo">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Nintendo Switch Lite.jpg"
+            alt="Nintendo Switch Lite"
+            loading="lazy"
+          >
+          <span class="hardware-badge">NINTENDO</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Portable Console</span>
+          <h3>Nintendo Switch Lite</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$199.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="handheld">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Analogue Pocket.jpg"
+            alt="Analogue Pocket"
+            loading="lazy"
+          >
+          <span class="hardware-badge">RETRO</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Retro Handheld</span>
+          <h3>Analogue Pocket</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$219.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+
+      <article class="hardware-card" data-category="handheld">
+
+        <div class="hardware-card-image">
+          <img
+            src="consoles/Sega Genesis Mini 2.jpg"
+            alt="Sega Genesis Mini 2"
+            loading="lazy"
+          >
+          <span class="hardware-badge">RETRO</span>
+        </div>
+
+        <div class="hardware-card-body">
+          <span class="hardware-type">Mini Console</span>
+          <h3>Sega Genesis Mini 2</h3>
+
+          <div class="hardware-card-footer">
+            <strong>$99.99</strong>
+            <a href="payment.html">Buy Now</a>
+          </div>
+        </div>
+
+      </article>
+
+    </div>
+
+    <div class="hardware-empty" id="hardwareEmpty">
+      <h3>No hardware found</h3>
+      <p>Try another search or category.</p>
+    </div>
+
+  </section>
+
+
+  <!-- FUTURE HARDWARE -->
+  <section class="hardware-section future-hardware" id="peripherals">
+
+    <div class="section-heading">
+      <div>
+        <span class="section-eyebrow">COMING TO UTECH</span>
+        <h2>Build Beyond the Console.</h2>
+        <p>
+          UTECH is expanding beyond gaming consoles into the hardware
+          that powers complete technology setups.
+        </p>
+      </div>
+    </div>
+
+    <div class="future-grid">
+
+      <div class="future-card" id="components">
+        <span class="future-number">01</span>
+        <h3>PC Components</h3>
+        <p>
+          GPUs, CPUs, memory, storage, power supplies and other
+          components for custom systems.
+        </p>
+        <span class="future-status">COMING SOON</span>
+      </div>
+
+      <div class="future-card">
+        <span class="future-number">02</span>
+        <h3>Raspberry Pi</h3>
+        <p>
+          Single-board computers and accessories for learning,
+          development, automation and experimentation.
+        </p>
+        <span class="future-status">COMING SOON</span>
+      </div>
+
+      <div class="future-card">
+        <span class="future-number">03</span>
+        <h3>Gaming Peripherals</h3>
+        <p>
+          Controllers, keyboards, mice, headsets and accessories
+          for complete gaming setups.
+        </p>
+        <span class="future-status">COMING SOON</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="hardware-cta">
+
+    <div>
+      <span class="section-eyebrow">UTECH STORE</span>
+
+      <h2>
+        Your Setup.
+        <span>Your System.</span>
+      </h2>
+
+      <p>
+        Explore the UTECH ecosystem and find the technology
+        that fits the way you play, build and create.
+      </p>
+
+      <div class="hardware-cta-actions">
+        <a href="products.html" class="primary-button">Explore Shop</a>
+        <a href="game.html" class="secondary-button">Explore Games</a>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="index.html" class="brand">
+                <span class="brand-mark">U</span>
+                <span class="brand-name">UTECH</span>
+            </a>
+
+            <p>
+                Gaming, hardware and technology
+                for the next generation.
+            </p>
+
+        </div>
+
+        <div class="footer-column">
+            <h4>Store</h4>
+
+            <ul>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="hardware.html">Consoles</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>UTECH</h4>
+
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.html">Support</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 UTECH. All rights reserved.
+        </span>
+
+        <span>
+            Gaming • Hardware • Technology
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const menu = document.getElementById("main-menu");
+
+  hamburger?.addEventListener("click", () => {
+    const isOpen = hamburger.classList.toggle("active");
+
+    menu?.classList.toggle("active");
+
+    hamburger.setAttribute(
+      "aria-expanded",
+      String(isOpen)
+    );
+  });
+
+
+  const filters = document.querySelectorAll(".hardware-filter");
+  const cards = document.querySelectorAll(".hardware-card");
+  const searchInput = document.getElementById("hardwareSearch");
+  const emptyState = document.getElementById("hardwareEmpty");
+
+  let activeFilter = "all";
+
+  function filterHardware() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const category = card.dataset.category || "";
+      const text = card.textContent.toLowerCase();
+
+      const matchesFilter =
+        activeFilter === "all" || category === activeFilter;
+
+      const matchesSearch =
+        !searchTerm || text.includes(searchTerm);
+
+      const visible = matchesFilter && matchesSearch;
+
+      card.style.display = visible ? "" : "none";
+
+      if (visible) visibleCount++;
+    });
+
+    emptyState.style.display =
+      visibleCount === 0 ? "block" : "none";
+  }
+
+
+  filters.forEach(filter => {
+    filter.addEventListener("click", () => {
+
+      filters.forEach(button =>
+        button.classList.remove("active")
+      );
+
+      filter.classList.add("active");
+
+      activeFilter = filter.dataset.filter;
+
+      filterHardware();
+    });
+  });
+
+
+  searchInput?.addEventListener("input", filterHardware);
+</script>
+
+    <script src="cart.js"></script>
+
 </body>
 </html>

@@ -1,44 +1,62 @@
-import ProductCard from "@/components/shop/ProductCard";
+import Link from "next/link";
 import { products } from "@/data/products";
-
-const filters = ["All Games", "Action", "Adventure", "Sports", "Racing", "Fighting"];
+import GamesExplorer from "@/components/games/GamesExplorer";
 
 export default function GamesPage() {
   const games = products.filter((product) => product.category === "games");
+  const featured = games[0];
 
   return (
-    <section className="section">
-      <div className="container">
-        <span className="eyebrow">UTECH GAMING</span>
-        <h1 className="section-title">PLAY. COMPETE. EXPERIENCE.</h1>
-        <p className="section-copy">
-          Browse the UTECH gaming library and add your software games directly to your cart.
-        </p>
-
-        <div className="shop-toolbar" style={{ marginTop: 32 }}>
-          <div>
-            <span className="section-kicker">GAME LIBRARY</span>
-            <h2>Available Games</h2>
+    <>
+      <section className="games-hero">
+        <div className="container games-hero-grid">
+          <div className="games-hero-copy">
+            <span className="eyebrow">UTECH GAMING</span>
+            <h1>PLAY. <span>COMPETE.</span> EXPERIENCE.</h1>
+            <p>
+              Discover software games for action, adventure, racing, sports and more.
+              Pick a title, add it to your cart and continue through the UTECH checkout.
+            </p>
+            <div className="hero-actions">
+              <a href="#game-library" className="button button-primary">Browse Games</a>
+              <Link href="/cart" className="button button-secondary">View Cart</Link>
+            </div>
           </div>
-          <div className="shop-search">
-            <input type="search" placeholder="Search games..." aria-label="Search games" />
+
+          <div className="games-hero-card">
+            <div className="games-hero-orbit" />
+            <div className="games-hero-console">
+              <span>UTECH</span>
+              <strong>GAMING</strong>
+              <small>SOFTWARE LIBRARY</small>
+            </div>
+            <div className="games-hero-stats">
+              <div><strong>{games.length}</strong><span>Titles</span></div>
+              <div><strong>5</strong><span>Genres</span></div>
+              <div><strong>$5.50</strong><span>From</span></div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div className="category-filters" style={{ marginTop: 20 }}>
-          {filters.map((filter) => (
-            <button key={filter} className="filter-btn" type="button">
-              {filter}
-            </button>
-          ))}
+      <section className="section games-library" id="game-library">
+        <div className="container">
+          <GamesExplorer games={games} />
         </div>
+      </section>
 
-        <div className="product-grid" style={{ marginTop: 40 }}>
-          {games.map((game) => (
-            <ProductCard key={game.id} product={game} />
-          ))}
-        </div>
-      </div>
-    </section>
+      {featured && (
+        <section className="games-bottom-cta">
+          <div className="container games-bottom-card">
+            <div>
+              <span className="eyebrow">READY TO PLAY?</span>
+              <h2>Build your collection.</h2>
+              <p>Games, consoles, laptops and hardware — all in one UTECH Store.</p>
+            </div>
+            <Link href="/shop" className="button button-primary">Explore Store</Link>
+          </div>
+        </section>
+      )}
+    </>
   );
 }

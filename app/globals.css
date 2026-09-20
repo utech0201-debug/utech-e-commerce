@@ -416,3 +416,227 @@ img { max-width: 100%; }
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Theme system */
+html {
+  color-scheme: light;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+body,
+.site-header,
+.nav-menu,
+.category-card,
+.product-card,
+.checkout-card,
+.summary,
+.search-box input,
+.filter-button,
+.qty button,
+.games-library,
+.games-empty,
+.upcoming-games,
+.upcoming-game-card,
+.games-search input,
+.checkout-notice,
+.payment-placeholder {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--navy);
+}
+
+.icon-button:hover {
+  border-color: var(--blue);
+  background: var(--bg);
+  color: var(--blue);
+}
+
+.theme-toggle {
+  transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(-8deg);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --white: #0f172a;
+  --navy: #f8fafc;
+  --blue: #60a5fa;
+  --bg: #111c2e;
+  --muted: #a9b8ca;
+  --border: #26364d;
+}
+
+html[data-theme="dark"] body {
+  background: #0a1220;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .site-header {
+  border-bottom-color: rgba(38,54,77,.95);
+  background: rgba(10,18,32,.94);
+}
+
+html[data-theme="dark"] .nav-menu a:hover {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .brand-mark {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #0a1220 0%, #111c2e 100%);
+}
+
+html[data-theme="dark"] .button-secondary,
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .product-card,
+html[data-theme="dark"] .checkout-card,
+html[data-theme="dark"] .summary,
+html[data-theme="dark"] .search-box input,
+html[data-theme="dark"] .filter-button,
+html[data-theme="dark"] .qty button,
+html[data-theme="dark"] .games-search input,
+html[data-theme="dark"] .games-empty,
+html[data-theme="dark"] .upcoming-game-card {
+  background: #0f1b2d;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .shop-toolbar,
+html[data-theme="dark"] .payment-placeholder,
+html[data-theme="dark"] .checkout-notice,
+html[data-theme="dark"] .games-library,
+html[data-theme="dark"] .games-bottom-cta,
+html[data-theme="dark"] .upcoming-games {
+  background: #0b1525;
+}
+
+html[data-theme="dark"] .section-copy,
+html[data-theme="dark"] .category-card p,
+html[data-theme="dark"] .product-body p,
+html[data-theme="dark"] .results-count,
+html[data-theme="dark"] .detail-copy > p,
+html[data-theme="dark"] .games-toolbar p,
+html[data-theme="dark"] .games-empty p,
+html[data-theme="dark"] .upcoming-heading p {
+  color: #a9b8ca;
+}
+
+html[data-theme="dark"] .category-card strong,
+html[data-theme="dark"] .product-type,
+html[data-theme="dark"] .upcoming-game-body > span {
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .button-secondary {
+  border-color: #26364d;
+}
+
+html[data-theme="dark"] .button-secondary:hover,
+html[data-theme="dark"] .filter-button:hover,
+html[data-theme="dark"] .filter-button.active {
+  border-color: #60a5fa;
+}
+
+html[data-theme="dark"] .product-card:hover,
+html[data-theme="dark"] .category-card:hover,
+html[data-theme="dark"] .upcoming-game-card:hover {
+  border-color: #365273;
+  box-shadow: 0 18px 40px rgba(0,0,0,.3);
+}
+
+html[data-theme="dark"] .product-image,
+html[data-theme="dark"] .cart-thumb,
+html[data-theme="dark"] .detail-image {
+  background: #162338;
+}
+
+html[data-theme="dark"] .game-product-card .product-image {
+  background: #162338;
+}
+
+html[data-theme="dark"] .nav-actions > a,
+html[data-theme="dark"] .menu-button,
+html[data-theme="dark"] .icon-button {
+  border-color: #26364d;
+  background: #0f1b2d;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .nav-actions > a:hover,
+html[data-theme="dark"] .menu-button:hover,
+html[data-theme="dark"] .icon-button:hover {
+  border-color: #60a5fa;
+  background: #162338;
+  color: #60a5fa;
+}
+
+html[data-theme="dark"] .cart-button span {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .nav-menu {
+  background: #0f1b2d;
+}
+
+html[data-theme="dark"] .checkout-notice {
+  color: #93c5fd;
+  background: #102747;
+}
+
+html[data-theme="dark"] .form-grid input {
+  background: #0f1b2d;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .form-grid label {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .upcoming-heading h2,
+html[data-theme="dark"] .upcoming-game-body h3 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .upcoming-count {
+  border-color: #26364d;
+  color: #93c5fd;
+  background: #0f1b2d;
+}
+
+html[data-theme="dark"] .games-bottom-card {
+  box-shadow: 0 25px 60px rgba(0,0,0,.3);
+}
+
+html[data-theme="dark"] .site-footer {
+  background: #050b14;
+}
+
+html[data-theme="dark"] .panel {
+  background: rgba(10,18,32,.98);
+  border-top-color: #26364d;
+}
+
+html[data-theme="dark"] .form input {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .panel > p {
+  color: #a9b8ca;
+}

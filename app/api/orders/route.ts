@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { products } from "@/data/products";
 
 type OrderItemInput = {
   id: string;
-  name: string;
-  price: number;
   quantity: number;
 };
 
@@ -36,20 +35,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required checkout details." }, { status: 400 });
     }
 
-    const items = body.items.map((item) => ({
-      product_slug: item.id,
-      product_name: item.name,
-      unit_price: Number(item.price),
-      quantity: Number(item.quantity),
-    }));
+    const items = body.items.map((item) => {
+      const product = products.find(
+        (candidate) => candidate.id === item.id || candidate.slug === item.id
+      );
+
+      return {
+        product,
+        quantity: Number(item.quantity),
+      };
+    });
 
     if (
       items.some(
         (item) =>
-          !item.product_slug ||
-          !item.product_name ||
-          !Number.isFinite(item.unit_price) ||
-          item.unit_price < 0 ||
+          !item.product ||
           !Number.isInteger(item.quantity) ||
           item.quantity < 1
       )
@@ -57,7 +57,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order items." }, { status: 400 });
     }
 
-    const subtotal = items.reduce(
+    const orderItems = items.map(({ product, quantity }) => ({
+      product_slug: product!.slug,
+      product_name: product!.name,
+      unit_price: product!.price,
+      quantity,
+    }));
+
+    const subtotal = orderItems.reduce(
       (sum, item) => sum + item.unit_price * item.quantity,
       0
     );
@@ -95,15 +102,18 @@ export async function POST(request: Request) {
 
     if (orderError || !order) {
       console.error("Order creation failed:", orderError);
+      await supabaseAdmin.from("customers").delete().eq("id", customer.id);
       return NextResponse.json({ error: "Could not create order." }, { status: 500 });
     }
 
-    const { error: itemsError } = await supabaseAdmin.from("order_items").insert(
-      items.map((item) => ({
-        order_id: order.id,
-        ...item,
-      }))
-    );
+    const { error: itemsError } = await supabaseAdmin
+      .from("order_items")
+      .insert(
+        orderItems.map((item) => ({
+          order_id: order.id,
+          ...item,
+        }))
+      );
 
     if (itemsError) {
       console.error("Order items creation failed:", itemsError);

@@ -78,13 +78,14 @@ export async function POST(request: Request) {
       userId = data.user?.id ?? null;
     }
 
-    const { data: customer } = await supabaseAdmin
+    const { data: existingCustomer } = await supabaseAdmin
       .from("customers")
       .select("id")
       .eq(userId ? "user_id" : "email", userId ?? body.email.trim().toLowerCase())
       .maybeSingle();
 
-    let customerId = customer?.id;
+    let customerId = existingCustomer?.id;
+    let createdCustomerId: string | null = null;
 
     if (!customerId) {
       const { data: createdCustomer, error: customerError } = await supabaseAdmin
@@ -104,6 +105,7 @@ export async function POST(request: Request) {
       }
 
       customerId = createdCustomer.id;
+      createdCustomerId = createdCustomer.id;
     }
 
     const { data: order, error: orderError } = await supabaseAdmin
@@ -124,7 +126,9 @@ export async function POST(request: Request) {
 
     if (orderError || !order) {
       console.error("Order creation failed:", orderError);
-      if (!customer) await supabaseAdmin.from("customers").delete().eq("id", customerId);
+      if (createdCustomerId) {
+        await supabaseAdmin.from("customers").delete().eq("id", createdCustomerId);
+      }
       return NextResponse.json({ error: "Could not create order." }, { status: 500 });
     }
 
@@ -140,7 +144,9 @@ export async function POST(request: Request) {
     if (itemsError) {
       console.error("Order items creation failed:", itemsError);
       await supabaseAdmin.from("orders").delete().eq("id", order.id);
-      await supabaseAdmin.from("customers").delete().eq("id", customer.id);
+      if (createdCustomerId) {
+        await supabaseAdmin.from("customers").delete().eq("id", createdCustomerId);
+      }
       return NextResponse.json({ error: "Could not save order items." }, { status: 500 });
     }
 

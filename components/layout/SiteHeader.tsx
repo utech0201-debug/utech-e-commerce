@@ -44,12 +44,15 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="nav-inner">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark">U</span><span>UTECH</span>
+          <span className="brand-mark">U</span>
+          <span>UTECH</span>
         </Link>
 
         <nav className={open ? "nav-menu open" : "nav-menu"}>
           {links.map(([label, href]) => (
-            <Link key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>
+            <Link key={href} href={href} onClick={() => setOpen(false)}>
+              {label}
+            </Link>
           ))}
         </nav>
 
@@ -74,12 +77,25 @@ export default function SiteHeader() {
             {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
-          <Link href="/account" className="icon-button account-button" aria-label="My account" title="My account">\n            <User size={19} />\n          </Link>\n\n          <Link href="/cart" className="cart-button" aria-label="Shopping cart">
+          <Link
+            href="/account"
+            className="icon-button account-button"
+            aria-label="My account"
+            title="My account"
+          >
+            <User size={19} />
+          </Link>
+
+          <Link href="/cart" className="cart-button" aria-label="Shopping cart">
             <ShoppingCart size={19} />
             {count > 0 && <span>{count}</span>}
           </Link>
 
-          <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle navigation">
+          <button
+            className="menu-button"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle navigation"
+          >
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>

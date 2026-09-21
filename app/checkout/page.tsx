@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/components/cart/CartProvider";
+import { useCart } from "@/components/cart/CartProvider";\nimport { supabase } from "@/lib/supabaseClient";
 
 export default function Checkout() {
   const { items, subtotal, clear } = useCart();
@@ -37,7 +37,7 @@ export default function Checkout() {
     try {
       const response = await fetch("/api/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           name: String(formData.get("name") || ""),
           email: String(formData.get("email") || ""),

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Moon, Search, ShoppingCart, Menu, Sun, X } from "lucide-react";
+import { Moon, Search, ShoppingCart, Menu, Sun, X, User } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -74,7 +74,7 @@ export default function SiteHeader() {
             {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
-          <Link href="/cart" className="cart-button" aria-label="Shopping cart">
+          <Link href="/account" className="icon-button account-button" aria-label="My account" title="My account">\n            <User size={19} />\n          </Link>\n\n          <Link href="/cart" className="cart-button" aria-label="Shopping cart">
             <ShoppingCart size={19} />
             {count > 0 && <span>{count}</span>}
           </Link>

@@ -8,6 +8,10 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 export const metadata: Metadata = {
   title: "UTECH Store | Gaming • Hardware • Technology",
   description: "UTECH Store — gaming systems, consoles, laptops, hardware and technology.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

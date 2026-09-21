@@ -69,25 +69,47 @@ export async function POST(request: Request) {
       0
     );
 
-    const { data: customer, error: customerError } = await supabaseAdmin
-      .from("customers")
-      .insert({
-        full_name: body.name.trim(),
-        email: body.email.trim().toLowerCase(),
-        phone: body.phone.trim(),
-      })
-      .select("id")
-      .single();
+    const authHeader = request.headers.get("authorization");
+    let userId: string | null = null;
 
-    if (customerError || !customer) {
-      console.error("Customer creation failed:", customerError);
-      return NextResponse.json({ error: "Could not create customer record." }, { status: 500 });
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      const { data } = await supabaseAdmin.auth.getUser(token);
+      userId = data.user?.id ?? null;
+    }
+
+    const { data: customer } = await supabaseAdmin
+      .from("customers")
+      .select("id")
+      .eq(userId ? "user_id" : "email", userId ?? body.email.trim().toLowerCase())
+      .maybeSingle();
+
+    let customerId = customer?.id;
+
+    if (!customerId) {
+      const { data: createdCustomer, error: customerError } = await supabaseAdmin
+        .from("customers")
+        .insert({
+          user_id: userId,
+          full_name: body.name.trim(),
+          email: body.email.trim().toLowerCase(),
+          phone: body.phone.trim(),
+        })
+        .select("id")
+        .single();
+
+      if (customerError || !createdCustomer) {
+        console.error("Customer creation failed:", customerError);
+        return NextResponse.json({ error: "Could not create customer record." }, { status: 500 });
+      }
+
+      customerId = createdCustomer.id;
     }
 
     const { data: order, error: orderError } = await supabaseAdmin
       .from("orders")
       .insert({
-        customer_id: customer.id,
+        customer_id: customerId,
         subtotal,
         shipping_amount: 0,
         total_amount: subtotal,
@@ -102,7 +124,7 @@ export async function POST(request: Request) {
 
     if (orderError || !order) {
       console.error("Order creation failed:", orderError);
-      await supabaseAdmin.from("customers").delete().eq("id", customer.id);
+      if (!customer) await supabaseAdmin.from("customers").delete().eq("id", customerId);
       return NextResponse.json({ error: "Could not create order." }, { status: 500 });
     }
 

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/components/cart/CartProvider";\nimport { supabase } from "@/lib/supabaseClient";
+import { useCart } from "@/components/cart/CartProvider";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function Checkout() {
   const { items, subtotal, clear } = useCart();
@@ -27,7 +29,7 @@ export default function Checkout() {
     );
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setIsSubmitting(true);
@@ -35,6 +37,18 @@ export default function Checkout() {
     const formData = new FormData(event.currentTarget);
 
     try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+
+      if (session?.access_token) {
+        headers.Authorization = `Bearer ${session.access_token}`;
+      }
+
       const response = await fetch("/api/orders", {
         method: "POST",
         headers,
@@ -58,7 +72,11 @@ export default function Checkout() {
       clear();
       router.push(`/checkout/success?order=${encodeURIComponent(result.orderId)}`);
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Could not create your order.");
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Could not create your order.",
+      );
       setIsSubmitting(false);
     }
   }
@@ -77,18 +95,36 @@ export default function Checkout() {
             <div className="checkout-card">
               <h2>Contact details</h2>
               <div className="form-grid">
-                <label>Full name<input name="name" required placeholder="Your full name" /></label>
-                <label>Email<input name="email" type="email" required placeholder="you@example.com" /></label>
-                <label>Phone<input name="phone" type="tel" required placeholder="+233 ..." /></label>
+                <label>
+                  Full name
+                  <input name="name" required placeholder="Your full name" />
+                </label>
+                <label>
+                  Email
+                  <input name="email" type="email" required placeholder="you@example.com" />
+                </label>
+                <label>
+                  Phone
+                  <input name="phone" type="tel" required placeholder="+233 ..." />
+                </label>
               </div>
             </div>
 
             <div className="checkout-card">
               <h2>Delivery address</h2>
               <div className="form-grid">
-                <label className="full">Address<input name="address" required placeholder="Street address" /></label>
-                <label>City<input name="city" required placeholder="Accra" /></label>
-                <label>Country<input name="country" required defaultValue="Ghana" /></label>
+                <label className="full">
+                  Address
+                  <input name="address" required placeholder="Street address" />
+                </label>
+                <label>
+                  City
+                  <input name="city" required placeholder="Accra" />
+                </label>
+                <label>
+                  Country
+                  <input name="country" required defaultValue="Ghana" />
+                </label>
               </div>
             </div>
 

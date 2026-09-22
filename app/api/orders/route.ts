@@ -50,7 +50,7 @@ export async function POST(request: Request) {
 
     const normalizedItems = body.items.map((item) => ({
       id: String(item.id),
-      quantity: Number(item.quantity),
+      quantity: Number(item.quantity),\n      variantId: item.variantId ? String(item.variantId) : undefined,
     }));
 
     if (
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
       }
 
       const sellerIdSet = [...new Set((sellerProducts ?? []).map((product) => product.seller_id))];
-      const { data: sellers, error: sellersError } = await supabaseAdmin
+      const variantIds = normalizedItems.map((item) => item.variantId).filter((id): id is string => Boolean(id));\n      const { data: variants, error: variantsError } = variantIds.length\n        ? await supabaseAdmin.from("seller_product_variants").select("id, product_id, label, attributes, price, inventory, is_active").in("id", variantIds).eq("is_active", true)\n        : { data: [], error: null };\n\n      if (variantsError) {\n        console.error("Marketplace variant lookup failed:", variantsError);\n        return NextResponse.json({ error: "Could not verify marketplace product options." }, { status: 500 });\n      }\n\n      const variantMap = new Map((variants ?? []).map((variant) => [variant.id, variant]));\n\n      const { data: sellers, error: sellersError } = await supabaseAdmin
         .from("sellers")
         .select("id, commission_rate, status, order_method")
         .in("id", sellerIdSet)
@@ -130,11 +130,11 @@ export async function POST(request: Request) {
           throw new Error("A marketplace product is no longer available.");
         }
 
-        if (seller.order_method === "whatsapp") {
+        const variantId = item.variantId;\n        const variant = variantId ? variantMap.get(variantId) : undefined;\n\n        if (variantId && (!variant || variant.product_id !== product.id)) {\n          throw new Error(product.name + " has an invalid selected option.");\n        }\n\n        if (seller.order_method === "whatsapp") {
           throw new Error(product.name + " is configured for WhatsApp orders. Please use the seller's WhatsApp order option.");
         }
 
-        if (product.inventory < item.quantity) {
+        const availableInventory = variant ? Number(variant.inventory) : Number(product.inventory);\n        if (availableInventory < item.quantity) {
           throw new Error(product.name + " does not have enough stock.");
         }
 

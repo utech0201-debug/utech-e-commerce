@@ -167,7 +167,12 @@ export async function POST(request: Request) {
     if (marketplaceLines.length) {
       const marketplaceOrderItems = insertedItems.filter((item) => item.seller_id);
       const sellerOrderItems = marketplaceOrderItems.map((item) => {
-        const line = marketplaceLines.find((candidate) => candidate.sellerId === item.seller_id && candidate.slug === item.product_slug);
+        const line = marketplaceLines.find((candidate) =>
+          candidate.sellerId === item.seller_id &&
+          candidate.slug === item.product_slug &&
+          (candidate.variantId ?? null) === (item.variant_id ?? null) &&
+          candidate.price === Number(item.unit_price)
+        );
         if (!line) throw new Error("Could not map marketplace order item.");
         const grossAmount = Number(item.unit_price) * item.quantity;
         const platformFee = Number((grossAmount * line.commissionRate / 100).toFixed(2));

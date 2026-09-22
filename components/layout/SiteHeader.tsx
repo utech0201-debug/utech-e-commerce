@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Moon, Search, ShoppingCart, Menu, Sun, X, User } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, User } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
-import { useTheme } from "@/components/theme/ThemeProvider";
 import styles from "./SiteHeader.module.css";
 
 const links = [
@@ -21,7 +20,6 @@ export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const { count } = useCart();
-  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
 
   function submitSearch(event: FormEvent<HTMLFormElement>) {
@@ -65,15 +63,7 @@ export default function SiteHeader() {
             {searchOpen ? <X size={19} /> : <Search size={19} />}
           </button>
 
-          <button
-            className="icon-button theme-toggle"
-            type="button"
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
-          </button>
+
 
           <Link
             href="/account"

@@ -69,7 +69,12 @@ export default async function SellerDashboardPage() {
             {seller.status !== "approved" && (
               <p className="auth-success">Your seller account must be approved before products can be submitted.</p>
             )}
-            <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
+            <div className="seller-store-links">
+              {seller.status === "approved" && (
+                <Link className="button button-secondary" href={`/store/${seller.store_slug}`}>View Storefront</Link>
+              )}
+              <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
+            </div>
           </div>
 
           <div className="account-card">

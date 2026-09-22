@@ -15,7 +15,7 @@ export default async function StorefrontPage({ params }: Props) {
 
   const { data: seller } = await supabase
     .from("sellers")
-    .select("id, store_name, store_slug, description, logo_url")
+     .select("id, store_name, store_slug, description, logo_url, order_method, whatsapp_number, order_instructions")
     .eq("store_slug", slug)
     .eq("status", "approved")
     .maybeSingle();
@@ -54,6 +54,7 @@ export default async function StorefrontPage({ params }: Props) {
             <p>{seller.description || "Discover products from this UTECH marketplace seller."}</p>
             <div className="storefront-meta">
               <span>{products?.length ?? 0} published products</span>
+              <span>Orders: {seller.order_method === "whatsapp" ? "WhatsApp" : seller.order_method === "hybrid" ? "UTECH + WhatsApp" : "UTECH Checkout"}</span>
               <Link href="/shop">Browse UTECH Store</Link>
             </div>
           </div>

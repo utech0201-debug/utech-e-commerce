@@ -1364,3 +1364,86 @@ html[data-theme="dark"] .storefront-logo-fallback { background: #123a63; }
   color: var(--blue);
   font-weight: 700;
 }
+
+
+/* Seller earnings */
+.seller-earnings-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.seller-earnings-grid {
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, .8fr);
+}
+
+.seller-payout-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.seller-payout-status-pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.seller-payout-status-eligible {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.seller-payout-status-paid {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.seller-payout-status-cancelled,
+.seller-payout-status-refunded {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.seller-earnings-note {
+  margin-top: 24px;
+}
+
+html[data-theme="dark"] .seller-payout-status-pending {
+  background: #422006;
+  color: #fdba74;
+}
+
+html[data-theme="dark"] .seller-payout-status-eligible {
+  background: #052e24;
+  color: #6ee7b7;
+}
+
+html[data-theme="dark"] .seller-payout-status-paid {
+  background: #102747;
+  color: #93c5fd;
+}
+
+html[data-theme="dark"] .seller-payout-status-cancelled,
+html[data-theme="dark"] .seller-payout-status-refunded {
+  background: #450a0a;
+  color: #fca5a5;
+}
+
+@media (max-width: 900px) {
+  .seller-earnings-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .seller-earnings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .seller-earnings-stats {
+    grid-template-columns: 1fr;
+  }
+}

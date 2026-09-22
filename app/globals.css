@@ -1559,3 +1559,44 @@ html[data-theme="dark"] .seller-order-actions textarea {
   border-color: #26364d;
   color: #f8fafc;
 }
+
+
+.seller-external-order-form,
+.seller-external-items {
+  display: grid;
+  gap: 1rem;
+}
+
+.seller-external-items {
+  margin: 1.5rem 0;
+}
+
+.seller-external-line {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 100px 130px auto auto;
+  gap: .75rem;
+  align-items: center;
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.seller-external-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 760px) {
+  .seller-external-line {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .seller-external-line select {
+    grid-column: 1 / -1;
+  }
+}

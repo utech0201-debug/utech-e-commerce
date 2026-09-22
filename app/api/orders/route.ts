@@ -281,6 +281,26 @@ export async function POST(request: Request) {
         }
         return NextResponse.json({ error: "Could not record marketplace earnings." }, { status: 500 });
       }
+
+      for (const line of marketplaceLines) {
+        const { data: inventoryUpdated, error: inventoryError } = await supabaseAdmin
+          .schema("private")
+          .rpc("decrement_seller_inventory", {
+            p_product_id: line.id,
+            p_quantity: line.quantity,
+          });
+
+        if (inventoryError || inventoryUpdated !== true) {
+          console.error("Marketplace inventory update failed:", inventoryError);
+          await supabaseAdmin.from("seller_order_items").delete().eq("order_item_id", insertedItems.map((item) => item.id));
+          await supabaseAdmin.from("order_items").delete().eq("order_id", order.id);
+          await supabaseAdmin.from("orders").delete().eq("id", order.id);
+          if (createdCustomerId) {
+            await supabaseAdmin.from("customers").delete().eq("id", createdCustomerId);
+          }
+          return NextResponse.json({ error: "One or more marketplace products went out of stock. Please review your cart." }, { status: 409 });
+        }
+      }
     }
 
     return NextResponse.json({

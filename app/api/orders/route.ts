@@ -155,7 +155,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Could not create order." }, { status: 500 });
     }
 
-    const { data: insertedItems, error: itemsError } = await supabaseAdmin.from("order_items").insert(orderItems.map((item) => ({ order_id: order.id, ...item }))).select("id, product_slug, seller_id, unit_price, quantity");
+    const { data: insertedItems, error: itemsError } = await supabaseAdmin.from("order_items").insert(orderItems.map((item) => ({ order_id: order.id, ...item }))).select("id, product_slug, seller_id, unit_price, quantity, variant_id");
 
     if (itemsError || !insertedItems) {
       await supabaseAdmin.from("orders").delete().eq("id", order.id);

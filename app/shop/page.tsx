@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import ShopExplorer from "@/components/shop/ShopExplorer";
 import { products } from "@/data/products";
+import { getApprovedMarketplaceProducts } from "@/lib/marketplace";
 
 function ShopExplorerFallback() {
   return (
@@ -11,7 +12,9 @@ function ShopExplorerFallback() {
   );
 }
 
-export default function Shop() {
+export default async function Shop() {
+  const marketplaceProducts = await getApprovedMarketplaceProducts();
+  const catalog = [...products, ...marketplaceProducts];
   return (
     <section className="section">
       <div className="container">
@@ -22,7 +25,7 @@ export default function Shop() {
         </p>
         <div style={{ marginTop: 40 }}>
           <Suspense fallback={<ShopExplorerFallback />}>
-            <ShopExplorer products={products} />
+            <ShopExplorer products={catalog} />
           </Suspense>
         </div>
       </div>

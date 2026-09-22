@@ -23,9 +23,15 @@ export default async function AdminPayoutsPage({ searchParams }: { searchParams:
   }
 
   const adminClient = getSupabaseAdmin();
-  const [{ data: earnings }, { data: payouts }, { data: sellers }] = await Promise.all([
+  const [{ data: earnings }, { data: externalEarnings }, { data: payouts }, { data: sellers }] = await Promise.all([
     adminClient
       .from("seller_order_items")
+      .select("id, seller_id, gross_amount, platform_fee, seller_amount, payout_status, created_at")
+      .in("payout_status", ["pending", "eligible"])
+      .order("created_at", { ascending: false })
+      .limit(100),
+    adminClient
+      .from("seller_external_orders")
       .select("id, seller_id, gross_amount, platform_fee, seller_amount, payout_status, created_at")
       .in("payout_status", ["pending", "eligible"])
       .order("created_at", { ascending: false })
@@ -38,14 +44,18 @@ export default async function AdminPayoutsPage({ searchParams }: { searchParams:
     adminClient.from("sellers").select("id, store_name, store_slug, status").order("store_name"),
   ]);
 
+  const allEarnings = [
+    ...(earnings ?? []).map((row) => ({ ...row, source: "checkout" })),
+    ...(externalEarnings ?? []).map((row) => ({ ...row, source: "external" })),
+  ];
   const sellerMap = new Map((sellers ?? []).map((seller) => [seller.id, seller]));
   const eligibleBySeller = new Map<string, number>();
-  for (const row of earnings ?? []) {
+  for (const row of allEarnings) {
     if (row.payout_status === "eligible") {
       eligibleBySeller.set(row.seller_id, (eligibleBySeller.get(row.seller_id) ?? 0) + Number(row.seller_amount ?? 0));
     }
   }
-  const eligibleRows = earnings ?? [];
+  const eligibleRows = allEarnings;
   const eligibleTotal = eligibleRows.reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
   const pendingTotal = eligibleRows
     .filter((row) => row.payout_status === "pending")

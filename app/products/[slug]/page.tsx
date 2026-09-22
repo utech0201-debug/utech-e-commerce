@@ -27,7 +27,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       ? data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware"
       : "hardware";
 
-    const { data: imageRows } = await supabase.from("seller_product_images").select("image_url, sort_order").eq("product_id", data.id).order("sort_order", { ascending: true });
+    const { data: variantRows } = await supabase.from("seller_product_variants").select("id, label, attributes, price, compare_at_price, inventory, sku").eq("product_id", data.id).eq("is_active", true).order("created_at", { ascending: true });\n    const variants = (variantRows ?? []).map((variant) => ({ id: variant.id, label: variant.label, attributes: (variant.attributes ?? {}) as Record<string, string>, price: Number(variant.price), compareAtPrice: variant.compare_at_price == null ? null : Number(variant.compare_at_price), inventory: Number(variant.inventory), sku: variant.sku }));\n\n    const { data: imageRows } = await supabase.from("seller_product_images").select("image_url, sort_order").eq("product_id", data.id).order("sort_order", { ascending: true });
     gallery = (imageRows ?? []).map((image) => image.image_url);
     if (!gallery.length && data.image_url) gallery = [data.image_url];
 
@@ -45,7 +45,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       sellerStoreName: seller.store_name,
       orderMethod: seller.order_method,
       whatsappNumber: seller.whatsapp_number,
-      orderInstructions: seller.order_instructions,
+      orderInstructions: seller.order_instructions,\n      variants,
     };
   }
 

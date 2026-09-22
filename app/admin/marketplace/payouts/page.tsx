@@ -8,7 +8,8 @@ function money(value: number | string | null | undefined, currency = "USD") {
   return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(Number(value ?? 0));
 }
 
-export default async function AdminPayoutsPage() {
+export default async function AdminPayoutsPage({ searchParams }: { searchParams: Promise<{ success?: string }> }) {
+  const params = await searchParams;
   const supabase = await createSupabaseServerClient();
   const { data: claimsData } = await supabase.auth.getClaims();
   const email = claimsData?.claims?.email as string | undefined;
@@ -38,6 +39,12 @@ export default async function AdminPayoutsPage() {
   ]);
 
   const sellerMap = new Map((sellers ?? []).map((seller) => [seller.id, seller]));
+  const eligibleBySeller = new Map<string, number>();
+  for (const row of earnings ?? []) {
+    if (row.payout_status === "eligible") {
+      eligibleBySeller.set(row.seller_id, (eligibleBySeller.get(row.seller_id) ?? 0) + Number(row.seller_amount ?? 0));
+    }
+  }
   const eligibleRows = earnings ?? [];
   const eligibleTotal = eligibleRows.reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
   const pendingTotal = eligibleRows
@@ -55,6 +62,7 @@ export default async function AdminPayoutsPage() {
             <span className="eyebrow">UTECH ADMIN</span>
             <h1 className="section-title">Payouts.</h1>
             <p className="section-copy">Review seller earnings before UTECH records a payout.</p>
+            {params.success === "1" && <p className="auth-success">Payout recorded successfully.</p>}
           </div>
           <div className="seller-header-actions">
             <a className="button button-secondary" href="/admin/marketplace">Marketplace Admin</a>
@@ -74,6 +82,24 @@ export default async function AdminPayoutsPage() {
           </div>
           {eligibleRows.length ? (
             <div className="order-list">
+              {Array.from(eligibleBySeller.keys()).map((sellerId) => {
+                const seller = sellerMap.get(sellerId);
+                const sellerEligible = eligibleBySeller.get(sellerId) ?? 0;
+                return (
+                  <div className="order-row" key={sellerId}>
+                    <div>
+                      <strong>{seller?.store_name ?? "Unknown seller"}</strong>
+                      <span>{money(sellerEligible)} eligible earnings</span>
+                    </div>
+                    <form action="/api/admin/marketplace/payout" method="post" className="admin-review-actions">
+                      <input type="hidden" name="sellerId" value={sellerId} />
+                      <input type="hidden" name="provider" value="manual" />
+                      <input name="providerReference" placeholder="Payment reference" maxLength={160} aria-label="Payment reference" />
+                      <button className="button button-primary" type="submit">Record payout</button>
+                    </form>
+                  </div>
+                );
+              })}
               {eligibleRows.map((row) => {
                 const seller = sellerMap.get(row.seller_id);
                 return (

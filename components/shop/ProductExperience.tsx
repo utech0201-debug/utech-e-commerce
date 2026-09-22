@@ -56,7 +56,7 @@ export default function ProductExperience({ product, gallery }: { product: Produ
           )}
 
           <div className="marketplace-price-row">
-            <div className="price">{"$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</div>
+            <div className="price">{product.variants?.length ? "From $" + Math.min(...product.variants.map((variant) => variant.price)).toLocaleString("en-US", { minimumFractionDigits: 2 }) : "$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</div>
             <span className="marketplace-availability">Available to order</span>
           </div>
 

@@ -33,7 +33,18 @@ export default function ProductCard({ product }: { product: Product }) {
         <p>{product.description}</p>
         <div className="product-footer">
           <strong>{"$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</strong>
-          <AddToCart product={product} />
+          {product.orderMethod === "whatsapp" && product.whatsappNumber ? (
+            <a
+              className="button button-primary"
+              target="_blank"
+              rel="noreferrer"
+              href={`https://wa.me/${product.whatsappNumber.replace(/\\D/g, "")}?text=${encodeURIComponent(`Hi, I want to order ${product.name} from ${product.sellerStoreName ?? "your UTECH store"}.`)}`}
+            >
+              WhatsApp
+            </a>
+          ) : (
+            <AddToCart product={product} />
+          )}
         </div>
       </div>
     </article>

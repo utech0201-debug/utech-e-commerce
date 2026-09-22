@@ -11,7 +11,7 @@ const filters: Array<{ label: string; value: "all" | ProductCategory }> = [
   { label: "Games", value: "games" },
   { label: "Consoles", value: "consoles" },
   { label: "Laptops", value: "laptops" },
-  { label: "Hardware", value: "hardware" },
+  { label: "Hardware", value: "hardware" },\n  { label: "Fashion", value: "fashion" },\n  { label: "Accessories", value: "accessories" },\n  { label: "Other", value: "other" },
 ];
 
 type Sort = "featured" | "price-low" | "price-high" | "name";
@@ -51,7 +51,7 @@ export default function ShopExplorer({ products, initialQuery = "" }: { products
       const matchesQuery = !normalized || [product.name, product.type, product.description, product.category, product.sellerStoreName ?? ""].join(" ").toLowerCase().includes(normalized);
       return matchesCategory && matchesQuery;
     });
-    return [...filtered].sort((a,b) => sort === "price-low" ? a.price-b.price : sort === "price-high" ? b.price-a.price : sort === "name" ? a.name.localeCompare(b.name) : Number(Boolean(b.featured))-Number(Boolean(a.featured)));
+    const effectivePrice = (product: Product) => product.variants?.length ? Math.min(...product.variants.map((variant) => variant.price)) : product.price;\n    return [...filtered].sort((a,b) => sort === "price-low" ? effectivePrice(a)-effectivePrice(b) : sort === "price-high" ? effectivePrice(b)-effectivePrice(a) : sort === "name" ? a.name.localeCompare(b.name) : Number(Boolean(b.featured))-Number(Boolean(a.featured)));
   }, [category, products, query, sort]);
 
   const updateCategory = (value: "all" | ProductCategory) => {

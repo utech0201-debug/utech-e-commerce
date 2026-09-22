@@ -21,7 +21,7 @@ export default async function SellerEarningsPage() {
 
   const { data: seller } = await supabase
     .from("sellers")
-    .select("id, store_name, status, commission_rate")
+    .select("id, store_name, store_slug, status, commission_rate")
     .eq("user_id", userId)
     .maybeSingle();
 

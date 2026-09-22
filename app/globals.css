@@ -1672,3 +1672,74 @@ html[data-theme="dark"] .cart-empty-marketplace,html[data-theme="dark"] .cart-pa
   .checkout-item strong { flex: 0 0 auto; }
   .checkout-back { display: block; width: 100%; padding-top: 2px; }
 }
+
+
+/* Global mobile polish pass */
+html, body { overflow-x: hidden; }
+
+@media (max-width: 760px) {
+  .container, .nav-inner { width: min(calc(100% - 24px), var(--max)); }
+  .section { padding: 52px 0; }
+  .section-title { overflow-wrap: anywhere; }
+  .button { max-width: 100%; }
+
+  .account-header { gap: 16px; margin-bottom: 24px; }
+  .account-header .seller-header-actions,
+  .seller-header-actions { width: 100%; justify-content: flex-start; }
+  .seller-header-actions .button,
+  .seller-header-actions .seller-status,
+  .seller-header-actions .seller-payout-status { max-width: 100%; }
+  .account-grid, .admin-marketplace-grid { gap: 16px; }
+  .auth-card, .account-card { padding: 20px; border-radius: 16px; }
+  .account-card .button { width: 100%; align-self: stretch; }
+
+  .seller-hero { gap: 24px; padding: 22px; border-radius: 16px; }
+  .seller-hero h1 { font-size: clamp(2.6rem, 14vw, 4.4rem); }
+  .seller-hero .hero-actions { width: 100%; }
+  .seller-hero .hero-actions .button { flex: 1 1 100%; width: 100%; }
+  .seller-hero-panel { min-height: 220px; padding: 24px; }
+  .seller-callout { padding: 24px; border-radius: 16px; }
+  .seller-callout .button { width: 100%; }
+
+  .seller-form-actions { display: grid; grid-template-columns: 1fr; }
+  .seller-form-actions .button { width: 100%; }
+  .seller-product-actions { flex-wrap: wrap; }
+
+  .seller-order-card { padding: 16px; border-radius: 14px; }
+  .seller-order-card-header { align-items: flex-start; }
+  .seller-order-customer { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .seller-order-customer span { overflow-wrap: anywhere; }
+
+  .storefront-hero { grid-template-columns: 1fr; gap: 18px; padding: 22px; border-radius: 16px; }
+  .storefront-brand { justify-items: start; }
+  .storefront-logo { width: 76px; height: 76px; }
+  .storefront-heading { margin: 40px 0 18px; }
+
+  .marketplace-detail { grid-template-columns: 1fr; gap: 24px; }
+  .marketplace-gallery { min-width: 0; }
+  .gallery-main { min-height: 300px; }
+  .gallery-thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .gallery-thumb { min-width: 0; }
+  .marketplace-detail-copy { min-width: 0; }
+  .seller-summary { width: 100%; }
+  .purchase-panel { padding: 16px; }
+
+  .cart-layout { gap: 16px; }
+  .marketplace-cart-item { min-width: 0; }
+
+  .admin-marketplace-grid { grid-template-columns: 1fr; }
+  .admin-review-row { width: 100%; }
+  .admin-review-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .admin-review-actions .button { width: 100%; min-width: 0; }
+}
+
+@media (max-width: 420px) {
+  .container, .nav-inner { width: calc(100% - 20px); }
+  .section { padding: 44px 0; }
+  .auth-card, .account-card, .checkout-card, .checkout-summary { padding: 16px; }
+  .section-title { font-size: clamp(1.9rem, 11vw, 2.7rem); }
+  .hero-actions, .seller-hero .hero-actions { gap: 8px; }
+  .hero-actions .button { width: 100%; }
+  .admin-review-actions { grid-template-columns: 1fr; }
+  .gallery-thumbs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

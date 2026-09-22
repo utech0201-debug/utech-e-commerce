@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";\nimport { Check, ShoppingCart } from "lucide-react";
+import { useState } from "react";
+import { Check, ShoppingCart } from "lucide-react";
 import type { Product, ProductVariant } from "@/data/products";
 import { useCart } from "@/components/cart/CartProvider";
 

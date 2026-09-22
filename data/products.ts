@@ -10,6 +10,9 @@ export type Product = {
   image: string;
   description: string;
   featured?: boolean;
+  sellerId?: string;
+  sellerStoreSlug?: string;
+  sellerStoreName?: string;
 };
 
 const gameImage = (file: string) =>

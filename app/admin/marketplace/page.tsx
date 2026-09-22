@@ -36,7 +36,7 @@ export default async function MarketplaceAdminPage() {
 
   const admin = getSupabaseAdmin();
   const [{ data: sellers }, { data: products }] = await Promise.all([
-    admin.from("sellers").select("id, store_name, store_slug, description, status, commission_rate, created_at").order("created_at", { ascending: false }),
+    admin.from("sellers").select("id, store_name, store_slug, description, status, commission_rate, verification_status, created_at").order("created_at", { ascending: false }),
     admin.from("seller_products").select("id, seller_id, name, category, price, inventory, status, rejection_reason, created_at, sellers(store_name)").order("created_at", { ascending: false }),
   ]);
 
@@ -74,7 +74,7 @@ export default async function MarketplaceAdminPage() {
               <div className="admin-review-row" key={seller.id}>
                 <div>
                   <strong>{seller.store_name}</strong>
-                  <span>/{seller.store_slug}</span>
+                  <span>/{seller.store_slug} · identity: {seller.verification_status}</span>
                   <small>{seller.description || "No description provided."}</small>
                 </div>
                 <div className="admin-review-actions">

@@ -49,6 +49,7 @@ export default async function MarketplaceAdminPage() {
         <div className="account-header">
           <div className="seller-header-actions">
             <a className="button button-secondary" href="/admin/marketplace/payouts">Payout Center</a>
+            <a className="button button-secondary" href="/admin/marketplace/external-orders">External Orders</a>
           </div>
           <div>
             <span className="eyebrow">UTECH ADMIN</span>

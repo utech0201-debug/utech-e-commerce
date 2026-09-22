@@ -27,10 +27,16 @@ export default async function SellerEarningsPage() {
 
   if (!seller) redirect("/seller/apply");
 
-  const [{ data: earnings }, { data: payouts }] = await Promise.all([
+  const [{ data: earnings }, { data: externalEarnings }, { data: payouts }] = await Promise.all([
     supabase
       .from("seller_order_items")
       .select("id, gross_amount, commission_rate, platform_fee, seller_amount, payout_status, created_at")
+      .eq("seller_id", seller.id)
+      .order("created_at", { ascending: false })
+      .limit(50),
+    supabase
+      .from("seller_external_orders")
+      .select("id, gross_amount, commission_rate, platform_fee, seller_amount, payout_status, created_at, source, verification_status")
       .eq("seller_id", seller.id)
       .order("created_at", { ascending: false })
       .limit(50),
@@ -43,15 +49,20 @@ export default async function SellerEarningsPage() {
   ]);
 
   const rows = earnings ?? [];
+  const externalRows = externalEarnings ?? [];
+  const allSellerEarnings = [
+    ...rows.map((row) => ({ ...row, source: "UTECH Checkout" })),
+    ...externalRows.map((row) => ({ ...row, source: "External sale" })),
+  ];
   const payoutRows = payouts ?? [];
 
-  const gross = rows.reduce((sum, row) => sum + Number(row.gross_amount ?? 0), 0);
-  const platformFees = rows.reduce((sum, row) => sum + Number(row.platform_fee ?? 0), 0);
-  const sellerEarnings = rows.reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
-  const pending = rows
+  const gross = allSellerEarnings.reduce((sum, row) => sum + Number(row.gross_amount ?? 0), 0);
+  const platformFees = allSellerEarnings.reduce((sum, row) => sum + Number(row.platform_fee ?? 0), 0);
+  const sellerEarnings = allSellerEarnings.reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
+  const pending = allSellerEarnings
     .filter((row) => row.payout_status === "pending")
     .reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
-  const eligible = rows
+  const eligible = allSellerEarnings
     .filter((row) => row.payout_status === "eligible")
     .reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
   const paidOut = payoutRows
@@ -90,16 +101,16 @@ export default async function SellerEarningsPage() {
           <div className="account-card">
             <div className="account-card-heading">
               <h2>Sales ledger</h2>
-              <span>{rows.length} recent records</span>
+              <span>{allSellerEarnings.length} recent records</span>
             </div>
-            {rows.length ? (
+            {allSellerEarnings.length ? (
               <div className="order-list">
-                {rows.map((row) => (
+                {allSellerEarnings.map((row) => (
                   <div className="order-row" key={row.id}>
                     <div>
                       <strong>{money(row.seller_amount)}</strong>
                       <span>
-                        Gross {money(row.gross_amount)} · {Number(row.commission_rate).toFixed(2)}% commission
+                        {row.source} · Gross {money(row.gross_amount)} · {Number(row.commission_rate).toFixed(2)}% commission
                       </span>
                       <span>{new Date(row.created_at).toLocaleString()}</span>
                     </div>
@@ -149,7 +160,7 @@ export default async function SellerEarningsPage() {
           <h2>Commission model</h2>
           <p>
             Your current UTECH platform commission rate is <strong>{Number(seller.commission_rate).toFixed(2)}%</strong>.
-            Commission is recorded when a marketplace order is created; seller earnings are tracked separately from customer order totals.
+            Commission is recorded for both UTECH Checkout and verified external sales. External sales remain pending until UTECH verification before becoming payout eligible.
           </p>
         </div>
       </div>

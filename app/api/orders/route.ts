@@ -78,7 +78,8 @@ export async function POST(request: Request) {
       const sellerMap = new Map((sellers ?? []).map((seller) => [seller.id, seller]));
       const productMap = new Map((sellerProducts ?? []).map((product) => [product.id, product]));
 
-      marketplaceLines = marketplaceItems.map((item) => {\n        const id = item.id.match(sellerProductIdPattern)?.[1];
+      marketplaceLines = marketplaceItems.map((item) => {
+        const id = item.id.match(sellerProductIdPattern)?.[1];
         const product = productMap.get(id);
         const item = normalizedItems.find((candidate) => candidate.id === "seller-" + id);
         const seller = product ? sellerMap.get(product.seller_id) : undefined;

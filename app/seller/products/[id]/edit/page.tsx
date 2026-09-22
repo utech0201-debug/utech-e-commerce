@@ -49,6 +49,11 @@ export default async function EditSellerProductPage({
     );
   }
 
+  const { count: imageCount } = await supabase
+    .from("seller_product_images")
+    .select("id", { count: "exact", head: true })
+    .eq("product_id", product.id);
+
   return (
     <section className="section account-section">
       <div className="container seller-product-page">
@@ -63,6 +68,7 @@ export default async function EditSellerProductPage({
         <div className="account-card">
           <ProductForm
             sellerId={seller.id}
+            initialImageCount={imageCount ?? 0}
             product={{
               id: product.id,
               name: product.name,

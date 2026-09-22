@@ -1652,3 +1652,23 @@ html[data-theme="dark"] .cart-empty-marketplace,html[data-theme="dark"] .cart-pa
   background: #fef2f2;
   color: #b91c1c;
 }
+
+
+/* Checkout mobile polish */
+@media (max-width: 700px) {
+  .checkout-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 28px; }
+  .checkout-form { min-width: 0; gap: 14px; }
+  .checkout-card { min-width: 0; padding: 18px; border-radius: 12px; }
+  .checkout-card h2 { margin-bottom: 16px; font-size: 1.05rem; }
+  .form-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .form-grid label.full { grid-column: auto; }
+  .form-grid input { width: 100%; min-width: 0; }
+  .payment-placeholder { padding: 15px; }
+  .checkout-form > .button { width: 100%; min-height: 50px; }
+  .checkout-summary { width: 100%; min-width: 0; padding: 18px; }
+  .checkout-summary h2 { font-size: 1.05rem; }
+  .checkout-item { align-items: flex-start; gap: 10px; font-size: .76rem; }
+  .checkout-item span { min-width: 0; overflow-wrap: anywhere; }
+  .checkout-item strong { flex: 0 0 auto; }
+  .checkout-back { display: block; width: 100%; padding-top: 2px; }
+}

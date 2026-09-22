@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState } from "react";\nimport { Check, ShoppingCart } from "lucide-react";
 import type { Product, ProductVariant } from "@/data/products";
 import { useCart } from "@/components/cart/CartProvider";
 
@@ -24,7 +24,7 @@ export default function AddToCart({ product }: { product: Product }) {
     return (
       <>
         <button className="add-button" type="button" onClick={() => setOpen(true)}>
-          {added ? "Added ✓" : "Select options"}
+          {added ? <><Check size={15} /> Added</> : "Select options"}
         </button>
         {open && (
           <div className="variant-modal-backdrop" role="presentation" onMouseDown={(event) => {
@@ -58,5 +58,5 @@ export default function AddToCart({ product }: { product: Product }) {
     );
   }
 
-  return <button className="add-button" type="button" onClick={() => addItem()}>{added ? "Added ✓" : "Add to Cart"}</button>;
+  return <button className="add-button" type="button" onClick={() => addItem()}>{added ? <><Check size={15} /> Added</> : <><ShoppingCart size={15} /> Add to Cart</>}</button>;
 }

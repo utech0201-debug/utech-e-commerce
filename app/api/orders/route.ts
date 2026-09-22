@@ -80,8 +80,7 @@ export async function POST(request: Request) {
 
       marketplaceLines = marketplaceItems.map((item) => {
         const id = item.id.match(sellerProductIdPattern)?.[1];
-        const product = productMap.get(id);
-        const item = normalizedItems.find((candidate) => candidate.id === "seller-" + id);
+        const product = id ? productMap.get(id) : undefined;
         const seller = product ? sellerMap.get(product.seller_id) : undefined;
         const commissionRate = seller ? Number(seller.commission_rate) : undefined;
 

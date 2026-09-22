@@ -1447,3 +1447,54 @@ html[data-theme="dark"] .seller-payout-status-refunded {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Seller ordering controls */
+.auth-form select,
+.auth-form textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--navy);
+  outline: none;
+}
+.auth-form select:focus,
+.auth-form textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.seller-order-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+}
+.seller-order-options p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.admin-review-actions input {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--navy);
+}
+html[data-theme="dark"] .auth-form select,
+html[data-theme="dark"] .auth-form textarea,
+html[data-theme="dark"] .admin-review-actions input {
+  background: #111c2e;
+  border-color: #26364d;
+  color: #f8fafc;
+}
+html[data-theme="dark"] .seller-order-options {
+  background: #111c2e;
+  border-color: #26364d;
+}

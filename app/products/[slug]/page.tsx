@@ -17,10 +17,12 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let product = getProduct(slug);\n  let gallery: string[] = product?.image ? [product.image] : [];
+  let product = getProduct(slug);
+  let gallery: string[] = product?.image ? [product.image] : [];
 
   if (!product) {
     const supabase = await createSupabaseServerClient();
+
     const { data } = await supabase
       .from("seller_products")
       .select("id, slug, name, description, category, price, image_url, inventory, seller_id")
@@ -44,7 +46,16 @@ export default async function ProductPage({
         ? (data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware")
         : "hardware";
 
-    const { data: imageRows } = await supabase\n      .from("seller_product_images")\n      .select("image_url, sort_order")\n      .eq("product_id", data.id)\n      .order("sort_order", { ascending: true });\n\n    gallery = (imageRows ?? []).map((image) => image.image_url);\n    if (!gallery.length && data.image_url) gallery = [data.image_url];\n\n    product = {
+    const { data: imageRows } = await supabase
+      .from("seller_product_images")
+      .select("image_url, sort_order")
+      .eq("product_id", data.id)
+      .order("sort_order", { ascending: true });
+
+    gallery = (imageRows ?? []).map((image) => image.image_url);
+    if (!gallery.length && data.image_url) gallery = [data.image_url];
+
+    product = {
       id: "seller-" + data.id,
       slug: data.slug,
       name: data.name,
@@ -63,15 +74,20 @@ export default async function ProductPage({
     <section className="detail">
       <div className="container detail-grid">
         <div className="detail-image">
-          {product.image ? (
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(max-width:850px) 100vw, 50vw"
-              style={{ objectFit: "contain", padding: 28 }}
-              unoptimized={Boolean(product.sellerId)}
-            />
+          {gallery.length > 0 ? (
+            <div className="product-gallery">
+              {gallery.map((image, index) => (
+                <div className="product-gallery-image" key={image + index}>
+                  <Image
+                    src={image}
+                    alt={index === 0 ? product.name : product.name + " view " + (index + 1)}
+                    fill
+                    sizes="(max-width:850px) 100vw, 50vw"
+                    unoptimized={Boolean(product.sellerId)}
+                  />
+                </div>
+              ))}
+            </div>
           ) : (
             <div className="storefront-product-placeholder">
               <span>{product.category}</span>

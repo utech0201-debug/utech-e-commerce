@@ -26,9 +26,7 @@ const categories: ProductCategory[] = ["games", "consoles", "laptops", "hardware
 
 function normalizeCategory(category: string): ProductCategory {
   const value = category.trim().toLowerCase();
-  return categories.includes(value as ProductCategory)
-    ? (value as ProductCategory)
-    : "hardware";
+  return categories.includes(value as ProductCategory) ? (value as ProductCategory) : "hardware";
 }
 
 export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
@@ -49,31 +47,31 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
     .eq("status", "approved")
     .in("id", sellerIds);
 
-  const sellerMap = new Map(
-    ((sellers ?? []) as SellerRow[]).map((seller) => [seller.id, seller]),
-  );
+  const sellerMap = new Map(((sellers ?? []) as SellerRow[]).map((seller) => [seller.id, seller]));
 
-  return (rows as SellerProductRow[])
-    .map((row) => {
-      const seller = sellerMap.get(row.seller_id);
-      if (!seller) return null;
+  const products: Array<Product | null> = (rows as SellerProductRow[]).map((row) => {
+    const seller = sellerMap.get(row.seller_id);
+    if (!seller) return null;
 
-      return {
-        id: "seller-" + row.id,
-        slug: row.slug,
-        name: row.name,
-        price: Number(row.price),
-        category: normalizeCategory(row.category),
-        type: "Marketplace Product",
-        image: row.image_url ?? "",
-        description: row.description,
-        sellerId: row.seller_id,
-        sellerStoreSlug: seller.store_slug,
-        sellerStoreName: seller.store_name,
-        orderMethod: seller.order_method,
-        whatsappNumber: seller.whatsapp_number,
-        orderInstructions: seller.order_instructions,
-      } satisfies Product;
-    })
-    .filter((product): product is Product => product !== null);
+    const product: Product = {
+      id: "seller-" + row.id,
+      slug: row.slug,
+      name: row.name,
+      price: Number(row.price),
+      category: normalizeCategory(row.category),
+      type: "Marketplace Product",
+      image: row.image_url ?? "",
+      description: row.description,
+      sellerId: row.seller_id,
+      sellerStoreSlug: seller.store_slug,
+      sellerStoreName: seller.store_name,
+      orderMethod: seller.order_method,
+      whatsappNumber: seller.whatsapp_number,
+      orderInstructions: seller.order_instructions,
+    };
+
+    return product;
+  });
+
+  return products.filter((product): product is Product => product !== null);
 }

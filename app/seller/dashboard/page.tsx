@@ -88,6 +88,7 @@ export default async function SellerDashboardPage() {
               )}
               <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
               <Link className="button button-secondary" href="/seller/orders">Orders</Link>
+              <Link className="button button-secondary" href="/seller/external-orders">Record External Sale</Link>
               <Link className="button button-secondary" href="/seller/earnings">View Earnings</Link>
               <Link className="button button-secondary" href="/seller/settings">Order Settings</Link>
             </div>

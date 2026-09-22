@@ -35,13 +35,20 @@ export default async function MarketplaceAdminPage() {
   }
 
   const admin = getSupabaseAdmin();
-  const [{ data: sellers }, { data: products }] = await Promise.all([
+  const [{ data: sellers }, { data: products }, { data: verificationCases }, { data: payoutRows }] = await Promise.all([
     admin.from("sellers").select("id, store_name, store_slug, description, status, commission_rate, verification_status, created_at").order("created_at", { ascending: false }),
     admin.from("seller_products").select("id, seller_id, name, category, price, inventory, status, rejection_reason, created_at, sellers(store_name)").order("created_at", { ascending: false }),
+    admin.from("seller_verifications").select("id, verification_status").in("verification_status", ["submitted", "under_review", "needs_more_info"]),
+    admin.from("seller_order_items").select("id, seller_id, seller_amount, payout_status").in("payout_status", ["pending", "eligible"]).limit(500),
   ]);
 
-  const pendingSellers = sellers?.filter((seller) => seller.status === "pending") ?? [];
-  const pendingProducts = products?.filter((product) => product.status === "pending") ?? [];
+  const sellerRows = sellers ?? [];
+  const productRows = products ?? [];
+  const pendingSellers = sellerRows.filter((seller) => seller.status === "pending");
+  const activeSellers = sellerRows.filter((seller) => seller.status === "approved");
+  const suspendedSellers = sellerRows.filter((seller) => seller.status === "suspended");
+  const pendingProducts = productRows.filter((product) => product.status === "pending");
+  const openEarnings = (payoutRows ?? []).reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
 
   return (
     <section className="section account-section">
@@ -50,18 +57,22 @@ export default async function MarketplaceAdminPage() {
           <div className="seller-header-actions">
             <a className="button button-secondary" href="/admin/marketplace/payouts">Payout Center</a>
             <a className="button button-secondary" href="/admin/marketplace/external-orders">External Orders</a>
+            <a className="button button-secondary" href="/admin/marketplace/verification">Verification</a>
           </div>
           <div>
             <span className="eyebrow">UTECH ADMIN</span>
             <h1 className="section-title">Marketplace control center.</h1>
-            <p className="section-copy">Review sellers and product listings before they become visible in the marketplace.</p>
+            <p className="section-copy">Review sellers and product listings before they become visible in the marketplace, and control seller access when risk changes.</p>
           </div>
         </div>
 
         <div className="seller-stats">
           <div className="account-card"><span>Pending sellers</span><strong>{pendingSellers.length}</strong></div>
           <div className="account-card"><span>Pending products</span><strong>{pendingProducts.length}</strong></div>
-          <div className="account-card"><span>Total sellers</span><strong>{sellers?.length ?? 0}</strong></div>
+          <div className="account-card"><span>Active sellers</span><strong>{activeSellers.length}</strong></div>
+          <div className="account-card"><span>Suspended sellers</span><strong>{suspendedSellers.length}</strong></div>
+          <div className="account-card"><span>Verification queue</span><strong>{verificationCases?.length ?? 0}</strong></div>
+          <div className="account-card"><span>Open seller earnings</span><strong>${openEarnings.toFixed(2)}</strong></div>
         </div>
 
         <div className="admin-marketplace-grid">
@@ -74,7 +85,7 @@ export default async function MarketplaceAdminPage() {
               <div className="admin-review-row" key={seller.id}>
                 <div>
                   <strong>{seller.store_name}</strong>
-                  <span>/{seller.store_slug} · identity: {seller.verification_status}</span>
+                  <span>/{seller.store_slug} · identity: {seller.verification_status} · commission: {seller.commission_rate}%</span>
                   <small>{seller.description || "No description provided."}</small>
                 </div>
                 <div className="admin-review-actions">
@@ -120,6 +131,37 @@ export default async function MarketplaceAdminPage() {
               </div>
             )) : <p className="empty">No product listings waiting for review.</p>}
           </div>
+        </div>
+
+        <div className="account-card">
+          <div className="account-card-heading">
+            <h2>Seller access controls</h2>
+            <span>{activeSellers.length + suspendedSellers.length} managed sellers</span>
+          </div>
+          {[...activeSellers, ...suspendedSellers].slice(0, 20).map((seller) => (
+            <div className="admin-review-row" key={seller.id}>
+              <div>
+                <strong>{seller.store_name}</strong>
+                <span>/{seller.store_slug} · {seller.status} · identity: {seller.verification_status}</span>
+              </div>
+              <div className="admin-review-actions">
+                {seller.status === "approved" ? (
+                  <form action="/api/admin/marketplace/seller" method="post">
+                    <input type="hidden" name="sellerId" value={seller.id} />
+                    <input type="hidden" name="decision" value="suspended" />
+                    <button className="button button-secondary" type="submit">Suspend seller</button>
+                  </form>
+                ) : (
+                  <form action="/api/admin/marketplace/seller" method="post">
+                    <input type="hidden" name="sellerId" value={seller.id} />
+                    <input type="hidden" name="decision" value="approved" />
+                    <button className="button button-primary" type="submit">Restore seller</button>
+                  </form>
+                )}
+              </div>
+            </div>
+          ))}
+          {activeSellers.length + suspendedSellers.length > 20 && <p className="seller-field-help">Showing the first 20 managed sellers.</p>}
         </div>
       </div>
     </section>

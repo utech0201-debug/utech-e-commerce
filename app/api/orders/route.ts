@@ -29,7 +29,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order quantities." }, { status: 400 });
     }
 
-    const marketplaceItems = normalizedItems.filter((item) => sellerProductIdPattern.test(item.id));\n    const sellerIds = marketplaceItems.map((item) => item.id.match(sellerProductIdPattern)?.[1]).filter((id): id is string => Boolean(id));
+    const marketplaceItems = normalizedItems.filter((item) => sellerProductIdPattern.test(item.id));
+    const sellerIds = marketplaceItems.map((item) => item.id.match(sellerProductIdPattern)?.[1]).filter((id): id is string => Boolean(id));
     const staticItems = normalizedItems.filter((item) => !sellerProductIdPattern.test(item.id));
 
     if (staticItems.some((item) => item.variantId)) {
@@ -77,7 +78,7 @@ export async function POST(request: Request) {
       const sellerMap = new Map((sellers ?? []).map((seller) => [seller.id, seller]));
       const productMap = new Map((sellerProducts ?? []).map((product) => [product.id, product]));
 
-      marketplaceLines = sellerIds.map((id) => {
+      marketplaceLines = marketplaceItems.map((item) => {\n        const id = item.id.match(sellerProductIdPattern)?.[1];
         const product = productMap.get(id);
         const item = normalizedItems.find((candidate) => candidate.id === "seller-" + id);
         const seller = product ? sellerMap.get(product.seller_id) : undefined;

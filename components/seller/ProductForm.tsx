@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { containsRestrictedMarketplaceContent, marketplacePolicyNotice } from "@/lib/marketplace-policy";
 
 type Product = {
   id?: string;
@@ -66,6 +67,12 @@ export default function ProductForm({ sellerId, product }: Props) {
       return;
     }
 
+    if (containsRestrictedMarketplaceContent(name, description, form.category)) {
+      setError(marketplacePolicyNotice);
+      setSaving(false);
+      return;
+    }
+
     const price = Number(form.price);
     const inventory = Number(form.inventory);
     const compareAt = form.compare_at_price.trim() ? Number(form.compare_at_price) : null;
@@ -104,9 +111,13 @@ export default function ProductForm({ sellerId, product }: Props) {
       : await supabase.from("seller_products").insert({ seller_id: sellerId, slug, ...payload }).select("id").single();
 
     if (result.error) {
-      setError(result.error.code === "23505"
-        ? "That product URL is already in use. Change the product name slightly and try again."
-        : result.error.message);
+      setError(
+        result.error.code === "23505"
+          ? "That product URL is already in use. Change the product name slightly and try again."
+          : result.error.code === "23514"
+            ? marketplacePolicyNotice
+            : result.error.message,
+      );
       setSaving(false);
       return;
     }
@@ -163,6 +174,8 @@ export default function ProductForm({ sellerId, product }: Props) {
           <textarea rows={7} value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="Tell customers what they are buying..." required />
         </label>
       </div>
+
+      <p className="seller-field-help">{marketplacePolicyNotice} Every product must also pass UTECH review before it becomes public.</p>
 
       {error && <p className="auth-error">{error}</p>}
       {message && <p className="auth-success">{message}</p>}

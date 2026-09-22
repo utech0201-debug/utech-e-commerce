@@ -1498,3 +1498,64 @@ html[data-theme="dark"] .seller-order-options {
   background: #111c2e;
   border-color: #26364d;
 }
+
+/* Seller order management */
+.seller-orders-list { display: grid; gap: 16px; }
+.seller-order-card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+}
+.seller-order-card-header,
+.seller-order-meta,
+.seller-order-customer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+}
+.seller-order-card-header { justify-content: space-between; }
+.seller-order-card-header strong,
+.seller-order-customer strong { display: block; }
+.seller-order-card-header span,
+.seller-order-meta span,
+.seller-order-customer span { color: var(--muted); font-size: 0.9rem; }
+.seller-order-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.seller-order-actions {
+  display: grid;
+  grid-template-columns: minmax(150px, 180px) 1fr 1.5fr auto;
+  gap: 10px;
+  align-items: start;
+}
+.seller-order-actions select,
+.seller-order-actions input,
+.seller-order-actions textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--navy);
+}
+@media (max-width: 900px) {
+  .seller-order-actions { grid-template-columns: 1fr 1fr; }
+  .seller-order-actions textarea { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .seller-order-actions { grid-template-columns: 1fr; }
+  .seller-order-actions textarea { grid-column: auto; }
+}
+html[data-theme="dark"] .seller-order-card {
+  background: #0f1a2b;
+  border-color: #26364d;
+}
+html[data-theme="dark"] .seller-order-actions select,
+html[data-theme="dark"] .seller-order-actions input,
+html[data-theme="dark"] .seller-order-actions textarea {
+  background: #111c2e;
+  border-color: #26364d;
+  color: #f8fafc;
+}

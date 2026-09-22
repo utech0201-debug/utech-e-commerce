@@ -20,9 +20,12 @@ type Product = {
 type Props = {
   sellerId: string;
   product?: Product;
+  initialImageCount?: number;
 };
 
 const categories = ["Games", "Consoles", "Laptops", "Hardware", "Accessories", "Other"];
+const MIN_IMAGES = 2;
+const MAX_IMAGES = 10;
 
 function slugify(value: string) {
   return value
@@ -32,7 +35,7 @@ function slugify(value: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-export default function ProductForm({ sellerId, product }: Props) {
+export default function ProductForm({ sellerId, product, initialImageCount = 0 }: Props) {
   const router = useRouter();
   const [form, setForm] = useState<Product>({
     name: product?.name ?? "",
@@ -44,12 +47,32 @@ export default function ProductForm({ sellerId, product }: Props) {
     inventory: product?.inventory ?? "0",
     status: product?.status,
   });
-  const [saving, setSaving] = useState(false);\n  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imageCount, setImageCount] = useState(initialImageCount);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   function update(field: keyof Product, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
+  }
+
+  function handleImages(files: FileList | null) {
+    if (!files) return;
+
+    const selected = Array.from(files);
+    if (selected.length > MAX_IMAGES) {
+      setError("You can select at most 10 product images at a time.");
+      return;
+    }
+
+    if (imageCount + selected.length > MAX_IMAGES) {
+      setError(`This product already has ${imageCount} image(s). You can add ${MAX_IMAGES - imageCount} more.`);
+      return;
+    }
+
+    setError("");
+    setImageFiles(selected);
   }
 
   async function save(status: "draft" | "pending") {
@@ -95,7 +118,21 @@ export default function ProductForm({ sellerId, product }: Props) {
       return;
     }
 
-    const payload = {
+    const finalImageCount = imageCount + imageFiles.length;
+
+    if (status === "pending" && finalImageCount < MIN_IMAGES) {
+      setError(`Add at least ${MIN_IMAGES} product images before submitting for review. Front and back views are recommended.`);
+      setSaving(false);
+      return;
+    }
+
+    if (imageCount + imageFiles.length > MAX_IMAGES) {
+      setError(`A product can have at most ${MAX_IMAGES} images.`);
+      setSaving(false);
+      return;
+    }
+
+    const draftPayload = {
       name,
       description,
       category: form.category,
@@ -103,12 +140,12 @@ export default function ProductForm({ sellerId, product }: Props) {
       compare_at_price: compareAt,
       image_url: form.image_url.trim() || null,
       inventory,
-      status,
+      status: "draft" as const,
     };
 
     const result = product?.id
-      ? await supabase.from("seller_products").update(payload).eq("id", product.id).select("id").single()
-      : await supabase.from("seller_products").insert({ seller_id: sellerId, slug, ...payload }).select("id").single();
+      ? await supabase.from("seller_products").update(draftPayload).eq("id", product.id).select("id").single()
+      : await supabase.from("seller_products").insert({ seller_id: sellerId, slug, ...draftPayload }).select("id").single();
 
     if (result.error) {
       setError(
@@ -122,7 +159,57 @@ export default function ProductForm({ sellerId, product }: Props) {
       return;
     }
 
-    const productId = result.data?.id;\n\n    if (imageFiles.length > 0 && productId) {\n      const uploadForm = new FormData();\n      uploadForm.append("productId", productId);\n      imageFiles.forEach((file) => uploadForm.append("images", file));\n      const uploadResponse = await fetch("/api/seller/product-images", { method: "POST", body: uploadForm });\n      const uploadResult = await uploadResponse.json().catch(() => null);\n      if (!uploadResponse.ok) {\n        setError(uploadResult?.error ?? "Product saved, but the image upload failed. You can edit the product and try again.");\n        setSaving(false);\n        return;\n      }\n    }\n\n    setMessage(status === "pending" ? "Product submitted for UTECH review." : "Product saved as a draft.");
+    const productId = result.data?.id;
+    let uploadedCount = 0;
+
+    if (imageFiles.length > 0 && productId) {
+      const uploadForm = new FormData();
+      uploadForm.append("productId", productId);
+      imageFiles.forEach((file) => uploadForm.append("images", file));
+
+      const uploadResponse = await fetch("/api/seller/product-images", {
+        method: "POST",
+        body: uploadForm,
+      });
+      const uploadResult = await uploadResponse.json().catch(() => null);
+
+      if (!uploadResponse.ok) {
+        setError(uploadResult?.error ?? "Product saved as a draft, but the image upload failed. Try again.");
+        setSaving(false);
+        return;
+      }
+
+      uploadedCount = Number(uploadResult?.uploaded ?? imageFiles.length);
+      setImageCount((current) => current + uploadedCount);
+      setImageFiles([]);
+    }
+
+    if (status === "pending" && productId) {
+      const reviewResult = await supabase
+        .from("seller_products")
+        .update({ status: "pending" })
+        .eq("id", productId)
+        .select("id")
+        .single();
+
+      if (reviewResult.error) {
+        setError(
+          reviewResult.error.code === "42501"
+            ? "Add at least 2 product images before submitting for review."
+            : reviewResult.error.message,
+        );
+        setSaving(false);
+        return;
+      }
+    }
+
+    setMessage(
+      status === "pending"
+        ? "Product submitted for UTECH review."
+        : uploadedCount > 0
+          ? `Draft saved with ${imageCount + uploadedCount} product images.`
+          : "Product saved as a draft.",
+    );
     setSaving(false);
 
     setTimeout(() => router.push("/seller/dashboard"), 500);
@@ -166,7 +253,25 @@ export default function ProductForm({ sellerId, product }: Props) {
         <label className="seller-form-full">
           Product image URL
           <input type="url" value={form.image_url} onChange={(e) => update("image_url", e.target.value)} placeholder="https://..." />
-          <span className="seller-field-help">Image uploads will be added with the marketplace storage system.</span>
+          <span className="seller-field-help">Optional fallback image URL. Uploaded gallery images are used for the marketplace product gallery.</span>
+        </label>
+
+        <label className="seller-form-full">
+          Product images
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            multiple
+            onChange={(e) => handleImages(e.target.files)}
+          />
+          <span className="seller-field-help">
+            {imageCount}/{MAX_IMAGES} images saved. At least {MIN_IMAGES} images are required for review. Front + back views are recommended. You can add side, detail, packaging or in-use views too. Maximum 5 MB per image.
+          </span>
+          {imageFiles.length > 0 && (
+            <span className="seller-field-help">
+              {imageFiles.length} new image{imageFiles.length === 1 ? "" : "s"} selected.
+            </span>
+          )}
         </label>
 
         <label className="seller-form-full">

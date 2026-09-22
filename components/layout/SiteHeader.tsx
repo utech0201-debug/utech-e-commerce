@@ -16,6 +16,7 @@ const links = [
   ["Consoles", "/consoles"],
   ["Laptops", "/laptops"],
   ["Hardware", "/hardware"],
+  ["Sell", "/sell"],
 ];
 
 export default function SiteHeader() {

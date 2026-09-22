@@ -49,7 +49,9 @@ export default async function EditSellerProductPage({
     );
   }
 
-  const { data: variants } = await supabase.from("seller_product_variants").select("id, label, attributes, price, compare_at_price, inventory, sku").eq("product_id", product.id).order("created_at", { ascending: true });\n\n  const { count: imageCount } = await supabase
+  const { data: variants } = await supabase.from("seller_product_variants").select("id, label, attributes, price, compare_at_price, inventory, sku").eq("product_id", product.id).order("created_at", { ascending: true });
+
+  const { count: imageCount } = await supabase
     .from("seller_product_images")
     .select("id", { count: "exact", head: true })
     .eq("product_id", product.id);

@@ -13,7 +13,9 @@ type SellerProductRow = {
   seller_id: string;
 };
 
-type SellerVariantRow = { id: string; product_id: string; label: string; attributes: Record<string, string>; price: number; compare_at_price: number | null; inventory: number; sku: string | null; };\n\ntype SellerRow = {
+type SellerVariantRow = { id: string; product_id: string; label: string; attributes: Record<string, string>; price: number; compare_at_price: number | null; inventory: number; sku: string | null; };
+
+type SellerRow = {
   id: string;
   store_name: string;
   store_slug: string;
@@ -47,7 +49,21 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
     .eq("status", "approved")
     .in("id", sellerIds);
 
-  const sellerMap = new Map(((sellers ?? []) as SellerRow[]).map((seller) => [seller.id, seller]));\n\n  const { data: variantRows } = await supabase\n    .from("seller_product_variants")\n    .select("id, product_id, label, attributes, price, compare_at_price, inventory, sku")\n    .in("product_id", (rows as SellerProductRow[]).map((row) => row.id))\n    .eq("is_active", true)\n    .order("created_at", { ascending: true });\n\n  const variantMap = new Map<string, ProductVariant[]>();\n  for (const row of (variantRows ?? []) as SellerVariantRow[]) {\n    const list = variantMap.get(row.product_id) ?? [];\n    list.push({ id: row.id, label: row.label, attributes: row.attributes ?? {}, price: Number(row.price), compareAtPrice: row.compare_at_price == null ? null : Number(row.compare_at_price), inventory: Number(row.inventory), sku: row.sku });\n    variantMap.set(row.product_id, list);\n  }
+  const sellerMap = new Map(((sellers ?? []) as SellerRow[]).map((seller) => [seller.id, seller]));
+
+  const { data: variantRows } = await supabase
+    .from("seller_product_variants")
+    .select("id, product_id, label, attributes, price, compare_at_price, inventory, sku")
+    .in("product_id", (rows as SellerProductRow[]).map((row) => row.id))
+    .eq("is_active", true)
+    .order("created_at", { ascending: true });
+
+  const variantMap = new Map<string, ProductVariant[]>();
+  for (const row of (variantRows ?? []) as SellerVariantRow[]) {
+    const list = variantMap.get(row.product_id) ?? [];
+    list.push({ id: row.id, label: row.label, attributes: row.attributes ?? {}, price: Number(row.price), compareAtPrice: row.compare_at_price == null ? null : Number(row.compare_at_price), inventory: Number(row.inventory), sku: row.sku });
+    variantMap.set(row.product_id, list);
+  }
 
   const products: Array<Product | null> = (rows as SellerProductRow[]).map((row) => {
     const seller = sellerMap.get(row.seller_id);
@@ -67,7 +83,8 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
       sellerStoreName: seller.store_name,
       orderMethod: seller.order_method,
       whatsappNumber: seller.whatsapp_number,
-      orderInstructions: seller.order_instructions,\n      variants: variantMap.get(row.id),
+      orderInstructions: seller.order_instructions,
+      variants: variantMap.get(row.id),
     };
 
     return product;

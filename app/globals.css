@@ -73,7 +73,7 @@ img { max-width: 100%; }
 .product-body p { min-height: 48px; margin-top: 9px; color: var(--muted); font-size: .82rem; line-height: 1.55; }
 .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
 .product-footer strong { font-size: 1.1rem; }
-.add-button { min-height: 40px; padding: 0 14px; border: 1px solid var(--navy); border-radius: 7px; background: var(--navy); color: var(--white); font-size: .78rem; font-weight: 700; }
+.add-button { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height: 40px; padding: 0 14px; border: 1px solid var(--navy); border-radius: 7px; background: var(--navy); color: var(--white); font-size: .78rem; font-weight: 700; }
 .add-button:hover { background: var(--blue); }
 
 .shop-toolbar { display: grid; grid-template-columns: minmax(240px, 1fr) auto; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order quantities." }, { status: 400 });
     }
 
-    const sellerIds = normalizedItems.map((item) => item.id.match(sellerProductIdPattern)?.[1]).filter((id): id is string => Boolean(id));
+    const marketplaceItems = normalizedItems.filter((item) => sellerProductIdPattern.test(item.id));\n    const sellerIds = marketplaceItems.map((item) => item.id.match(sellerProductIdPattern)?.[1]).filter((id): id is string => Boolean(id));
     const staticItems = normalizedItems.filter((item) => !sellerProductIdPattern.test(item.id));
 
     if (staticItems.some((item) => item.variantId)) {

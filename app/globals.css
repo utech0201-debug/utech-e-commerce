@@ -1345,3 +1345,12 @@ html[data-theme="dark"] .storefront-logo-fallback { background: #123a63; }
   .storefront-hero { grid-template-columns: 1fr; padding: 24px; }
   .storefront-logo { width: 76px; height: 76px; }
 }
+
+
+.marketplace-seller-link {
+  display: block;
+  margin-top: 5px;
+  color: var(--blue);
+  font-size: .72rem;
+  font-weight: 700;
+}

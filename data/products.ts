@@ -1,4 +1,6 @@
-export type ProductCategory = "games" | "consoles" | "laptops" | "hardware";
+export type ProductCategory = "games" | "consoles" | "laptops" | "hardware" | "fashion" | "accessories" | "other";
+
+export type ProductVariant = { id: string; label: string; attributes: Record<string, string>; price: number; compareAtPrice?: number | null; inventory: number; sku?: string | null; };
 
 export type Product = {
   id: string;
@@ -16,6 +18,7 @@ export type Product = {
   orderMethod?: "utech_checkout" | "whatsapp" | "hybrid";
   whatsappNumber?: string | null;
   orderInstructions?: string | null;
+  variants?: ProductVariant[];
 };
 
 const gameImage = (file: string) =>

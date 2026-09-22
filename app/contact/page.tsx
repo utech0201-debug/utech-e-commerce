@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import styles from "./ContactPage.module.css";
 import { useState, type FormEvent } from "react";
 
 const topics = [
@@ -41,9 +42,9 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="section contact-page">
+    <section className={`section contact-page ${styles.page}`}>
       <div className="container">
-        <div className="contact-hero">
+        <div className={styles.hero}>
           <div>
             <span className="eyebrow">UTECH SUPPORT</span>
             <h1 className="section-title">Let&apos;s solve it together.</h1>
@@ -52,25 +53,25 @@ export default function ContactPage() {
               Send the UTECH team a message and we&apos;ll have the right context from the start.
             </p>
           </div>
-          <div className="contact-hero-panel">
+          <div className={styles.heroPanel}>
             <span>SUPPORT DESK</span>
             <strong>One message.<br />One clear next step.</strong>
             <p>Tell us what happened and what you need help with.</p>
           </div>
         </div>
 
-        <div className="contact-layout">
-          <div className="contact-form-card">
-            <div className="contact-card-heading">
+        <div className={styles.layout}>
+          <div className={styles.formCard}>
+            <div className={styles.heading}>
               <div>
                 <span className="eyebrow">SEND A MESSAGE</span>
                 <h2>How can we help?</h2>
               </div>
-              <span className="contact-secure-note">Secure form</span>
+              <span className={styles.secure}>Secure form</span>
             </div>
 
-            <form className="contact-form" onSubmit={submit}>
-              <div className="contact-form-grid">
+            <form className={styles.form} onSubmit={submit}>
+              <div className={styles.grid}>
                 <label>
                   Name
                   <input name="name" type="text" autoComplete="name" maxLength={120} placeholder="Your name" required />
@@ -79,7 +80,7 @@ export default function ContactPage() {
                   Email
                   <input name="email" type="email" autoComplete="email" maxLength={254} placeholder="you@example.com" required />
                 </label>
-                <label className="contact-form-full">
+                <label className={styles.full}>
                   What do you need help with?
                   <select name="topic" defaultValue="general">
                     {topics.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
@@ -88,20 +89,20 @@ export default function ContactPage() {
                 <label className="contact-form-full">
                   Message
                   <textarea name="message" rows={7} maxLength={4000} placeholder="Give us the details..." required />
-                  <span className="contact-help">For order issues, include the order number if you have it. Never send passwords or payment card details.</span>
+                  <span className={styles.help}>For order issues, include the order number if you have it. Never send passwords or payment card details.</span>
                 </label>
-                <input className="contact-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               </div>
 
               {status === "success" && (
-                <div className="contact-success" role="status">
+                <div className={styles.success} role="status">
                   <strong>Message received.</strong>
                   <span>Your request has been sent to the UTECH support queue.</span>
                 </div>
               )}
               {status === "error" && <p className="auth-error" role="alert">{error}</p>}
 
-              <div className="contact-form-actions">
+              <div className={styles.actions}>
                 <button className="button button-primary" type="submit" disabled={status === "sending"}>
                   {status === "sending" ? "Sending..." : "Send message"}
                 </button>
@@ -110,11 +111,11 @@ export default function ContactPage() {
             </form>
           </div>
 
-          <aside className="contact-sidebar">
-            <div className="contact-info-card">
+          <aside className={styles.sidebar}>
+            <div className={styles.infoCard}>
               <span className="eyebrow">BEFORE YOU MESSAGE</span>
               <h2>Get faster help.</h2>
-              <div className="contact-check">
+              <div className={styles.check}>
                 <strong>Order issue</strong>
                 <span>Have your order number and the issue ready.</span>
               </div>
@@ -132,7 +133,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="contact-info-card contact-quick-links">
+            <div className={styles.infoCard}>
               <span className="eyebrow">QUICK LINKS</span>
               <Link href="/shop"><strong>Browse the marketplace</strong><span>Explore products and sellers →</span></Link>
               <Link href="/sell"><strong>Start selling</strong><span>Apply for a UTECH seller account →</span></Link>

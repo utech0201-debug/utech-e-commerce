@@ -106,7 +106,7 @@ export async function POST(request: Request) {
       const sellerIdSet = [...new Set((sellerProducts ?? []).map((product) => product.seller_id))];
       const { data: sellers, error: sellersError } = await supabaseAdmin
         .from("sellers")
-        .select("id, commission_rate, status")
+        .select("id, commission_rate, status, order_method")
         .in("id", sellerIdSet)
         .eq("status", "approved");
 
@@ -116,17 +116,22 @@ export async function POST(request: Request) {
       }
 
       const sellerMap = new Map(
-        (sellers ?? []).map((seller) => [seller.id, Number(seller.commission_rate)]),
+        (sellers ?? []).map((seller) => [seller.id, seller]),
       );
       const productMap = new Map((sellerProducts ?? []).map((product) => [product.id, product]));
 
       marketplaceLines = sellerIds.map((id) => {
         const product = productMap.get(id);
         const item = normalizedItems.find((candidate) => candidate.id === "seller-" + id);
-        const commissionRate = product ? sellerMap.get(product.seller_id) : undefined;
+        const seller = product ? sellerMap.get(product.seller_id) : undefined;
+        const commissionRate = seller ? Number(seller.commission_rate) : undefined;
 
-        if (!product || commissionRate === undefined || !item) {
+        if (!product || !seller || commissionRate === undefined || !item) {
           throw new Error("A marketplace product is no longer available.");
+        }
+
+        if (seller.order_method === "whatsapp") {
+          throw new Error(product.name + " is configured for WhatsApp orders. Please use the seller's WhatsApp order option.");
         }
 
         if (product.inventory < item.quantity) {

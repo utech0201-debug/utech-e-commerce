@@ -47,6 +47,9 @@ export default async function MarketplaceAdminPage() {
     <section className="section account-section">
       <div className="container">
         <div className="account-header">
+          <div className="seller-header-actions">
+            <a className="button button-secondary" href="/admin/marketplace/payouts">Payout Center</a>
+          </div>
           <div>
             <span className="eyebrow">UTECH ADMIN</span>
             <h1 className="section-title">Marketplace control center.</h1>

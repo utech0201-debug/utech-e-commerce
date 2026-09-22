@@ -13,6 +13,9 @@ export type Product = {
   sellerId?: string;
   sellerStoreSlug?: string;
   sellerStoreName?: string;
+  orderMethod?: "utech_checkout" | "whatsapp" | "hybrid";
+  whatsappNumber?: string | null;
+  orderInstructions?: string | null;
 };
 
 const gameImage = (file: string) =>

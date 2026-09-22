@@ -59,7 +59,7 @@ export default function Checkout() {
           address: String(formData.get("address") || ""),
           city: String(formData.get("city") || ""),
           country: String(formData.get("country") || ""),
-          items,
+          items: items.map((item) => ({ id: item.id, quantity: item.quantity, variantId: item.selectedVariantId })),
         }),
       });
 

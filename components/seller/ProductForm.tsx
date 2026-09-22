@@ -44,7 +44,7 @@ export default function ProductForm({ sellerId, product }: Props) {
     inventory: product?.inventory ?? "0",
     status: product?.status,
   });
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] = useState(false);\n  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -122,7 +122,7 @@ export default function ProductForm({ sellerId, product }: Props) {
       return;
     }
 
-    setMessage(status === "pending" ? "Product submitted for UTECH review." : "Product saved as a draft.");
+    const productId = result.data?.id;\n\n    if (imageFiles.length > 0 && productId) {\n      const uploadForm = new FormData();\n      uploadForm.append("productId", productId);\n      imageFiles.forEach((file) => uploadForm.append("images", file));\n      const uploadResponse = await fetch("/api/seller/product-images", { method: "POST", body: uploadForm });\n      const uploadResult = await uploadResponse.json().catch(() => null);\n      if (!uploadResponse.ok) {\n        setError(uploadResult?.error ?? "Product saved, but the image upload failed. You can edit the product and try again.");\n        setSaving(false);\n        return;\n      }\n    }\n\n    setMessage(status === "pending" ? "Product submitted for UTECH review." : "Product saved as a draft.");
     setSaving(false);
 
     setTimeout(() => router.push("/seller/dashboard"), 500);

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   }
 
   const admin = getSupabaseAdmin();
-  const { data, error } = await admin.schema("private").rpc("record_seller_payout", {
+  const { data, error } = await admin.rpc("record_seller_payout", {
     p_seller_id: sellerId,
     p_provider: provider || "manual",
     p_provider_reference: providerReference || null,

@@ -3,6 +3,7 @@ name: Next.js Verification
 on:
   push:
     branches:
+      - main
       - nextjs-16-migration
   pull_request:
     branches:

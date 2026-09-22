@@ -34,7 +34,7 @@ export default async function ProductPage({
 
     const { data: seller } = await supabase
       .from("sellers")
-      .select("store_name, store_slug")
+       .select("store_name, store_slug, order_method, whatsapp_number, order_instructions")
       .eq("id", data.seller_id)
       .eq("status", "approved")
       .maybeSingle();
@@ -67,6 +67,9 @@ export default async function ProductPage({
       sellerId: data.seller_id,
       sellerStoreSlug: seller.store_slug,
       sellerStoreName: seller.store_name,
+      orderMethod: seller.order_method,
+      whatsappNumber: seller.whatsapp_number,
+      orderInstructions: seller.order_instructions,
     };
   }
 
@@ -112,7 +115,15 @@ export default async function ProductPage({
             </p>
           )}
 
-          <AddToCart product={product} />
+          {product.sellerId && (product as typeof product & { orderMethod?: string; whatsappNumber?: string | null; orderInstructions?: string | null }).orderMethod !== "utech_checkout" ? (
+            <div className="seller-order-options">
+              <p>{(product as typeof product & { orderInstructions?: string | null }).orderInstructions || "This seller accepts orders through WhatsApp."}</p>
+              {(product as typeof product & { whatsappNumber?: string | null }).whatsappNumber && (
+                <a className="button button-primary" target="_blank" rel="noreferrer" href={`https://wa.me/${(product as typeof product & { whatsappNumber: string }).whatsappNumber.replace(/\\D/g, "")}?text=${encodeURIComponent(`Hi, I want to order ${product.name} from ${product.sellerStoreName ?? "your UTECH store"}.`)}`}>Order via WhatsApp</a>
+              )}
+              {(product as typeof product & { orderMethod?: string }).orderMethod === "hybrid" && <AddToCart product={product} />}
+            </div>
+          ) : <AddToCart product={product} />}
 
           <div style={{ marginTop: 18 }}>
             <Link href="/shop" className="button button-secondary">

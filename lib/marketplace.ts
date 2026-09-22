@@ -22,11 +22,11 @@ type SellerVariantRow = { id: string; product_id: string; label: string; attribu
   order_instructions: string | null;
 };
 
-const categories: ProductCategory[] = ["games", "consoles", "laptops", "hardware"];
+const categories: ProductCategory[] = ["games", "consoles", "laptops", "hardware", "fashion", "accessories", "other"];
 
 function normalizeCategory(category: string): ProductCategory {
   const value = category.trim().toLowerCase();
-  return categories.includes(value as ProductCategory) ? (value as ProductCategory) : "hardware";
+  return categories.includes(value as ProductCategory) ? (value as ProductCategory) : "other";
 }
 
 export async function getApprovedMarketplaceProducts(): Promise<Product[]> {

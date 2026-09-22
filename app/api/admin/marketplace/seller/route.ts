@@ -21,7 +21,12 @@ export async function POST(request: Request) {
   }
 
   const admin = getSupabaseAdmin();
-  const { error } = await admin.from("sellers").update({ status: decision, updated_at: new Date().toISOString() }).eq("id", sellerId);
+  const { error } = await admin
+    .from("sellers")
+    .update({ status: decision, updated_at: new Date().toISOString() })
+    .eq("id", sellerId)
+    .eq("status", "pending");
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.redirect(new URL("/admin/marketplace", request.url), 303);

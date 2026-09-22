@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase/server";\nimport ProductCard from "@/components/shop/ProductCard";\nimport type { Product } from "@/data/products";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import ProductCard from "@/components/shop/ProductCard";
+import type { Product } from "@/data/products";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
-
+type Props = { params: Promise<{ slug: string }> };
 export const dynamic = "force-dynamic";
 
 export default async function StorefrontPage({ params }: Props) {
@@ -15,7 +14,7 @@ export default async function StorefrontPage({ params }: Props) {
 
   const { data: seller } = await supabase
     .from("sellers")
-     .select("id, store_name, store_slug, description, logo_url, order_method, whatsapp_number, order_instructions")
+    .select("id, store_name, store_slug, description, logo_url, order_method, whatsapp_number, order_instructions")
     .eq("store_slug", slug)
     .eq("status", "approved")
     .maybeSingle();
@@ -29,23 +28,60 @@ export default async function StorefrontPage({ params }: Props) {
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
-  const productIds = (products ?? []).map((product) => product.id);\n  const { data: variantRows } = productIds.length ? await supabase.from("seller_product_variants").select("id, product_id, label, attributes, price, compare_at_price, inventory, sku").in("product_id", productIds).eq("is_active", true).order("created_at", { ascending: true }) : { data: [] };\n  const variantsByProduct = new Map<string, Product["variants"]>();\n  for (const variant of variantRows ?? []) {\n    const list = variantsByProduct.get(variant.product_id) ?? [];\n    list.push({ id: variant.id, label: variant.label, attributes: (variant.attributes ?? {}) as Record<string, string>, price: Number(variant.price), compareAtPrice: variant.compare_at_price == null ? null : Number(variant.compare_at_price), inventory: Number(variant.inventory), sku: variant.sku });\n    variantsByProduct.set(variant.product_id, list);\n  }\n  const catalogProducts: Product[] = (products ?? []).map((product) => ({ id: "seller-" + product.id, slug: product.slug, name: product.name, price: Number(product.price), category: (["games","consoles","laptops","hardware","fashion","accessories","other"].includes(product.category.toLowerCase()) ? product.category.toLowerCase() : "other") as Product["category"], type: product.category, image: product.image_url ?? "", description: product.description, sellerId: seller.id, sellerStoreSlug: seller.store_slug, sellerStoreName: seller.store_name, orderMethod: seller.order_method, whatsappNumber: seller.whatsapp_number, orderInstructions: seller.order_instructions, variants: variantsByProduct.get(product.id) }));\n\n  return (
+  const productIds = (products ?? []).map((product) => product.id);
+  const { data: variantRows } = productIds.length
+    ? await supabase.from("seller_product_variants").select("id, product_id, label, attributes, price, compare_at_price, inventory, sku").in("product_id", productIds).eq("is_active", true).order("created_at", { ascending: true })
+    : { data: [] };
+
+  const variantsByProduct = new Map<string, Product["variants"]>();
+  for (const variant of variantRows ?? []) {
+    const list = variantsByProduct.get(variant.product_id) ?? [];
+    list.push({
+      id: variant.id,
+      label: variant.label,
+      attributes: (variant.attributes ?? {}) as Record<string, string>,
+      price: Number(variant.price),
+      compareAtPrice: variant.compare_at_price == null ? null : Number(variant.compare_at_price),
+      inventory: Number(variant.inventory),
+      sku: variant.sku,
+    });
+    variantsByProduct.set(variant.product_id, list);
+  }
+
+  const allowedCategories = ["games", "consoles", "laptops", "hardware", "fashion", "accessories", "other"] as const;
+  const catalogProducts: Product[] = (products ?? []).map((product) => {
+    const normalizedCategory = product.category.toLowerCase();
+    const category = allowedCategories.includes(normalizedCategory as typeof allowedCategories[number])
+      ? normalizedCategory as typeof allowedCategories[number]
+      : "other";
+    return {
+      id: "seller-" + product.id,
+      slug: product.slug,
+      name: product.name,
+      price: Number(product.price),
+      category,
+      type: product.category,
+      image: product.image_url ?? "",
+      description: product.description,
+      sellerId: seller.id,
+      sellerStoreSlug: seller.store_slug,
+      sellerStoreName: seller.store_name,
+      orderMethod: seller.order_method,
+      whatsappNumber: seller.whatsapp_number,
+      orderInstructions: seller.order_instructions,
+      variants: variantsByProduct.get(product.id),
+    };
+  });
+
+  return (
     <section className="section storefront-section">
       <div className="container">
         <div className="storefront-hero">
           <div className="storefront-brand">
             {seller.logo_url ? (
-              <Image
-                src={seller.logo_url}
-                alt={seller.store_name}
-                width={96}
-                height={96}
-                className="storefront-logo"
-              />
+              <Image src={seller.logo_url} alt={seller.store_name} width={96} height={96} className="storefront-logo" />
             ) : (
-              <div className="storefront-logo storefront-logo-fallback">
-                {seller.store_name.slice(0, 1).toUpperCase()}
-              </div>
+              <div className="storefront-logo storefront-logo-fallback">{seller.store_name.slice(0, 1).toUpperCase()}</div>
             )}
           </div>
           <div className="storefront-copy">
@@ -61,33 +97,12 @@ export default async function StorefrontPage({ params }: Props) {
         </div>
 
         <div className="storefront-heading">
-          <div>
-            <span className="eyebrow">STORE CATALOG</span>
-            <h2 className="section-title">Shop {seller.store_name}.</h2>
-          </div>
+          <div><span className="eyebrow">STORE CATALOG</span><h2 className="section-title">Shop {seller.store_name}.</h2></div>
         </div>
 
-        {catalogProducts.length > 0 ? (\n          <div className="product-grid storefront-product-grid">\n            {catalogProducts.map((product) => <ProductCard key={product.id} product={product} />)}\n          </div>        ) : (
-                    <div className="storefront-product-placeholder">
-                      <span>{product.category}</span>
-                    </div>
-                  )}
-                </Link>
-                <div className="product-body">
-                  <span className="product-type">{product.category}</span>
-                  <h3>
-                    <Link href={`/products/${product.slug}`}>{product.name}</Link>
-                  </h3>
-                  <p>{product.description}</p>
-                  <div className="product-footer">
-                    <strong>${product.price.toFixed(2)}</strong>
-                    <span className="storefront-stock">
-                      {product.inventory > 0 ? `${product.inventory} in stock` : "Out of stock"}
-                    </span>
-                  </div>
-                </div>
-              </article>
-            ))}
+        {catalogProducts.length > 0 ? (
+          <div className="product-grid storefront-product-grid">
+            {catalogProducts.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         ) : (
           <div className="empty-results">

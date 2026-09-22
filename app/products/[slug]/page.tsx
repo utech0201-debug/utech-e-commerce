@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProduct, products } from "@/data/products";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import AddToCart from "@/components/shop/AddToCart";
+import ProductExperience from "@/components/shop/ProductExperience";
 
 export const dynamic = "force-dynamic";
 
@@ -11,47 +10,24 @@ export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }));
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   let product = getProduct(slug);
   let gallery: string[] = product?.image ? [product.image] : [];
 
   if (!product) {
     const supabase = await createSupabaseServerClient();
-
-    const { data } = await supabase
-      .from("seller_products")
-      .select("id, slug, name, description, category, price, image_url, inventory, seller_id")
-      .eq("slug", slug)
-      .eq("status", "approved")
-      .maybeSingle();
-
+    const { data } = await supabase.from("seller_products").select("id, slug, name, description, category, price, image_url, inventory, seller_id").eq("slug", slug).eq("status", "approved").maybeSingle();
     if (!data) notFound();
 
-    const { data: seller } = await supabase
-      .from("sellers")
-       .select("store_name, store_slug, order_method, whatsapp_number, order_instructions")
-      .eq("id", data.seller_id)
-      .eq("status", "approved")
-      .maybeSingle();
-
+    const { data: seller } = await supabase.from("sellers").select("store_name, store_slug, order_method, whatsapp_number, order_instructions").eq("id", data.seller_id).eq("status", "approved").maybeSingle();
     if (!seller) notFound();
 
-    const category =
-      ["games", "consoles", "laptops", "hardware"].includes(data.category.toLowerCase())
-        ? (data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware")
-        : "hardware";
+    const category = ["games", "consoles", "laptops", "hardware"].includes(data.category.toLowerCase())
+      ? data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware"
+      : "hardware";
 
-    const { data: imageRows } = await supabase
-      .from("seller_product_images")
-      .select("image_url, sort_order")
-      .eq("product_id", data.id)
-      .order("sort_order", { ascending: true });
-
+    const { data: imageRows } = await supabase.from("seller_product_images").select("image_url, sort_order").eq("product_id", data.id).order("sort_order", { ascending: true });
     gallery = (imageRows ?? []).map((image) => image.image_url);
     if (!gallery.length && data.image_url) gallery = [data.image_url];
 
@@ -73,65 +49,5 @@ export default async function ProductPage({
     };
   }
 
-  return (
-    <section className="detail">
-      <div className="container detail-grid">
-        <div className="detail-image">
-          {gallery.length > 0 ? (
-            <div className="product-gallery">
-              {gallery.map((image, index) => (
-                <div className="product-gallery-image" key={image + index}>
-                  <Image
-                    src={image}
-                    alt={index === 0 ? product.name : product.name + " view " + (index + 1)}
-                    fill
-                    sizes="(max-width:850px) 100vw, 50vw"
-                    unoptimized={Boolean(product.sellerId)}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="storefront-product-placeholder">
-              <span>{product.category}</span>
-            </div>
-          )}
-        </div>
-
-        <div className="detail-copy">
-          <span className="eyebrow">{product.type}</span>
-          <h1>{product.name}</h1>
-          <div className="price">
-            {"$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </div>
-          <p>{product.description}</p>
-
-          {product.sellerStoreSlug && (
-            <p className="marketplace-product-seller">
-              Sold by{" "}
-              <Link href={"/store/" + product.sellerStoreSlug}>
-                {product.sellerStoreName}
-              </Link>
-            </p>
-          )}
-
-          {product.sellerId && product.orderMethod !== "utech_checkout" ? (
-            <div className="seller-order-options">
-              <p>{product.orderInstructions || "This seller accepts orders through WhatsApp."}</p>
-              {product.whatsappNumber && (
-                <a className="button button-primary" target="_blank" rel="noreferrer" href={`https://wa.me/${product.whatsappNumber.replace(/\\D/g, "")}?text=${encodeURIComponent(`Hi, I want to order ${product.name} from ${product.sellerStoreName ?? "your UTECH store"}.`)}`}>Order via WhatsApp</a>
-              )}
-              {product.orderMethod === "hybrid" && <AddToCart product={product} />}
-            </div>
-          ) : <AddToCart product={product} />}
-
-          <div style={{ marginTop: 18 }}>
-            <Link href="/shop" className="button button-secondary">
-              Back to Shop
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <ProductExperience product={product} gallery={gallery} />;
 }

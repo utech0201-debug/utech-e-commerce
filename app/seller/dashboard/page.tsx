@@ -51,6 +51,23 @@ export default async function SellerDashboardPage() {
   const productCount = products?.length ?? 0;
   const approvedCount = products?.filter((product) => product.status === "approved").length ?? 0;
 
+  const { data: sellerOrders } = await supabase
+    .from("seller_order_items")
+    .select("id, seller_amount, fulfillment_status, payout_status, created_at")
+    .eq("seller_id", seller.id)
+    .order("created_at", { ascending: false })
+    .limit(100);
+
+  const orderRows = sellerOrders ?? [];
+  const activeOrders = orderRows.filter((row) =>
+    ["pending", "confirmed", "processing", "ready", "shipped"].includes(row.fulfillment_status),
+  ).length;
+  const deliveredOrders = orderRows.filter((row) => row.fulfillment_status === "delivered").length;
+  const pendingPayout = orderRows
+    .filter((row) => row.payout_status === "pending")
+    .reduce((sum, row) => sum + Number(row.seller_amount ?? 0), 0);
+  const recentOrderCount = orderRows.length;
+
   return (
     <section className="section account-section">
       <div className="container">
@@ -72,7 +89,10 @@ export default async function SellerDashboardPage() {
         <div className="seller-stats">
           <div className="account-card"><span>Products</span><strong>{productCount}</strong></div>
           <div className="account-card"><span>Published</span><strong>{approvedCount}</strong></div>
-          <div className="account-card"><span>Platform commission</span><strong>{seller.commission_rate}%</strong></div>
+          <div className="account-card"><span>Active orders</span><strong>{activeOrders}</strong></div>
+          <div className="account-card"><span>Delivered</span><strong>{deliveredOrders}</strong></div>
+          <div className="account-card"><span>Pending payout</span><strong>{pendingPayout.toFixed(2)}</strong></div>
+          <div className="account-card"><span>Commission</span><strong>{seller.commission_rate}%</strong></div>
         </div>
 
         <div className="account-grid seller-dashboard-grid">
@@ -101,6 +121,33 @@ export default async function SellerDashboardPage() {
             <p>Your seller account is isolated to your own store and products. UTECH controls approval status and commission settings.</p>
             <p>Products are private until UTECH review approves them. Marketplace safety rules are enforced in both the application and database layers.</p>
             <p className="seller-field-help">Keep your account credentials private. UTECH will never ask you to share your password or secret authentication codes.</p>
+          </div>
+
+          <div className="account-card seller-dashboard-orders">
+            <div className="account-card-heading">
+              <h2>Order activity</h2>
+              <span>{recentOrderCount} recent records</span>
+            </div>
+            {orderRows.length ? (
+              <div className="order-list">
+                {orderRows.slice(0, 5).map((order) => (
+                  <div className="order-row" key={order.id}>
+                    <div>
+                      <strong>{Number(order.seller_amount ?? 0).toFixed(2)}</strong>
+                      <span>{order.fulfillment_status} · payout {order.payout_status}</span>
+                      <span>{new Date(order.created_at).toLocaleString()}</span>
+                    </div>
+                    <Link href="/seller/orders">Manage</Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty">
+                <strong>No marketplace orders yet.</strong>
+                <p>Orders for your store will appear here after checkout.</p>
+              </div>
+            )}
+            <Link className="button button-secondary" href="/seller/orders">Open order management</Link>
           </div>
 
           <div className="account-card">

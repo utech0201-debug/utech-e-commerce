@@ -12,11 +12,8 @@ import styles from "./SiteHeader.module.css";
 const links = [
   ["Home", "/"],
   ["Shop", "/shop"],
-  ["Games", "/games"],
-  ["Consoles", "/consoles"],
-  ["Laptops", "/laptops"],
-  ["Hardware", "/hardware"],
   ["Sell", "/sell"],
+  ["Contact", "/contact"],
 ];
 
 export default function SiteHeader() {

@@ -17,6 +17,9 @@ type SellerRow = {
   id: string;
   store_name: string;
   store_slug: string;
+  order_method: "utech_checkout" | "whatsapp" | "hybrid";
+  whatsapp_number: string | null;
+  order_instructions: string | null;
 };
 
 const categories: ProductCategory[] = ["games", "consoles", "laptops", "hardware"];
@@ -42,7 +45,7 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
   const sellerIds = [...new Set((rows as SellerProductRow[]).map((row) => row.seller_id))];
   const { data: sellers } = await supabase
     .from("sellers")
-    .select("id, store_name, store_slug")
+    .select("id, store_name, store_slug, order_method, whatsapp_number, order_instructions")
     .eq("status", "approved")
     .in("id", sellerIds);
 
@@ -67,6 +70,9 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
         sellerId: row.seller_id,
         sellerStoreSlug: seller.store_slug,
         sellerStoreName: seller.store_name,
+        orderMethod: seller.order_method,
+        whatsappNumber: seller.whatsapp_number,
+        orderInstructions: seller.order_instructions,
       } satisfies Product;
     })
     .filter((product): product is Product => product !== null);

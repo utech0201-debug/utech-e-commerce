@@ -27,7 +27,7 @@ export default async function EditSellerProductPage({
 
   const { data: product } = await supabase
     .from("seller_products")
-    .select("id, name, description, category, price, compare_at_price, image_url, inventory, status")
+    .select("id, name, description, category, price, compare_at_price, image_url, inventory, status, rejection_reason")
     .eq("id", id)
     .eq("seller_id", seller.id)
     .maybeSingle();
@@ -49,12 +49,28 @@ export default async function EditSellerProductPage({
     );
   }
 
-  const { data: variants } = await supabase.from("seller_product_variants").select("id, label, attributes, price, compare_at_price, inventory, sku").eq("product_id", product.id).order("created_at", { ascending: true });
+  const { data: variants } = await supabase
+    .from("seller_product_variants")
+    .select("id, label, attributes, price, compare_at_price, inventory, sku")
+    .eq("product_id", product.id)
+    .order("created_at", { ascending: true });
 
   const { count: imageCount } = await supabase
     .from("seller_product_images")
     .select("id", { count: "exact", head: true })
     .eq("product_id", product.id);
+
+  const initialVariants = (variants ?? []).map((variant) => ({
+    id: variant.id,
+    label: variant.label,
+    attributes: Object.entries((variant.attributes ?? {}) as Record<string, string>)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", "),
+    price: String(variant.price),
+    compare_at_price: variant.compare_at_price == null ? "" : String(variant.compare_at_price),
+    inventory: String(variant.inventory),
+    sku: variant.sku ?? "",
+  }));
 
   return (
     <section className="section account-section">
@@ -64,6 +80,9 @@ export default async function EditSellerProductPage({
             <span className="eyebrow">PRODUCT MANAGEMENT</span>
             <h1 className="section-title">Edit product.</h1>
             <p className="section-copy">Update the listing, save it as a draft, or submit it for UTECH review.</p>
+            {product.rejection_reason && (
+              <p className="auth-error">Review feedback: {product.rejection_reason}</p>
+            )}
           </div>
           <Link className="button button-secondary" href="/seller/dashboard">Back to Dashboard</Link>
         </div>
@@ -71,6 +90,7 @@ export default async function EditSellerProductPage({
           <ProductForm
             sellerId={seller.id}
             initialImageCount={imageCount ?? 0}
+            initialVariants={initialVariants}
             product={{
               id: product.id,
               name: product.name,

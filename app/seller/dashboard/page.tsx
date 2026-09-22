@@ -12,7 +12,7 @@ export default async function SellerDashboardPage() {
 
   const { data: seller } = await supabase
     .from("sellers")
-    .select("id, store_name, store_slug, description, status, commission_rate")
+     .select("id, store_name, store_slug, description, status, commission_rate, order_method, whatsapp_number")
     .eq("user_id", userId)
     .maybeSingle();
 
@@ -88,6 +88,7 @@ export default async function SellerDashboardPage() {
               )}
               <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
               <Link className="button button-secondary" href="/seller/earnings">View Earnings</Link>
+              <Link className="button button-secondary" href="/seller/settings">Order Settings</Link>
             </div>
           </div>
 

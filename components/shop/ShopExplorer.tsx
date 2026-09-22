@@ -59,7 +59,7 @@ export default function ShopExplorer({
       const matchesCategory = category === "all" || product.category === category;
       const matchesQuery =
         !normalized ||
-        [product.name, product.type, product.description, product.category]
+        [product.name, product.type, product.description, product.category, product.sellerStoreName ?? ""]
           .join(" ")
           .toLowerCase()
           .includes(normalized);

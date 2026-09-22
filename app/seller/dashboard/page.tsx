@@ -45,7 +45,7 @@ export default async function SellerDashboardPage() {
           <div>
             <span className="eyebrow">SELLER CENTER</span>
             <h1 className="section-title">{seller.store_name}</h1>
-            <p className="section-copy">Manage your UTECH marketplace store and products.</p>
+            <p className="section-copy">Manage your brand, products and UTECH marketplace store.</p>
           </div>
           <div className="seller-header-actions">
             {seller.status === "approved" && (
@@ -75,6 +75,13 @@ export default async function SellerDashboardPage() {
               )}
               <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
             </div>
+          </div>
+
+          <div className="account-card">
+            <h2>Seller safety</h2>
+            <p>Your seller account is isolated to your own store and products. UTECH controls approval status and commission settings.</p>
+            <p>Products are private until UTECH review approves them. Marketplace safety rules are enforced in both the application and database layers.</p>
+            <p className="seller-field-help">Keep your account credentials private. UTECH will never ask you to share your password or secret authentication codes.</p>
           </div>
 
           <div className="account-card">

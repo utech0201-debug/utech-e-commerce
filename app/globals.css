@@ -1354,3 +1354,13 @@ html[data-theme="dark"] .storefront-logo-fallback { background: #123a63; }
   font-size: .72rem;
   font-weight: 700;
 }
+
+
+.marketplace-product-seller {
+  margin-top: 16px;
+  color: var(--muted);
+}
+.marketplace-product-seller a {
+  color: var(--blue);
+  font-weight: 700;
+}

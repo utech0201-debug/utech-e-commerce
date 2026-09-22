@@ -1249,3 +1249,99 @@ html[data-theme="dark"] .admin-review-row strong {
     width: 100%;
   }
 }
+
+
+/* Public seller storefront */
+.storefront-section { background: var(--white); }
+.storefront-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 34px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--bg);
+}
+.storefront-brand { display: grid; place-items: center; }
+.storefront-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--white);
+}
+.storefront-logo-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  background: var(--navy);
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+.storefront-copy h1 {
+  margin-top: 8px;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: .95;
+  letter-spacing: -.05em;
+}
+.storefront-copy p {
+  max-width: 720px;
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.storefront-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+}
+.storefront-meta a { color: var(--blue); }
+.storefront-heading { margin: 58px 0 22px; }
+.storefront-product-image { position: relative; }
+.storefront-product-image img { object-fit: contain; padding: 24px; }
+.storefront-product-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--blue);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.storefront-stock {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 700;
+  text-align: right;
+}
+.seller-store-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.seller-store-links .button { margin-top: 0; }
+html[data-theme="dark"] .storefront-hero {
+  background: #0b1525;
+  border-color: #26364d;
+}
+html[data-theme="dark"] .storefront-logo {
+  background: #0f1b2d;
+  border-color: #26364d;
+}
+html[data-theme="dark"] .storefront-logo-fallback { background: #123a63; }
+@media (max-width: 700px) {
+  .storefront-hero { grid-template-columns: 1fr; padding: 24px; }
+  .storefront-logo { width: 76px; height: 76px; }
+}

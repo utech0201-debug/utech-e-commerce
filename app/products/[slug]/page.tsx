@@ -17,7 +17,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let product = getProduct(slug);
+  let product = getProduct(slug);\n  let gallery: string[] = product?.image ? [product.image] : [];
 
   if (!product) {
     const supabase = await createSupabaseServerClient();
@@ -44,7 +44,7 @@ export default async function ProductPage({
         ? (data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware")
         : "hardware";
 
-    product = {
+    const { data: imageRows } = await supabase\n      .from("seller_product_images")\n      .select("image_url, sort_order")\n      .eq("product_id", data.id)\n      .order("sort_order", { ascending: true });\n\n    gallery = (imageRows ?? []).map((image) => image.image_url);\n    if (!gallery.length && data.image_url) gallery = [data.image_url];\n\n    product = {
       id: "seller-" + data.id,
       slug: data.slug,
       name: data.name,

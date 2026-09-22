@@ -35,6 +35,19 @@ export default async function SellerDashboardPage() {
     .eq("seller_id", seller.id)
     .order("created_at", { ascending: false });
 
+  const productIds = (products ?? []).map((product) => product.id);
+  const { data: imageRows } = productIds.length
+    ? await supabase
+        .from("seller_product_images")
+        .select("product_id")
+        .in("product_id", productIds)
+    : { data: [] };
+
+  const imageCounts = new Map<string, number>();
+  for (const row of imageRows ?? []) {
+    imageCounts.set(row.product_id, (imageCounts.get(row.product_id) ?? 0) + 1);
+  }
+
   const productCount = products?.length ?? 0;
   const approvedCount = products?.filter((product) => product.status === "approved").length ?? 0;
 
@@ -96,7 +109,7 @@ export default async function SellerDashboardPage() {
                   <div className="order-row seller-product-row" key={product.id}>
                     <div>
                       <strong>{product.name}</strong>
-                      <span>{product.status} · {product.inventory} in stock</span>
+                      <span>{product.status} · {product.inventory} in stock · {imageCounts.get(product.id) ?? 0}/10 images</span>
                     </div>
                     <div className="seller-product-actions">
                       <strong>{product.price}</strong>

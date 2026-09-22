@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";\nimport ProductCard from "@/components/shop/ProductCard";\nimport type { Product } from "@/data/products";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,7 +29,7 @@ export default async function StorefrontPage({ params }: Props) {
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
-  return (
+  const productIds = (products ?? []).map((product) => product.id);\n  const { data: variantRows } = productIds.length ? await supabase.from("seller_product_variants").select("id, product_id, label, attributes, price, compare_at_price, inventory, sku").in("product_id", productIds).eq("is_active", true).order("created_at", { ascending: true }) : { data: [] };\n  const variantsByProduct = new Map<string, Product["variants"]>();\n  for (const variant of variantRows ?? []) {\n    const list = variantsByProduct.get(variant.product_id) ?? [];\n    list.push({ id: variant.id, label: variant.label, attributes: (variant.attributes ?? {}) as Record<string, string>, price: Number(variant.price), compareAtPrice: variant.compare_at_price == null ? null : Number(variant.compare_at_price), inventory: Number(variant.inventory), sku: variant.sku });\n    variantsByProduct.set(variant.product_id, list);\n  }\n  const catalogProducts: Product[] = (products ?? []).map((product) => ({ id: "seller-" + product.id, slug: product.slug, name: product.name, price: Number(product.price), category: (["games","consoles","laptops","hardware","fashion","accessories","other"].includes(product.category.toLowerCase()) ? product.category.toLowerCase() : "other") as Product["category"], type: product.category, image: product.image_url ?? "", description: product.description, sellerId: seller.id, sellerStoreSlug: seller.store_slug, sellerStoreName: seller.store_name, orderMethod: seller.order_method, whatsappNumber: seller.whatsapp_number, orderInstructions: seller.order_instructions, variants: variantsByProduct.get(product.id) }));\n\n  return (
     <section className="section storefront-section">
       <div className="container">
         <div className="storefront-hero">
@@ -67,20 +67,7 @@ export default async function StorefrontPage({ params }: Props) {
           </div>
         </div>
 
-        {products && products.length > 0 ? (
-          <div className="product-grid storefront-product-grid">
-            {products.map((product) => (
-              <article className="product-card" key={product.id}>
-                <Link className="product-image storefront-product-image" href={`/products/${product.slug}`}>
-                  {product.image_url ? (
-                    <Image
-                      src={product.image_url}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                      unoptimized
-                    />
-                  ) : (
+        {catalogProducts.length > 0 ? (\n          <div className="product-grid storefront-product-grid">\n            {catalogProducts.map((product) => <ProductCard key={product.id} product={product} />)}\n          </div>        ) : (
                     <div className="storefront-product-placeholder">
                       <span>{product.category}</span>
                     </div>

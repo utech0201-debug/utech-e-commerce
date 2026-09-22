@@ -23,9 +23,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     const { data: seller } = await supabase.from("sellers").select("store_name, store_slug, order_method, whatsapp_number, order_instructions").eq("id", data.seller_id).eq("status", "approved").maybeSingle();
     if (!seller) notFound();
 
-    const category = ["games", "consoles", "laptops", "hardware"].includes(data.category.toLowerCase())
-      ? data.category.toLowerCase() as "games" | "consoles" | "laptops" | "hardware"
-      : "hardware";
+    const marketplaceCategories = ["games", "consoles", "laptops", "hardware", "fashion", "accessories", "other"] as const;
+    const normalizedCategory = data.category.toLowerCase();
+    const category = marketplaceCategories.includes(normalizedCategory as (typeof marketplaceCategories)[number])
+      ? normalizedCategory as (typeof marketplaceCategories)[number]
+      : "other";
 
     const { data: variantRows } = await supabase.from("seller_product_variants").select("id, label, attributes, price, compare_at_price, inventory, sku").eq("product_id", data.id).eq("is_active", true).order("created_at", { ascending: true });\n    const variants = (variantRows ?? []).map((variant) => ({ id: variant.id, label: variant.label, attributes: (variant.attributes ?? {}) as Record<string, string>, price: Number(variant.price), compareAtPrice: variant.compare_at_price == null ? null : Number(variant.compare_at_price), inventory: Number(variant.inventory), sku: variant.sku }));\n\n    const { data: imageRows } = await supabase.from("seller_product_images").select("image_url, sort_order").eq("product_id", data.id).order("sort_order", { ascending: true });
     gallery = (imageRows ?? []).map((image) => image.image_url);

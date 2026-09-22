@@ -20,6 +20,10 @@ export default function AccountPage() {
   const [name, setName] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
+  const [deleteError, setDeleteError] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -53,6 +57,33 @@ export default function AccountPage() {
     router.refresh();
   }
 
+  async function deleteAccount() {
+    if (deleteConfirmation !== "DELETE") {
+      setDeleteError("Type DELETE to confirm account deletion.");
+      return;
+    }
+
+    setDeleting(true);
+    setDeleteError("");
+
+    const response = await fetch("/api/account/delete", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ confirmation: deleteConfirmation }),
+    });
+    const result = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      setDeleteError(result?.error ?? "Account deletion failed. Please try again.");
+      setDeleting(false);
+      return;
+    }
+
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  }
+
   if (loading) {
     return <section className="section"><div className="container"><p className="section-copy">Loading your account...</p></div></section>;
   }
@@ -75,6 +106,37 @@ export default function AccountPage() {
             <p>Account email</p>
             <strong>{email}</strong>
             <Link href="/shop" className="button button-primary">Continue Shopping</Link>
+          </div>
+          <div className="account-card account-danger-zone">
+            <span className="eyebrow">ACCOUNT SETTINGS</span>
+            <h2>Delete account</h2>
+            <p>Delete your UTECH account and personal profile data. Completed order records may be retained where required for marketplace records.</p>
+            {!deleteOpen ? (
+              <button className="button button-danger" type="button" onClick={() => setDeleteOpen(true)}>
+                Delete My Account
+              </button>
+            ) : (
+              <div className="account-delete-confirm">
+                <p><strong>This cannot be undone.</strong> Type DELETE below to confirm.</p>
+                <input
+                  value={deleteConfirmation}
+                  onChange={(event) => setDeleteConfirmation(event.target.value)}
+                  placeholder="DELETE"
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-label="Type DELETE to confirm account deletion"
+                />
+                {deleteError && <p className="auth-error">{deleteError}</p>}
+                <div className="seller-form-actions">
+                  <button className="button button-secondary" type="button" onClick={() => { setDeleteOpen(false); setDeleteConfirmation(""); setDeleteError(""); }} disabled={deleting}>
+                    Cancel
+                  </button>
+                  <button className="button button-danger" type="button" onClick={() => void deleteAccount()} disabled={deleting || deleteConfirmation !== "DELETE"}>
+                    {deleting ? "Deleting..." : "Permanently Delete Account"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <div className="account-card account-orders">
             <div className="account-card-heading">

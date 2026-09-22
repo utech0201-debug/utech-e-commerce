@@ -17,6 +17,19 @@ type OrderInput = {
   items: OrderItemInput[];
 };
 
+type MarketplaceLine = {
+  id: string;
+  sellerId: string;
+  slug: string;
+  name: string;
+  price: number;
+  quantity: number;
+  commissionRate: number;
+  inventory: number;
+};
+
+const sellerProductIdPattern = /^seller-([0-9a-f-]{36})$/i;
+
 export async function POST(request: Request) {
   try {
     const supabaseAdmin = getSupabaseAdmin();
@@ -35,38 +48,124 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required checkout details." }, { status: 400 });
     }
 
-    const items = body.items.map((item) => {
-      const product = products.find(
-        (candidate) => candidate.id === item.id || candidate.slug === item.id
-      );
-
-      return {
-        product,
-        quantity: Number(item.quantity),
-      };
-    });
+    const normalizedItems = body.items.map((item) => ({
+      id: String(item.id),
+      quantity: Number(item.quantity),
+    }));
 
     if (
-      items.some(
-        (item) =>
-          !item.product ||
-          !Number.isInteger(item.quantity) ||
-          item.quantity < 1
+      normalizedItems.some(
+        (item) => !Number.isInteger(item.quantity) || item.quantity < 1,
       )
     ) {
-      return NextResponse.json({ error: "Invalid order items." }, { status: 400 });
+      return NextResponse.json({ error: "Invalid order quantities." }, { status: 400 });
     }
 
-    const orderItems = items.map(({ product, quantity }) => ({
-      product_slug: product!.slug,
-      product_name: product!.name,
-      unit_price: product!.price,
-      quantity,
-    }));
+    const sellerIds = normalizedItems
+      .map((item) => item.id.match(sellerProductIdPattern)?.[1])
+      .filter((id): id is string => Boolean(id));
+
+    const staticItems = normalizedItems.filter(
+      (item) => !sellerProductIdPattern.test(item.id),
+    );
+
+    const staticLines = staticItems.map((item) => {
+      const product = products.find(
+        (candidate) => candidate.id === item.id || candidate.slug === item.id,
+      );
+
+      return product
+        ? {
+            sellerId: null,
+            product_slug: product.slug,
+            product_name: product.name,
+            unit_price: product.price,
+            quantity: item.quantity,
+          }
+        : null;
+    });
+
+    if (staticLines.some((line) => !line)) {
+      return NextResponse.json({ error: "One or more products are no longer available." }, { status: 400 });
+    }
+
+    let marketplaceLines: MarketplaceLine[] = [];
+
+    if (sellerIds.length) {
+      const { data: sellerProducts, error: sellerProductsError } = await supabaseAdmin
+        .from("seller_products")
+        .select("id, slug, name, price, inventory, seller_id")
+        .in("id", sellerIds)
+        .eq("status", "approved");
+
+      if (sellerProductsError) {
+        console.error("Marketplace product lookup failed:", sellerProductsError);
+        return NextResponse.json({ error: "Could not verify marketplace products." }, { status: 500 });
+      }
+
+      const sellerIdSet = [...new Set((sellerProducts ?? []).map((product) => product.seller_id))];
+      const { data: sellers, error: sellersError } = await supabaseAdmin
+        .from("sellers")
+        .select("id, commission_rate, status")
+        .in("id", sellerIdSet)
+        .eq("status", "approved");
+
+      if (sellersError) {
+        console.error("Seller lookup failed:", sellersError);
+        return NextResponse.json({ error: "Could not verify marketplace sellers." }, { status: 500 });
+      }
+
+      const sellerMap = new Map(
+        (sellers ?? []).map((seller) => [seller.id, Number(seller.commission_rate)]),
+      );
+      const productMap = new Map((sellerProducts ?? []).map((product) => [product.id, product]));
+
+      marketplaceLines = sellerIds.map((id) => {
+        const product = productMap.get(id);
+        const item = normalizedItems.find((candidate) => candidate.id === "seller-" + id);
+        const commissionRate = product ? sellerMap.get(product.seller_id) : undefined;
+
+        if (!product || commissionRate === undefined || !item) {
+          throw new Error("A marketplace product is no longer available.");
+        }
+
+        if (product.inventory < item.quantity) {
+          throw new Error(product.name + " does not have enough stock.");
+        }
+
+        return {
+          id: product.id,
+          sellerId: product.seller_id,
+          slug: product.slug,
+          name: product.name,
+          price: Number(product.price),
+          quantity: item.quantity,
+          commissionRate,
+          inventory: product.inventory,
+        };
+      });
+    }
+
+    const orderItems = [
+      ...staticLines.filter(Boolean).map((item) => ({
+        product_slug: item!.product_slug,
+        product_name: item!.product_name,
+        unit_price: item!.unit_price,
+        quantity: item!.quantity,
+        seller_id: null,
+      })),
+      ...marketplaceLines.map((item) => ({
+        product_slug: item.slug,
+        product_name: item.name,
+        unit_price: item.price,
+        quantity: item.quantity,
+        seller_id: item.sellerId,
+      })),
+    ];
 
     const subtotal = orderItems.reduce(
       (sum, item) => sum + item.unit_price * item.quantity,
-      0
+      0,
     );
 
     const authHeader = request.headers.get("authorization");
@@ -132,22 +231,56 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Could not create order." }, { status: 500 });
     }
 
-    const { error: itemsError } = await supabaseAdmin
+    const { data: insertedItems, error: itemsError } = await supabaseAdmin
       .from("order_items")
-      .insert(
-        orderItems.map((item) => ({
-          order_id: order.id,
-          ...item,
-        }))
-      );
+      .insert(orderItems.map((item) => ({ order_id: order.id, ...item })))
+      .select("id, product_slug, seller_id, unit_price, quantity");
 
-    if (itemsError) {
+    if (itemsError || !insertedItems) {
       console.error("Order items creation failed:", itemsError);
       await supabaseAdmin.from("orders").delete().eq("id", order.id);
       if (createdCustomerId) {
         await supabaseAdmin.from("customers").delete().eq("id", createdCustomerId);
       }
       return NextResponse.json({ error: "Could not save order items." }, { status: 500 });
+    }
+
+    if (marketplaceLines.length) {
+      const marketplaceOrderItems = insertedItems.filter((item) => item.seller_id);
+      const sellerOrderItems = marketplaceOrderItems.map((item) => {
+        const line = marketplaceLines.find(
+          (candidate) => candidate.sellerId === item.seller_id && candidate.slug === item.product_slug,
+        );
+
+        if (!line) throw new Error("Could not map marketplace order item.");
+
+        const grossAmount = Number(item.unit_price) * item.quantity;
+        const platformFee = Number((grossAmount * line.commissionRate / 100).toFixed(2));
+
+        return {
+          order_item_id: item.id,
+          seller_id: line.sellerId,
+          gross_amount: grossAmount,
+          commission_rate: line.commissionRate,
+          platform_fee: platformFee,
+          seller_amount: Number((grossAmount - platformFee).toFixed(2)),
+          payout_status: "pending",
+        };
+      });
+
+      const { error: sellerItemsError } = await supabaseAdmin
+        .from("seller_order_items")
+        .insert(sellerOrderItems);
+
+      if (sellerItemsError) {
+        console.error("Seller order item creation failed:", sellerItemsError);
+        await supabaseAdmin.from("order_items").delete().eq("order_id", order.id);
+        await supabaseAdmin.from("orders").delete().eq("id", order.id);
+        if (createdCustomerId) {
+          await supabaseAdmin.from("customers").delete().eq("id", createdCustomerId);
+        }
+        return NextResponse.json({ error: "Could not record marketplace earnings." }, { status: 500 });
+      }
     }
 
     return NextResponse.json({
@@ -157,6 +290,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Order API error:", error);
-    return NextResponse.json({ error: "Invalid checkout request." }, { status: 400 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Invalid checkout request." },
+      { status: 400 },
+    );
   }
 }

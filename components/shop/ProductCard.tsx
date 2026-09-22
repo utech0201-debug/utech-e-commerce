@@ -32,7 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <h3><Link href={"/products/" + product.slug}>{product.name}</Link></h3>
         <p>{product.description}</p>
         <div className="product-footer">
-          <strong>{"$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</strong>
+          <strong>{product.variants?.length ? "From $" + Math.min(...product.variants.map((variant) => variant.price)).toLocaleString("en-US", { minimumFractionDigits: 2 }) : "$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</strong>
           {product.orderMethod === "whatsapp" && product.whatsappNumber ? (
             <a
               className="button button-primary"

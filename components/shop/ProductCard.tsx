@@ -24,6 +24,11 @@ export default function ProductCard({ product }: { product: Product }) {
       </Link>
       <div className="product-body">
         <span className="product-type">{product.type}</span>
+        {product.sellerStoreSlug && (
+          <Link className="marketplace-seller-link" href={"/store/" + product.sellerStoreSlug}>
+            Sold by {product.sellerStoreName}
+          </Link>
+        )}
         <h3><Link href={"/products/" + product.slug}>{product.name}</Link></h3>
         <p>{product.description}</p>
         <div className="product-footer">

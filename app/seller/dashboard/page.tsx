@@ -87,6 +87,7 @@ export default async function SellerDashboardPage() {
                 <Link className="button button-secondary" href={`/store/${seller.store_slug}`}>View Storefront</Link>
               )}
               <Link className="button button-secondary" href="/seller/apply">Edit application</Link>
+              <Link className="button button-secondary" href="/seller/earnings">View Earnings</Link>
             </div>
           </div>
 

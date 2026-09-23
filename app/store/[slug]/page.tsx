@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import ProductCard from "@/components/shop/ProductCard";
+import FollowStoreButton from "@/components/store/FollowStoreButton";
 import type { Product } from "@/data/products";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -91,7 +92,7 @@ export default async function StorefrontPage({ params }: Props) {
             <div className="storefront-meta">
               <span>{products?.length ?? 0} published products</span>
               <span>Orders: {seller.order_method === "whatsapp" ? "WhatsApp" : seller.order_method === "hybrid" ? "UTECH + WhatsApp" : "UTECH Checkout"}</span>
-              <Link href="/shop">Browse UTECH Store</Link>
+              <Link href="/shop">Browse UTECH Store</Link><FollowStoreButton slug={seller.store_slug} name={seller.store_name} logoUrl={seller.logo_url} />
             </div>
           </div>
         </div>

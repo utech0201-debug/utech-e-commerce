@@ -13,7 +13,7 @@ export default function AppIntro() {
     const hideTimer = window.setTimeout(() => {
       setVisible(false);
       window.sessionStorage.setItem("utech-app-intro", "1");
-    }, 1800);
+    }, 3000);
 
     return () => window.clearTimeout(hideTimer);
   }, []);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "@/components/shop/AddToCart";
+import WishlistButton from "@/components/shop/WishlistButton";
 import type { Product } from "@/data/products";
 import { saveRecentlyViewed } from "@/lib/personalization";
 
@@ -42,8 +43,13 @@ export default function ProductExperience({ product, gallery }: { product: Produ
 
         <div className="detail-copy marketplace-detail-copy">
           <div className="product-breadcrumbs"><Link href="/">Home</Link><span>›</span><Link href={"/shop?category=" + product.category}>{product.category}</Link><span>›</span><strong>{product.name}</strong></div>
-          <span className="eyebrow">{product.type}</span>
-          <h1>{product.name}</h1>
+          <div className="detail-title-row">
+            <div>
+              <span className="eyebrow">{product.type}</span>
+              <h1>{product.name}</h1>
+            </div>
+            <WishlistButton product={product} />
+          </div>
 
           {product.sellerStoreSlug && (
             <div className="seller-summary">

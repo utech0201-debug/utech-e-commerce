@@ -1,0 +1,68 @@
+.billboard{
+  position:relative;
+  min-width:0;
+  min-height:326px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0,.95fr) minmax(260px,1.05fr);
+  align-items:center;
+  border:1px solid #dbe3ec;
+  border-radius:14px;
+  background:linear-gradient(118deg,#061a35 0%,#0b2b50 52%,#125da2 100%);
+  color:#fff;
+  box-shadow:0 12px 34px rgba(11,31,58,.13);
+  isolation:isolate;
+}
+.copy{position:relative;z-index:4;padding:34px 28px 34px 34px;min-width:0}
+.kicker{display:inline-flex;padding:6px 10px;border:1px solid rgba(151,203,255,.28);border-radius:999px;background:rgba(255,255,255,.07);color:#a9d5ff;font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.eyebrow{margin:12px 0 0;color:#78b9f5;font-size:9px;font-weight:800;letter-spacing:.12em}
+.copy h1{margin:7px 0 10px;max-width:430px;font-size:clamp(27px,3vw,43px);line-height:1.02;letter-spacing:-.045em}
+.description{max-width:430px;margin:0;color:#d5e5f5;font-size:13px;line-height:1.55}
+.price{display:flex;align-items:baseline;gap:9px;margin-top:17px}
+.price strong{font-size:22px;letter-spacing:-.03em}
+.price span{color:#9ec1df;font-size:10px;font-weight:700}
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+.link{color:#dceeff;font-size:11px;font-weight:800}
+.visual{position:relative;height:100%;min-height:326px;display:grid;place-items:center;overflow:hidden}
+.glow{position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(87,181,255,.28);filter:blur(26px)}
+.orbit{position:absolute;border:1px solid rgba(155,214,255,.18);border-radius:50%;transform:rotate(-18deg)}
+.orbitOne{width:330px;height:180px}
+.orbitTwo{width:280px;height:145px;transform:rotate(25deg)}
+.image{position:relative;z-index:2;width:min(78%,430px);height:auto;max-height:285px;object-fit:contain;filter:drop-shadow(0 22px 25px rgba(0,0,0,.38));animation:billboardIn .5s ease both}
+.arrow{position:absolute;z-index:6;top:50%;width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(4,17,34,.5);backdrop-filter:blur(8px);color:#fff;font-size:25px;line-height:1;transform:translateY(-50%);transition:background .2s,transform .2s}
+.arrow:hover{background:rgba(255,255,255,.16);transform:translateY(-50%) scale(1.04)}
+.prev{left:12px}.next{right:12px}
+.dots{position:absolute;z-index:7;left:34px;bottom:14px;display:flex;gap:5px}
+.dots button{width:6px;height:6px;padding:0;border:0;border-radius:99px;background:rgba(255,255,255,.35);transition:width .2s,background .2s}
+.dots button.active{width:19px;background:#fff}
+.progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.1);z-index:8}
+.progress span{display:block;height:100%;width:100%;background:#66b8ff;transform-origin:left;animation:billboardProgress 5s linear both}
+.empty{padding:40px;display:flex;align-items:center}
+.empty h1{font-size:38px;margin:10px 0}
+.empty p{color:#d5e5f5;margin-bottom:18px}
+@keyframes billboardIn{from{opacity:0;transform:translateX(22px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes billboardProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:1050px){.billboard{grid-template-columns:minmax(0,1fr) minmax(240px,.9fr)}.copy{padding-left:28px}.copy h1{font-size:34px}.image{width:88%}}
+@media(max-width:760px){
+  .billboard{min-height:0;grid-template-columns:1fr;border-radius:14px}
+  .copy{padding:25px 22px 8px}
+  .copy h1{font-size:31px}
+  .description{font-size:12px}
+  .price{margin-top:13px}
+  .actions{margin-top:14px}
+  .visual{min-height:205px;height:205px}
+  .image{width:min(72%,310px);max-height:190px}
+  .glow{width:180px;height:180px}
+  .orbitOne{width:260px;height:130px}
+  .orbitTwo{width:220px;height:105px}
+  .dots{left:22px;bottom:10px}
+  .arrow{width:31px;height:31px}
+}
+@media(max-width:430px){
+  .copy{padding:22px 18px 6px}
+  .copy h1{font-size:28px}
+  .eyebrow{font-size:8px}
+  .link{font-size:10px}
+  .visual{min-height:175px;height:175px}
+  .image{max-height:165px}
+}

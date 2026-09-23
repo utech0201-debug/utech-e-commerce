@@ -1,0 +1,24 @@
+.wrap{position:relative}
+.badge{position:absolute;right:-3px;top:-4px;min-width:17px;height:17px;padding:0 4px;display:grid;place-items:center;border:2px solid var(--white);border-radius:999px;background:#dc2626;color:#fff;font-size:.56rem;font-weight:800;line-height:1}
+.panel{position:absolute;right:0;top:calc(100% + 12px);z-index:80;width:min(390px,calc(100vw - 24px));overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 20px 50px rgba(11,31,58,.16)}
+.panelHeader{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 18px;border-bottom:1px solid var(--border)}
+.panelHeader h3{margin-top:4px;font-size:1rem;color:var(--navy)}
+.panelHeader button{display:flex;align-items:center;gap:5px;border:0;background:none;color:var(--blue);font-size:.68rem;font-weight:800;cursor:pointer}
+.panelHeader button:disabled{opacity:.45;cursor:not-allowed}
+.list{max-height:390px;overflow:auto}
+.item{display:flex;align-items:stretch;gap:8px;border-bottom:1px solid #edf1f5;background:var(--white)}
+.item.unread{background:#f6faff}
+.itemButton{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0;padding:14px 8px 14px 17px;border:0;background:none;text-align:left;cursor:pointer}
+.itemButton>span:last-child{display:grid;gap:4px}
+.itemButton strong{color:var(--navy);font-size:.73rem}
+.itemButton small{color:var(--muted);font-size:.68rem;line-height:1.45}
+.itemButton em{color:#94a3b8;font-size:.6rem;font-style:normal;font-weight:700}
+.dot{width:7px;height:7px;min-width:7px;margin-top:5px;border-radius:50%;background:transparent}
+.unread .dot{background:var(--blue)}
+.item>a{align-self:center;margin-right:13px;color:var(--blue);font-size:.65rem;font-weight:800}
+.empty{display:grid;place-items:center;gap:7px;padding:38px 25px;text-align:center;color:var(--muted)}
+.empty svg{color:#94a3b8}
+.empty strong{color:var(--navy);font-size:.78rem}
+.empty span{max-width:250px;font-size:.67rem;line-height:1.5}
+.footerLink{display:block;padding:13px 18px;border-top:1px solid var(--border);color:var(--blue);font-size:.7rem;font-weight:800;text-align:center}
+@media(max-width:760px){.panel{position:fixed;right:12px;top:68px;width:min(390px,calc(100vw - 24px))}}

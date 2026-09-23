@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProductCard from "@/components/shop/ProductCard";
+import SponsoredAd from "@/components/ads/SponsoredAd";
 import type { Product } from "@/data/products";
 import styles from "./MarketplaceHome.module.css";
 
@@ -10,9 +11,18 @@ const categories = [
   { label: "Hardware", query: "hardware", icon: "⚙️" },
 ];
 
-type Props = { products: Product[] };
+type Ad = {
+  id: string;
+  title: string;
+  body: string;
+  image_url: string | null;
+  href: string;
+  placement: string;
+};
 
-export default function MarketplaceHome({ products }: Props) {
+type Props = { products: Product[]; ads?: Ad[] };
+
+export default function MarketplaceHome({ products, ads = [] }: Props) {
   const featured = products.filter((product) => product.featured).slice(0, 4);
   const deals = products.slice(0, 6);
 
@@ -83,6 +93,12 @@ export default function MarketplaceHome({ products }: Props) {
           ))}
         </div>
       </section>
+
+      {ads.length ? (
+        <section className={styles.section} aria-label="Sponsored offers">
+          {ads.map((ad) => <SponsoredAd key={ad.id} ad={ad} />)}
+        </section>
+      ) : null}
 
       <section className={styles.deals}>
         <div className={styles.sectionHeader}>

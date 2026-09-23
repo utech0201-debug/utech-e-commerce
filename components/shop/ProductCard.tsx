@@ -42,7 +42,7 @@ export default function ProductCard({ product }: { product: Product }) {
               className="button button-primary"
               target="_blank"
               rel="noreferrer"
-              href={`https://wa.me/${product.whatsappNumber.replace(/\\D/g, "")}?text=${encodeURIComponent(`Hi, I want to order ${product.name} from ${product.sellerStoreName ?? "your UTECH store"}.`)}`}
+              href={`https://wa.me/${product.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(`Hi, I want to order ${product.name} from ${product.sellerStoreName ?? "your UTECH store"}.`)}`}
             >
               WhatsApp
             </a>

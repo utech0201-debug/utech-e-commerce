@@ -47,12 +47,6 @@ export default function AccountPage() {
     return () => { active = false; };
   }, [router]);
 
-  async function signOut() {
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
-  }
-
 
   if (loading) {
     return <section className="section"><div className="container"><p className="section-copy">Loading your account...</p></div></section>;

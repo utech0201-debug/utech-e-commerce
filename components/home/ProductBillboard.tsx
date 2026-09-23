@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/data/products";
+import styles from "./ProductBillboard.module.css";
 
 type Props = { products: Product[] };
 
@@ -42,9 +44,9 @@ export default function ProductBillboard({ products }: Props) {
 
   if (!slides.length) {
     return (
-      <section className="product-billboard product-billboard-empty" aria-label="UTech Marketplace">
+      <section className={`${styles.billboard} ${styles.empty}`} aria-label="UTech Marketplace">
         <div>
-          <span className="product-billboard-kicker">WELCOME TO UTECH</span>
+          <span className={styles.kicker}>WELCOME TO UTECH</span>
           <h1>Shop tech, gaming and more.</h1>
           <p>Discover products from UTECH and independent sellers.</p>
           <Link href="/shop" className="button button-primary">Shop now</Link>
@@ -56,39 +58,65 @@ export default function ProductBillboard({ products }: Props) {
   const product = slides[active];
 
   return (
-    <section className="product-billboard" aria-label="Featured products" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-      <div className="product-billboard-copy">
-        <span className="product-billboard-kicker">{categoryLabel[product.category]}</span>
-        <p className="product-billboard-eyebrow">LIVE FROM THE UTECH MARKETPLACE</p>
+    <section
+      className={styles.billboard}
+      aria-label="Featured products"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <div className={styles.copy}>
+        <span className={styles.kicker}>{categoryLabel[product.category]}</span>
+        <p className={styles.eyebrow}>LIVE FROM THE UTECH MARKETPLACE</p>
         <h1>{product.name}</h1>
-        <p className="product-billboard-description">{product.description}</p>
-        <div className="product-billboard-price">
+        <p className={styles.description}>{product.description}</p>
+        <div className={styles.price}>
           <strong>${product.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
           <span>Available now</span>
         </div>
-        <div className="product-billboard-actions">
+        <div className={styles.actions}>
           <Link href={`/products/${product.slug}`} className="button button-primary">View product</Link>
-          <Link href="/shop" className="product-billboard-link">Browse marketplace →</Link>
+          <Link href="/shop" className={styles.link}>Browse marketplace →</Link>
         </div>
       </div>
-      <div className="product-billboard-visual">
-        <div className="product-billboard-glow" />
-        <div className="product-billboard-orbit product-billboard-orbit-one" />
-        <div className="product-billboard-orbit product-billboard-orbit-two" />
-        <img key={product.id} src={product.image} alt={product.name} className="product-billboard-image" />
+
+      <div className={styles.visual}>
+        <div className={styles.glow} />
+        <div className={`${styles.orbit} ${styles.orbitOne}`} />
+        <div className={`${styles.orbit} ${styles.orbitTwo}`} />
+        <Image
+          key={product.id}
+          src={product.image}
+          alt={product.name}
+          width={560}
+          height={360}
+          sizes="(max-width: 760px) 72vw, 40vw"
+          className={styles.image}
+          priority={active === 0}
+        />
       </div>
+
       {slides.length > 1 ? (
         <>
-          <button type="button" className="product-billboard-arrow product-billboard-prev" aria-label="Previous product" onClick={() => setActive((current) => (current - 1 + slides.length) % slides.length)}>‹</button>
-          <button type="button" className="product-billboard-arrow product-billboard-next" aria-label="Next product" onClick={() => setActive((current) => (current + 1) % slides.length)}>›</button>
-          <div className="product-billboard-dots" aria-label="Billboard slides">
+          <button type="button" className={`${styles.arrow} ${styles.prev}`} aria-label="Previous product" onClick={() => setActive((current) => (current - 1 + slides.length) % slides.length)}>‹</button>
+          <button type="button" className={`${styles.arrow} ${styles.next}`} aria-label="Next product" onClick={() => setActive((current) => (current + 1) % slides.length)}>›</button>
+          <div className={styles.dots} aria-label="Billboard slides">
             {slides.map((slide, index) => (
-              <button key={slide.id} type="button" aria-label={`Show ${slide.name}`} aria-current={index === active ? "true" : undefined} className={index === active ? "active" : ""} onClick={() => setActive(index)} />
+              <button
+                key={slide.id}
+                type="button"
+                aria-label={`Show ${slide.name}`}
+                aria-current={index === active ? "true" : undefined}
+                className={index === active ? styles.active : ""}
+                onClick={() => setActive(index)}
+              />
             ))}
           </div>
         </>
       ) : null}
-      <div className="product-billboard-progress" aria-hidden="true"><span key={product.id} /></div>
+
+      <div className={styles.progress} aria-hidden="true"><span key={product.id} /></div>
     </section>
   );
 }

@@ -18,6 +18,7 @@ export type Product = {
   orderMethod?: "utech_checkout" | "whatsapp" | "hybrid";
   whatsappNumber?: string | null;
   orderInstructions?: string | null;
+  inventory?: number;
   variants?: ProductVariant[];
 };
 

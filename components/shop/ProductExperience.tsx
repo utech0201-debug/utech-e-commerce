@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "@/components/shop/AddToCart";
 import type { Product } from "@/data/products";
+import { saveRecentlyViewed } from "@/lib/personalization";
 
 export default function ProductExperience({ product, gallery }: { product: Product; gallery: string[] }) {
   const [active, setActive] = useState(0);
@@ -13,6 +14,10 @@ export default function ProductExperience({ product, gallery }: { product: Produ
     ? "https://wa.me/" + product.whatsappNumber.replace(/\D/g, "") + "?text=" +
       encodeURIComponent("Hi, I want to order " + product.name + " from " + (product.sellerStoreName ?? "your UTECH store") + ".")
     : null;
+
+  useEffect(() => {
+    saveRecentlyViewed(product);
+  }, [product]);
 
   return (
     <section className="detail">
@@ -29,22 +34,14 @@ export default function ProductExperience({ product, gallery }: { product: Produ
             </div>
             {images.length > 1 && (
               <div className="gallery-thumbs" aria-label="Product images">
-                {images.map((image, index) => (
-                  <button type="button" key={image + index} className={index === active ? "gallery-thumb active" : "gallery-thumb"} onClick={() => setActive(index)} aria-label={"View image " + (index + 1)}>
-                    <Image src={image} alt="" fill sizes="88px" unoptimized={Boolean(product.sellerId)} />
-                  </button>
-                ))}
+                {images.map((image, index) => <button type="button" key={image + index} className={index === active ? "gallery-thumb active" : "gallery-thumb"} onClick={() => setActive(index)} aria-label={"View image " + (index + 1)}><Image src={image} alt="" fill sizes="88px" unoptimized={Boolean(product.sellerId)} /></button>)}
               </div>
             )}
           </div>
         </div>
 
         <div className="detail-copy marketplace-detail-copy">
-          <div className="product-breadcrumbs">
-            <Link href="/">Home</Link><span>›</span>
-            <Link href={"/shop?category=" + product.category}>{product.category}</Link><span>›</span>
-            <strong>{product.name}</strong>
-          </div>
+          <div className="product-breadcrumbs"><Link href="/">Home</Link><span>›</span><Link href={"/shop?category=" + product.category}>{product.category}</Link><span>›</span><strong>{product.name}</strong></div>
           <span className="eyebrow">{product.type}</span>
           <h1>{product.name}</h1>
 

@@ -5,133 +5,166 @@ import { useEffect, useRef, useState } from "react";
 function playIntroSound(context: AudioContext) {
   const now = context.currentTime;
 
-  // UTECH Sonic Logo — concept 7:
-  // calm piano-like tones + warm sustained pad + deep, full-bodied impact.
-  // Designed to feel reassuring and premium while still arriving loudly.
+  // UTECH Sonic Logo — concept 8:
+  // warm cinematic bloom + human-feeling chord movement + memorable melodic hook.
+  // The goal is calm at the core, but unmistakably alive and full-bodied.
   const compressor = context.createDynamicsCompressor();
-  compressor.threshold.setValueAtTime(-16, now);
-  compressor.knee.setValueAtTime(8, now);
-  compressor.ratio.setValueAtTime(5.5, now);
-  compressor.attack.setValueAtTime(0.008, now);
-  compressor.release.setValueAtTime(0.4, now);
+  compressor.threshold.setValueAtTime(-18, now);
+  compressor.knee.setValueAtTime(10, now);
+  compressor.ratio.setValueAtTime(4.5, now);
+  compressor.attack.setValueAtTime(0.006, now);
+  compressor.release.setValueAtTime(0.34, now);
 
   const master = context.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(1.28, now + 0.09);
-  master.gain.setValueAtTime(1.28, now + 2.5);
-  master.gain.exponentialRampToValueAtTime(0.0001, now + 3.25);
+  master.gain.exponentialRampToValueAtTime(1.42, now + 0.08);
+  master.gain.setValueAtTime(1.42, now + 2.72);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + 3.45);
   master.connect(compressor);
   compressor.connect(context.destination);
 
-  // 1. Warm cinematic foundation — felt rather than heard.
-  const bass = context.createOscillator();
-  const bassGain = context.createGain();
-  bass.type = "sine";
-  bass.frequency.setValueAtTime(73.42, now);
-  bass.frequency.exponentialRampToValueAtTime(55, now + 0.7);
-  bassGain.gain.setValueAtTime(0.0001, now);
-  bassGain.gain.exponentialRampToValueAtTime(0.72, now + 0.16);
-  bassGain.gain.exponentialRampToValueAtTime(0.18, now + 1.5);
-  bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.55);
-  bass.connect(bassGain);
-  bassGain.connect(master);
-  bass.start(now);
-  bass.stop(now + 2.62);
+  // 1. Big warm opening bloom — felt immediately, without a harsh "boom".
+  const bloom = context.createOscillator();
+  const bloom2 = context.createOscillator();
+  const bloomGain = context.createGain();
+  bloom.type = "sine";
+  bloom2.type = "triangle";
+  bloom.frequency.setValueAtTime(49, now);
+  bloom.frequency.exponentialRampToValueAtTime(73.42, now + 0.52);
+  bloom2.frequency.setValueAtTime(98, now);
+  bloom2.frequency.exponentialRampToValueAtTime(146.83, now + 0.58);
+  bloomGain.gain.setValueAtTime(0.0001, now);
+  bloomGain.gain.exponentialRampToValueAtTime(0.72, now + 0.14);
+  bloomGain.gain.exponentialRampToValueAtTime(0.16, now + 1.55);
+  bloomGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+  bloom.connect(bloomGain);
+  bloom2.connect(bloomGain);
+  bloomGain.connect(master);
+  bloom.start(now);
+  bloom2.start(now);
+  bloom.stop(now + 2.58);
+  bloom2.stop(now + 2.58);
 
-  // 2. Gentle "heart" pulse: soft low sine swell, not a drum hit.
-  [0.05, 0.82].forEach((offset) => {
-    const pulse = context.createOscillator();
-    const gain = context.createGain();
-    pulse.type = "sine";
-    pulse.frequency.setValueAtTime(82, now + offset);
-    pulse.frequency.exponentialRampToValueAtTime(64, now + offset + 0.42);
-    gain.gain.setValueAtTime(0.0001, now + offset);
-    gain.gain.exponentialRampToValueAtTime(0.32, now + offset + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.5);
-    pulse.connect(gain);
-    gain.connect(master);
-    pulse.start(now + offset);
-    pulse.stop(now + offset + 0.54);
-  });
+  // 2. Soft "breath" layer — a filtered swell that gives the ident a human warmth.
+  const breath = context.createOscillator();
+  const breathFilter = context.createBiquadFilter();
+  const breathGain = context.createGain();
+  breath.type = "sawtooth";
+  breath.frequency.setValueAtTime(174.61, now + 0.18);
+  breath.frequency.exponentialRampToValueAtTime(261.63, now + 1.18);
+  breathFilter.type = "lowpass";
+  breathFilter.frequency.setValueAtTime(480, now + 0.18);
+  breathFilter.frequency.exponentialRampToValueAtTime(1800, now + 1.15);
+  breathGain.gain.setValueAtTime(0.0001, now + 0.18);
+  breathGain.exponentialRampToValueAtTime(0.12, now + 0.62);
+  breathGain.exponentialRampToValueAtTime(0.0001, now + 1.48);
+  breath.connect(breathFilter);
+  breathFilter.connect(breathGain);
+  breathGain.connect(master);
+  breath.start(now + 0.18);
+  breath.stop(now + 1.55);
 
-  // 3. Calm three-note identity: C -> G -> E.
-  // Rounded triangle waves give a soft, almost bell/piano character.
+  // 3. Signature melody — C -> E -> G -> E, with the last E held.
+  // Two detuned voices make it feel richer and less like a plain oscillator.
   [
-    { frequency: 261.63, start: 0.28, length: 0.78, level: 0.5 },
-    { frequency: 392, start: 0.78, length: 0.9, level: 0.56 },
-    { frequency: 329.63, start: 1.38, length: 1.15, level: 0.62 },
+    { frequency: 261.63, start: 0.34, length: 0.48, level: 0.52 },
+    { frequency: 329.63, start: 0.72, length: 0.52, level: 0.58 },
+    { frequency: 392, start: 1.12, length: 0.66, level: 0.64 },
+    { frequency: 329.63, start: 1.58, length: 1.2, level: 0.72 },
   ].forEach(({ frequency, start, length, level }) => {
-    const tone = context.createOscillator();
-    const harmonic = context.createOscillator();
+    const lead = context.createOscillator();
+    const voice = context.createOscillator();
     const gain = context.createGain();
     const filter = context.createBiquadFilter();
 
-    tone.type = "triangle";
-    tone.frequency.setValueAtTime(frequency, now + start);
-    harmonic.type = "sine";
-    harmonic.frequency.setValueAtTime(frequency * 2, now + start);
+    lead.type = "triangle";
+    voice.type = "sine";
+    lead.frequency.setValueAtTime(frequency, now + start);
+    voice.frequency.setValueAtTime(frequency * 1.003, now + start);
 
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1800, now + start);
-    filter.frequency.exponentialRampToValueAtTime(3200, now + start + 0.45);
+    filter.frequency.setValueAtTime(1200, now + start);
+    filter.frequency.exponentialRampToValueAtTime(3600, now + start + 0.2);
 
     gain.gain.setValueAtTime(0.0001, now + start);
-    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.12);
-    gain.gain.exponentialRampToValueAtTime(level * 0.48, now + start + length * 0.62);
+    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.07);
+    gain.gain.exponentialRampToValueAtTime(level * 0.42, now + start + length * 0.62);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
 
-    tone.connect(filter);
-    harmonic.connect(filter);
+    lead.connect(filter);
+    voice.connect(filter);
     filter.connect(gain);
     gain.connect(master);
-    tone.start(now + start);
-    harmonic.start(now + start);
-    tone.stop(now + start + length + 0.04);
-    harmonic.stop(now + start + length + 0.04);
+
+    lead.start(now + start);
+    voice.start(now + start);
+    lead.stop(now + start + length + 0.03);
+    voice.stop(now + start + length + 0.03);
   });
 
-  // 4. Warm chord bed — creates the calming emotional lift.
+  // 4. Emotional chord bloom — C major opens underneath the final hook.
   [
-    { frequency: 261.63, level: 0.12 },
-    { frequency: 329.63, level: 0.1 },
-    { frequency: 392, level: 0.08 },
-  ].forEach(({ frequency, level }) => {
+    { frequency: 130.81, level: 0.18 },
+    { frequency: 261.63, level: 0.13 },
+    { frequency: 329.63, level: 0.12 },
+    { frequency: 392, level: 0.1 },
+  ].forEach(({ frequency, level }, index) => {
     const pad = context.createOscillator();
-    const padGain = context.createGain();
-    const padFilter = context.createBiquadFilter();
+    const gain = context.createGain();
+    const filter = context.createBiquadFilter();
+    const start = 1.18 + index * 0.025;
 
     pad.type = "sine";
-    pad.frequency.setValueAtTime(frequency, now + 1.05);
-    padFilter.type = "lowpass";
-    padFilter.frequency.setValueAtTime(900, now + 1.05);
-    padFilter.frequency.exponentialRampToValueAtTime(2200, now + 2.15);
+    pad.frequency.setValueAtTime(frequency, now + start);
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(700, now + start);
+    filter.frequency.exponentialRampToValueAtTime(2600, now + 2.1);
 
-    padGain.gain.setValueAtTime(0.0001, now + 1.05);
-    padGain.gain.exponentialRampToValueAtTime(level, now + 1.65);
-    padGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.05);
+    gain.gain.setValueAtTime(0.0001, now + start);
+    gain.gain.exponentialRampToValueAtTime(level, now + 1.72);
+    gain.gain.exponentialRampToValueAtTime(level * 0.62, now + 2.55);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.28);
 
-    pad.connect(padFilter);
-    padFilter.connect(padGain);
-    padGain.connect(master);
-    pad.start(now + 1.05);
-    pad.stop(now + 3.12);
+    pad.connect(filter);
+    filter.connect(gain);
+    gain.connect(master);
+    pad.start(now + start);
+    pad.stop(now + 3.34);
   });
 
-  // 5. Soft upper resolution — bright enough to cut through without becoming harsh.
-  const upper = context.createOscillator();
-  const upperGain = context.createGain();
-  upper.type = "sine";
-  upper.frequency.setValueAtTime(783.99, now + 1.88);
-  upper.frequency.exponentialRampToValueAtTime(659.25, now + 2.72);
-  upperGain.gain.setValueAtTime(0.0001, now + 1.88);
-  upperGain.gain.exponentialRampToValueAtTime(0.16, now + 2.1);
-  upperGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.02);
-  upper.connect(upperGain);
-  upperGain.connect(master);
-  upper.start(now + 1.88);
-  upper.stop(now + 3.08);
-}
+  // 5. Airy high resolution — the moment the logo "opens up".
+  const shimmer = context.createOscillator();
+  const shimmerGain = context.createGain();
+  const shimmerFilter = context.createBiquadFilter();
+  shimmer.type = "sine";
+  shimmer.frequency.setValueAtTime(659.25, now + 2.08);
+  shimmer.frequency.exponentialRampToValueAtTime(1046.5, now + 2.72);
+  shimmerFilter.type = "lowpass";
+  shimmerFilter.frequency.setValueAtTime(2200, now + 2.08);
+  shimmerFilter.frequency.exponentialRampToValueAtTime(5200, now + 2.72);
+  shimmerGain.gain.setValueAtTime(0.0001, now + 2.08);
+  shimmerGain.gain.exponentialRampToValueAtTime(0.2, now + 2.42);
+  shimmerGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.18);
+  shimmer.connect(shimmerFilter);
+  shimmerFilter.connect(shimmerGain);
+  shimmerGain.connect(master);
+  shimmer.start(now + 2.08);
+  shimmer.stop(now + 3.24);
 
+  // 6. Final soft "lock" — a short upper harmonic gives the brand a clean ending.
+  const lock = context.createOscillator();
+  const lockGain = context.createGain();
+  lock.type = "triangle";
+  lock.frequency.setValueAtTime(783.99, now + 2.72);
+  lock.frequency.exponentialRampToValueAtTime(659.25, now + 3.18);
+  lockGain.gain.setValueAtTime(0.0001, now + 2.72);
+  lockGain.gain.exponentialRampToValueAtTime(0.22, now + 2.84);
+  lockGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.4);
+  lock.connect(lockGain);
+  lockGain.connect(master);
+  lock.start(now + 2.72);
+  lock.stop(now + 3.46);
+}
 function speakBrandLine() {
   // Concept 7 intentionally has no spoken line.
 }
@@ -193,7 +226,7 @@ export default function AppIntro() {
     const hideTimer = window.setTimeout(() => {
       setVisible(false);
       window.sessionStorage.setItem("utech-app-intro", "1");
-    }, 3300);
+    }, 3500);
 
     return () => {
       window.clearTimeout(hideTimer);

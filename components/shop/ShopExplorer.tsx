@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { SlidersHorizontal, X } from "lucide-react";
+import { Clock3, Search, SlidersHorizontal, X } from "lucide-react";
 import ProductCard from "./ProductCard";
 import type { Product, ProductCategory } from "@/data/products";
+import { readRecentSearches, saveRecentSearch } from "@/lib/personalization";
 
 const filters: Array<{ label: string; value: "all" | ProductCategory }> = [
   { label: "All", value: "all" },
@@ -29,11 +30,25 @@ export default function ShopExplorer({ products, initialQuery = "" }: { products
   const [category, setCategory] = useState<"all" | ProductCategory>(urlCategory && filters.some(f => f.value === urlCategory) ? urlCategory : "all");
   const [sort, setSort] = useState<Sort>("featured");
   const [mobileFilters, setMobileFilters] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   useEffect(() => { setQuery(initialQuery || urlQuery); }, [initialQuery, urlQuery]);
+
   useEffect(() => {
     if (urlCategory && filters.some(f => f.value === urlCategory)) setCategory(urlCategory);
   }, [urlCategory]);
+
+  useEffect(() => {
+    const refresh = () => setRecentSearches(readRecentSearches());
+    refresh();
+    window.addEventListener("utech-recent-searches", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("utech-recent-searches", refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -42,6 +57,7 @@ export default function ShopExplorer({ products, initialQuery = "" }: { products
       if (current === next) return;
       const params = new URLSearchParams(searchParams.toString());
       next ? params.set("query", next) : params.delete("query");
+      if (next.length >= 2) saveRecentSearch(next);
       router.replace(params.toString() ? `${pathname}?${params}` : pathname);
     }, 300);
     return () => window.clearTimeout(timer);
@@ -64,6 +80,11 @@ export default function ShopExplorer({ products, initialQuery = "" }: { products
     if (value === "all") params.delete("category"); else params.set("category", value);
     router.replace(params.toString() ? `${pathname}?${params}` : pathname);
     setMobileFilters(false);
+  };
+
+  const chooseRecentSearch = (value: string) => {
+    setQuery(value);
+    setSearchFocused(false);
   };
 
   return (
@@ -89,7 +110,31 @@ export default function ShopExplorer({ products, initialQuery = "" }: { products
         </aside>
         <div className="shop-results">
           <div className="shop-toolbar">
-            <label className="search-box"><span className="sr-only">Search products</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search products, brands, stores..." /></label>
+            <div className="search-box search-box-history">
+              <label>
+                <span className="sr-only">Search products</span>
+                <Search size={17} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={query}
+                  onFocus={() => setSearchFocused(true)}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder="Search products, brands, stores..."
+                />
+                {query && <button type="button" className="search-clear" aria-label="Clear search" onClick={() => setQuery("")}><X size={15}/></button>}
+              </label>
+              {searchFocused && !query.trim() && recentSearches.length > 0 && (
+                <div className="search-history-menu" role="listbox" aria-label="Recent searches">
+                  <div className="search-history-title">Recent searches</div>
+                  {recentSearches.map((item) => (
+                    <button key={item} type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => chooseRecentSearch(item)}>
+                      <Clock3 size={15} />
+                      <span>{item}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <select className="shop-sort" value={sort} onChange={e => setSort(e.target.value as Sort)} aria-label="Sort products">
               <option value="featured">Featured</option><option value="price-low">Price: Low to High</option><option value="price-high">Price: High to Low</option><option value="name">Name: A-Z</option>
             </select>

@@ -3,6 +3,7 @@ import "./globals.css";
 import "./loading.css";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
+import AppIntro from "@/components/layout/AppIntro";
 import { CartProvider } from "@/components/cart/CartProvider";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
+        <AppIntro />
         <CartProvider>
           <SiteHeader />
           <main>{children}</main>

@@ -5,122 +5,135 @@ import { useEffect, useRef, useState } from "react";
 function playIntroSound(context: AudioContext) {
   const now = context.currentTime;
 
-  // UTECH Sonic Logo — concept 6:
-  // iconic low hit -> fast three-note hook -> wide tonal lift -> confident final lock.
-  // Built to feel like a real brand ident rather than a collection of sound effects.
+  // UTECH Sonic Logo — concept 7:
+  // calm piano-like tones + warm sustained pad + deep, full-bodied impact.
+  // Designed to feel reassuring and premium while still arriving loudly.
   const compressor = context.createDynamicsCompressor();
-  compressor.threshold.setValueAtTime(-19, now);
-  compressor.knee.setValueAtTime(5, now);
-  compressor.ratio.setValueAtTime(7, now);
-  compressor.attack.setValueAtTime(0.003, now);
-  compressor.release.setValueAtTime(0.24, now);
+  compressor.threshold.setValueAtTime(-16, now);
+  compressor.knee.setValueAtTime(8, now);
+  compressor.ratio.setValueAtTime(5.5, now);
+  compressor.attack.setValueAtTime(0.008, now);
+  compressor.release.setValueAtTime(0.4, now);
 
   const master = context.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(1.16, now + 0.025);
-  master.gain.setValueAtTime(1.16, now + 2.15);
-  master.gain.exponentialRampToValueAtTime(0.0001, now + 2.65);
+  master.gain.exponentialRampToValueAtTime(1.28, now + 0.09);
+  master.gain.setValueAtTime(1.28, now + 2.5);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + 3.25);
   master.connect(compressor);
   compressor.connect(context.destination);
 
-  // 1. Branded low-frequency hit.
-  const hit = context.createOscillator();
-  const hitGain = context.createGain();
-  hit.type = "sine";
-  hit.frequency.setValueAtTime(96, now);
-  hit.frequency.exponentialRampToValueAtTime(48, now + 0.22);
-  hitGain.gain.setValueAtTime(0.0001, now);
-  hitGain.gain.exponentialRampToValueAtTime(0.78, now + 0.012);
-  hitGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
-  hit.connect(hitGain);
-  hitGain.connect(master);
-  hit.start(now);
-  hit.stop(now + 0.38);
+  // 1. Warm cinematic foundation — felt rather than heard.
+  const bass = context.createOscillator();
+  const bassGain = context.createGain();
+  bass.type = "sine";
+  bass.frequency.setValueAtTime(73.42, now);
+  bass.frequency.exponentialRampToValueAtTime(55, now + 0.7);
+  bassGain.gain.setValueAtTime(0.0001, now);
+  bassGain.gain.exponentialRampToValueAtTime(0.72, now + 0.16);
+  bassGain.gain.exponentialRampToValueAtTime(0.18, now + 1.5);
+  bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.55);
+  bass.connect(bassGain);
+  bassGain.connect(master);
+  bass.start(now);
+  bass.stop(now + 2.62);
 
-  // 2. The hook: A -> C# -> E, deliberately tight and memorable.
+  // 2. Gentle "heart" pulse: soft low sine swell, not a drum hit.
+  [0.05, 0.82].forEach((offset) => {
+    const pulse = context.createOscillator();
+    const gain = context.createGain();
+    pulse.type = "sine";
+    pulse.frequency.setValueAtTime(82, now + offset);
+    pulse.frequency.exponentialRampToValueAtTime(64, now + offset + 0.42);
+    gain.gain.setValueAtTime(0.0001, now + offset);
+    gain.gain.exponentialRampToValueAtTime(0.32, now + offset + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.5);
+    pulse.connect(gain);
+    gain.connect(master);
+    pulse.start(now + offset);
+    pulse.stop(now + offset + 0.54);
+  });
+
+  // 3. Calm three-note identity: C -> G -> E.
+  // Rounded triangle waves give a soft, almost bell/piano character.
   [
-    { frequency: 440, start: 0.12, length: 0.22, level: 0.48 },
-    { frequency: 554.37, start: 0.29, length: 0.25, level: 0.5 },
-    { frequency: 659.25, start: 0.49, length: 0.46, level: 0.62 },
+    { frequency: 261.63, start: 0.28, length: 0.78, level: 0.5 },
+    { frequency: 392, start: 0.78, length: 0.9, level: 0.56 },
+    { frequency: 329.63, start: 1.38, length: 1.15, level: 0.62 },
   ].forEach(({ frequency, start, length, level }) => {
-    const osc = context.createOscillator();
+    const tone = context.createOscillator();
     const harmonic = context.createOscillator();
     const gain = context.createGain();
+    const filter = context.createBiquadFilter();
 
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(frequency, now + start);
-    harmonic.type = "triangle";
+    tone.type = "triangle";
+    tone.frequency.setValueAtTime(frequency, now + start);
+    harmonic.type = "sine";
     harmonic.frequency.setValueAtTime(frequency * 2, now + start);
 
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1800, now + start);
+    filter.frequency.exponentialRampToValueAtTime(3200, now + start + 0.45);
+
     gain.gain.setValueAtTime(0.0001, now + start);
-    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.012);
+    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.12);
+    gain.gain.exponentialRampToValueAtTime(level * 0.48, now + start + length * 0.62);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
 
-    osc.connect(gain);
-    harmonic.connect(gain);
+    tone.connect(filter);
+    harmonic.connect(filter);
+    filter.connect(gain);
     gain.connect(master);
-    osc.start(now + start);
+    tone.start(now + start);
     harmonic.start(now + start);
-    osc.stop(now + start + length + 0.03);
-    harmonic.stop(now + start + length + 0.03);
+    tone.stop(now + start + length + 0.04);
+    harmonic.stop(now + start + length + 0.04);
   });
 
-  // 3. A smooth lift underneath the hook.
-  const lift = context.createOscillator();
-  const liftGain = context.createGain();
-  const liftFilter = context.createBiquadFilter();
-  lift.type = "triangle";
-  lift.frequency.setValueAtTime(174.61, now + 0.45);
-  lift.frequency.exponentialRampToValueAtTime(349.23, now + 1.32);
-  liftFilter.type = "lowpass";
-  liftFilter.frequency.setValueAtTime(700, now + 0.45);
-  liftFilter.frequency.exponentialRampToValueAtTime(2600, now + 1.32);
-  liftGain.gain.setValueAtTime(0.0001, now + 0.45);
-  liftGain.gain.exponentialRampToValueAtTime(0.19, now + 0.85);
-  liftGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.52);
-  lift.connect(liftFilter);
-  liftFilter.connect(liftGain);
-  liftGain.connect(master);
-  lift.start(now + 0.45);
-  lift.stop(now + 1.58);
-
-  // 4. Confident final lock: E major voicing.
+  // 4. Warm chord bed — creates the calming emotional lift.
   [
-    { frequency: 329.63, level: 0.22 },
-    { frequency: 415.3, level: 0.17 },
-    { frequency: 493.88, level: 0.13 },
+    { frequency: 261.63, level: 0.12 },
+    { frequency: 329.63, level: 0.1 },
+    { frequency: 392, level: 0.08 },
   ].forEach(({ frequency, level }) => {
-    const osc = context.createOscillator();
-    const gain = context.createGain();
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(frequency, now + 1.34);
-    gain.gain.setValueAtTime(0.0001, now + 1.34);
-    gain.gain.exponentialRampToValueAtTime(level, now + 1.48);
-    gain.gain.exponentialRampToValueAtTime(level * 0.5, now + 2.18);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.58);
-    osc.connect(gain);
-    gain.connect(master);
-    osc.start(now + 1.34);
-    osc.stop(now + 2.62);
+    const pad = context.createOscillator();
+    const padGain = context.createGain();
+    const padFilter = context.createBiquadFilter();
+
+    pad.type = "sine";
+    pad.frequency.setValueAtTime(frequency, now + 1.05);
+    padFilter.type = "lowpass";
+    padFilter.frequency.setValueAtTime(900, now + 1.05);
+    padFilter.frequency.exponentialRampToValueAtTime(2200, now + 2.15);
+
+    padGain.gain.setValueAtTime(0.0001, now + 1.05);
+    padGain.gain.exponentialRampToValueAtTime(level, now + 1.65);
+    padGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.05);
+
+    pad.connect(padFilter);
+    padFilter.connect(padGain);
+    padGain.connect(master);
+    pad.start(now + 1.05);
+    pad.stop(now + 3.12);
   });
 
-  // 5. Short air release gives the logo a polished ending.
-  const air = context.createOscillator();
-  const airGain = context.createGain();
-  air.type = "sine";
-  air.frequency.setValueAtTime(988, now + 1.75);
-  air.frequency.exponentialRampToValueAtTime(783.99, now + 2.48);
-  airGain.gain.setValueAtTime(0.0001, now + 1.75);
-  airGain.gain.exponentialRampToValueAtTime(0.1, now + 1.94);
-  airGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.54);
-  air.connect(airGain);
-  airGain.connect(master);
-  air.start(now + 1.75);
-  air.stop(now + 2.6);
+  // 5. Soft upper resolution — bright enough to cut through without becoming harsh.
+  const upper = context.createOscillator();
+  const upperGain = context.createGain();
+  upper.type = "sine";
+  upper.frequency.setValueAtTime(783.99, now + 1.88);
+  upper.frequency.exponentialRampToValueAtTime(659.25, now + 2.72);
+  upperGain.gain.setValueAtTime(0.0001, now + 1.88);
+  upperGain.gain.exponentialRampToValueAtTime(0.16, now + 2.1);
+  upperGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.02);
+  upper.connect(upperGain);
+  upperGain.connect(master);
+  upper.start(now + 1.88);
+  upper.stop(now + 3.08);
 }
 
 function speakBrandLine() {
-  // Concept 6 intentionally has no spoken line.
+  // Concept 7 intentionally has no spoken line.
 }
 
 export default function AppIntro() {
@@ -141,21 +154,25 @@ export default function AppIntro() {
           (window as typeof window & {
             webkitAudioContext?: typeof AudioContext;
           }).webkitAudioContext;
+
         if (AudioContextClass) {
           const context =
             audioContextRef.current ?? new AudioContextClass();
           audioContextRef.current = context;
+
           if (context.state === "suspended") {
             try {
               await context.resume();
             } catch {}
           }
+
           if (context.state === "running") {
             playIntroSound(context);
             playedRef.current = true;
           }
         }
       } catch {}
+
       if (playedRef.current) {
         speakBrandLine();
         return true;
@@ -176,7 +193,7 @@ export default function AppIntro() {
     const hideTimer = window.setTimeout(() => {
       setVisible(false);
       window.sessionStorage.setItem("utech-app-intro", "1");
-    }, 3000);
+    }, 3300);
 
     return () => {
       window.clearTimeout(hideTimer);
@@ -184,6 +201,7 @@ export default function AppIntro() {
       window.removeEventListener("touchstart", unlockAudio);
       window.removeEventListener("keydown", unlockAudio);
       window.speechSynthesis?.cancel();
+
       if (audioContextRef.current) {
         void audioContextRef.current.close();
         audioContextRef.current = null;

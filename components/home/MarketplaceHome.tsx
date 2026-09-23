@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProductCard from "@/components/shop/ProductCard";
 import SponsoredAd from "@/components/ads/SponsoredAd";
+import ProductBillboard from "@/components/home/ProductBillboard";
 import type { Product } from "@/data/products";
 import styles from "./MarketplaceHome.module.css";
 
@@ -42,21 +43,7 @@ export default function MarketplaceHome({ products, ads = [] }: Props) {
             <Link href="/shop" className={styles.allCategories}>View all products →</Link>
           </aside>
 
-          <div className={styles.heroBanner}>
-            <div className={styles.heroCopy}>
-              <span className={styles.kicker}>WELCOME TO UTECH STORE</span>
-              <h1>Your marketplace for tech, gaming & more.</h1>
-              <p>Discover products from UTECH and independent sellers in one trusted marketplace.</p>
-              <div className={styles.heroActions}>
-                <Link href="/shop" className="button button-primary">Shop now</Link>
-                <Link href="/sell" className="button button-secondary">Start selling</Link>
-              </div>
-            </div>
-            <div className={styles.heroVisual}>
-              <div className={styles.glow} />
-              {products[0]?.image ? <img src={products[0].image} alt="" /> : null}
-            </div>
-          </div>
+          <ProductBillboard products={products} />
 
           <div className={styles.quickPanel}>
             <div>

@@ -56,8 +56,8 @@ function playIntroSound(context: AudioContext) {
   breathFilter.frequency.setValueAtTime(480, now + 0.18);
   breathFilter.frequency.exponentialRampToValueAtTime(1800, now + 1.15);
   breathGain.gain.setValueAtTime(0.0001, now + 0.18);
-  breathGain.exponentialRampToValueAtTime(0.12, now + 0.62);
-  breathGain.exponentialRampToValueAtTime(0.0001, now + 1.48);
+  breathGain.gain.exponentialRampToValueAtTime(0.12, now + 0.62);
+  breathGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.48);
   breath.connect(breathFilter);
   breathFilter.connect(breathGain);
   breathGain.connect(master);

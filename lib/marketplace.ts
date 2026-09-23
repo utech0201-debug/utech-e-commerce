@@ -77,6 +77,7 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
       category: normalizeCategory(row.category),
       type: "Marketplace Product",
       image: row.image_url ?? "",
+      inventory: Number(row.inventory),
       description: row.description,
       sellerId: row.seller_id,
       sellerStoreSlug: seller.store_slug,

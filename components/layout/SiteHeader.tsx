@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Search, ShoppingCart, Menu, X, User } from "lucide-react";
+import NotificationBell from "@/components/notifications/NotificationBell";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -26,15 +27,9 @@ export default function SiteHeader() {
   function submitSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const term = query.trim();
-
     setOpen(false);
     setSearchOpen(false);
-
-    if (term) {
-      router.push(`/shop?query=${encodeURIComponent(term)}`);
-    } else {
-      router.push("/shop");
-    }
+    router.push(term ? `/shop?query=${encodeURIComponent(term)}` : "/shop");
   }
 
   return (
@@ -47,9 +42,7 @@ export default function SiteHeader() {
 
         <nav className={open ? "nav-menu open" : "nav-menu"}>
           {links.map(([label, href]) => (
-            <Link key={href} href={href} onClick={() => setOpen(false)}>
-              {label}
-            </Link>
+            <Link key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>
           ))}
         </nav>
 
@@ -64,14 +57,9 @@ export default function SiteHeader() {
             {searchOpen ? <X size={19} /> : <Search size={19} />}
           </button>
 
+          <NotificationBell />
 
-
-          <Link
-            href="/account"
-            className="icon-button account-button"
-            aria-label="My account"
-            title="My account"
-          >
+          <Link href="/account" className="icon-button account-button" aria-label="My account" title="My account">
             <User size={19} />
           </Link>
 
@@ -80,11 +68,7 @@ export default function SiteHeader() {
             {count > 0 && <span>{count}</span>}
           </Link>
 
-          <button
-            className="menu-button"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle navigation"
-          >
+          <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle navigation">
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
@@ -94,14 +78,7 @@ export default function SiteHeader() {
         <div className={styles.panel}>
           <form className={styles.form} onSubmit={submitSearch}>
             <Search size={19} aria-hidden="true" />
-            <input
-              autoFocus
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search consoles, laptops, games, hardware..."
-              aria-label="Search UTECH products"
-            />
+            <input autoFocus type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search consoles, laptops, games, hardware..." aria-label="Search UTECH products" />
             <button type="submit">Search</button>
           </form>
           <p>Search by product name, category, type or description.</p>

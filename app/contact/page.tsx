@@ -119,15 +119,15 @@ export default function ContactPage() {
                 <strong>Order issue</strong>
                 <span>Have your order number and the issue ready.</span>
               </div>
-              <div className="contact-check">
+              <div className={styles.check}>
                 <strong>Seller support</strong>
                 <span>Tell us your store name and what you are trying to do.</span>
               </div>
-              <div className="contact-check">
+              <div className={styles.check}>
                 <strong>Product question</strong>
                 <span>Include the product name or marketplace link.</span>
               </div>
-              <div className="contact-check">
+              <div className={styles.check}>
                 <strong>Account or payment</strong>
                 <span>Never send passwords, OTPs, PINs, or full card details.</span>
               </div>
@@ -135,9 +135,11 @@ export default function ContactPage() {
 
             <div className={styles.infoCard}>
               <span className="eyebrow">QUICK LINKS</span>
-              <Link href="/shop"><strong>Browse the marketplace</strong><span>Explore products and sellers →</span></Link>
-              <Link href="/sell"><strong>Start selling</strong><span>Apply for a UTECH seller account →</span></Link>
-              <Link href="/account"><strong>Open your account</strong><span>Check your orders and profile →</span></Link>
+              <div className={styles.links}>
+                <Link href="/shop"><strong>Browse the marketplace</strong><span>Explore products and sellers →</span></Link>
+                <Link href="/sell"><strong>Start selling</strong><span>Apply for a UTECH seller account →</span></Link>
+                <Link href="/account"><strong>Open your account</strong><span>Check your orders and profile →</span></Link>
+              </div>
             </div>
           </aside>
         </div>

@@ -87,7 +87,8 @@ export function getProductsFromFollowedStores(products: Product[], followedStore
     .filter((product) => product.sellerStoreSlug && followed.has(product.sellerStoreSlug))
     .slice(0, limit);
 }
-\nexport function isStoreFollowed(slug: string) {
+
+export function isStoreFollowed(slug: string) {
   return readFollowedStores().some((store) => store.slug === slug);
 }
 

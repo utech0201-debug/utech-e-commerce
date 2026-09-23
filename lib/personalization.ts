@@ -81,7 +81,13 @@ export function readFollowedStores(): FollowedStore[] {
   } catch { return []; }
 }
 
-export function getProductsFromFollowedStores(products: Product[], followedStores: FollowedStore[], limit = 8): Product[] {\n  const followed = new Set(followedStores.map((store) => store.slug));\n  return products.filter((product) => product.sellerStoreSlug && followed.has(product.sellerStoreSlug)).slice(0, limit);\n}\n\nexport function isStoreFollowed(slug: string) {
+export function getProductsFromFollowedStores(products: Product[], followedStores: FollowedStore[], limit = 8): Product[] {
+  const followed = new Set(followedStores.map((store) => store.slug));
+  return products
+    .filter((product) => product.sellerStoreSlug && followed.has(product.sellerStoreSlug))
+    .slice(0, limit);
+}
+\nexport function isStoreFollowed(slug: string) {
   return readFollowedStores().some((store) => store.slug === slug);
 }
 

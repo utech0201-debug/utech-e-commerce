@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import SellerAdActions from "@/components/seller/SellerAdActions";
 
 export const dynamic = "force-dynamic";
 

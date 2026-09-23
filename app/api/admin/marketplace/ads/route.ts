@@ -31,18 +31,23 @@ export async function POST(request: Request) {
   const body = String(form.get("body") ?? "").trim().slice(0, 300);
   const href = String(form.get("href") ?? "").trim().slice(0, 1000);
   const imageUrl = String(form.get("imageUrl") ?? "").trim().slice(0, 2000) || null;
+  const startsAt = String(form.get("startsAt") ?? "").trim() || null;
+  const endsAt = String(form.get("endsAt") ?? "").trim() || null;
+  const dailyImpressionCap = Number(form.get("dailyImpressionCap") || 0) || null;
+  const totalImpressionCap = Number(form.get("totalImpressionCap") || 0) || null;
   const placement = String(form.get("placement") ?? "homepage");
   const targetCategory = String(form.get("targetCategory") ?? "").trim().slice(0, 80) || null;
   const sellerId = String(form.get("sellerId") ?? "").trim() || null;
   const productId = String(form.get("productId") ?? "").trim() || null;
 
-  if (title.length < 2 || !href || !placements.has(placement)) {
+  if (title.length < 2 || !href || !placements.has(placement) || (dailyImpressionCap !== null && dailyImpressionCap < 1) || (totalImpressionCap !== null && totalImpressionCap < 1)) {
     return NextResponse.json({ error: "Title, destination and placement are required." }, { status: 400 });
   }
 
   const { error } = await admin.from("marketplace_ads").insert({
     title, body, href, image_url: imageUrl, placement, target_category: targetCategory,
-    seller_id: sellerId || null, product_id: productId || null, status: "approved",
+    seller_id: sellerId || null, product_id: productId || null, status: "approved", starts_at: startsAt, ends_at: endsAt,
+    daily_impression_cap: dailyImpressionCap, total_impression_cap: totalImpressionCap,
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { isAdminEmail } from "@/lib/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
@@ -31,11 +32,6 @@ type DocumentRow = {
   created_at: string;
 };
 
-function isAdminEmail(email?: string | null) {
-  const allowed = (process.env.UTECH_ADMIN_EMAILS ?? "")
-    .split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
-  return !!email && allowed.includes(email.toLowerCase());
-}
 
 function label(value: string) {
   return value.replaceAll("_", " ").replace(/\b\w/g, (char) => char.toUpperCase());

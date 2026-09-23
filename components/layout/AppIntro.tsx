@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-function playIntroSound() {
+function playIntroSound(context?: AudioContext) {
   try {
     const AudioContextClass =
       window.AudioContext ||
@@ -10,59 +10,107 @@ function playIntroSound() {
 
     if (!AudioContextClass) return;
 
-    const context = new AudioContextClass();
-    const now = context.currentTime;
+    const audio = context ?? new AudioContextClass();
+    const now = audio.currentTime;
 
-    const master = context.createGain();
+    const master = audio.createGain();
     master.gain.setValueAtTime(0.0001, now);
-    master.gain.exponentialRampToValueAtTime(0.075, now + 0.08);
-    master.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
-    master.connect(context.destination);
+    master.gain.exponentialRampToValueAtTime(0.16, now + 0.08);
+    master.gain.exponentialRampToValueAtTime(0.0001, now + 1.35);
+    master.connect(audio.destination);
 
-    const frequencies = [146.83, 220, 293.66, 440];
+    const frequencies = [146.83, 220, 293.66, 440, 587.33];
     frequencies.forEach((frequency, index) => {
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      const start = now + index * 0.11;
+      const oscillator = audio.createOscillator();
+      const gain = audio.createGain();
+      const start = now + index * 0.12;
 
-      oscillator.type = index === 0 ? "sine" : "triangle";
+      oscillator.type = index < 2 ? "sine" : "triangle";
       oscillator.frequency.setValueAtTime(frequency, start);
-      oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.015, start + 0.7);
+      oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.02, start + 0.8);
 
       gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.32 / (index + 1), start + 0.06);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.9);
+      gain.gain.exponentialRampToValueAtTime(0.42 / (index + 1), start + 0.07);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 1.05);
 
       oscillator.connect(gain);
       gain.connect(master);
       oscillator.start(start);
-      oscillator.stop(start + 0.95);
+      oscillator.stop(start + 1.1);
     });
 
-    window.setTimeout(() => {
-      void context.close();
-    }, 1500);
+    if (!context) {
+      window.setTimeout(() => void audio.close(), 1600);
+    }
   } catch {
-    // Audio is optional. The intro remains fully functional if the browser blocks it.
+    // Audio is optional and never blocks the visual intro.
   }
 }
 
 export default function AppIntro() {
   const [visible, setVisible] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const soundPlayedRef = useRef(false);
 
   useEffect(() => {
     const seen = window.sessionStorage.getItem("utech-app-intro");
     if (seen) return;
 
     setVisible(true);
-    playIntroSound();
+
+    const unlockAndPlay = () => {
+      if (soundPlayedRef.current) return;
+
+      try {
+        const AudioContextClass =
+          window.AudioContext ||
+          (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        const context =
+          audioContextRef.current ?? new AudioContextClass();
+
+        audioContextRef.current = context;
+
+        const startSound = () => {
+          if (soundPlayedRef.current) return;
+          soundPlayedRef.current = true;
+          playIntroSound(context);
+        };
+
+        if (context.state === "suspended") {
+          void context.resume().then(startSound);
+        } else {
+          startSound();
+        }
+      } catch {
+        // Keep the intro usable when audio is unavailable.
+      }
+    };
+
+    const handleInteraction = () => unlockAndPlay();
+
+    window.addEventListener("pointerdown", handleInteraction, { once: true });
+    window.addEventListener("keydown", handleInteraction, { once: true });
+
+    // Try immediately; browsers that allow it will play without interaction.
+    unlockAndPlay();
 
     const hideTimer = window.setTimeout(() => {
       setVisible(false);
       window.sessionStorage.setItem("utech-app-intro", "1");
     }, 3000);
 
-    return () => window.clearTimeout(hideTimer);
+    return () => {
+      window.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+      window.clearTimeout(hideTimer);
+      if (audioContextRef.current) {
+        void audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
   }, []);
 
   if (!visible) return null;

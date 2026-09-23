@@ -9,14 +9,19 @@ import {
   readRecentlyViewed,
   readWishlist,
   type ViewedProduct,
+  readFollowedStores,
+  getProductsFromFollowedStores,
+  type FollowedStore,
 } from "@/lib/personalization";
 
 const RECENT_EVENT = "utech-recently-viewed";
-const WISHLIST_EVENT = "utech-wishlist";\nconst FOLLOWED_STORES_EVENT = "utech-followed-stores";
+const WISHLIST_EVENT = "utech-wishlist";
+const FOLLOWED_STORES_EVENT = "utech-followed-stores";
 
 export default function PersonalizedDiscovery({ products }: { products: Product[] }) {
   const [viewed, setViewed] = useState<ViewedProduct[]>([]);
-  const [wishlist, setWishlist] = useState<ViewedProduct[]>([]);\n  const [followedStores, setFollowedStores] = useState<FollowedStore[]>([]);
+  const [wishlist, setWishlist] = useState<ViewedProduct[]>([]);
+  const [followedStores, setFollowedStores] = useState<FollowedStore[]>([]);
 
   useEffect(() => {
     const refresh = () => {
@@ -25,11 +30,13 @@ export default function PersonalizedDiscovery({ products }: { products: Product[
     };
     refresh();
     window.addEventListener(RECENT_EVENT, refresh);
-    window.addEventListener(WISHLIST_EVENT, refresh);\n    window.addEventListener(FOLLOWED_STORES_EVENT, refresh);
+    window.addEventListener(WISHLIST_EVENT, refresh);
+    window.addEventListener(FOLLOWED_STORES_EVENT, refresh);
     window.addEventListener("storage", refresh);
     return () => {
       window.removeEventListener(RECENT_EVENT, refresh);
-      window.removeEventListener(WISHLIST_EVENT, refresh);\n      window.removeEventListener(FOLLOWED_STORES_EVENT, refresh);
+      window.removeEventListener(WISHLIST_EVENT, refresh);
+      window.removeEventListener(FOLLOWED_STORES_EVENT, refresh);
       window.removeEventListener("storage", refresh);
     };
   }, []);
@@ -46,7 +53,12 @@ export default function PersonalizedDiscovery({ products }: { products: Product[
     [catalog, wishlist],
   );
 
-  const followedProducts = useMemo(\n    () => getProductsFromFollowedStores(products, followedStores, 8),\n    [products, followedStores],\n  );\n\n  const recommendations = useMemo(
+  const followedProducts = useMemo(
+    () => getProductsFromFollowedStores(products, followedStores, 8),
+    [products, followedStores],
+  );
+
+  const recommendations = useMemo(
     () => getRecommendedProducts(products, viewed, 8),
     [products, viewed],
   );
@@ -92,7 +104,21 @@ export default function PersonalizedDiscovery({ products }: { products: Product[
         </section>
       )}
 
-      {followedProducts.length > 0 && (\n        <section className="section personalized-section">\n          <div className="section-header">\n            <div>\n              <span className="eyebrow">STORES YOU FOLLOW</span>\n              <h2>New from stores you follow</h2>\n              <p>Fresh products from the sellers you chose to keep close.</p>\n            </div>\n            <a href="/shop">Browse marketplace →</a>\n          </div>\n          <div className="product-grid personalized-grid">\n            {followedProducts.map((product) => <ProductCard key={product.id} product={product} />)}\n          </div>\n        </section>\n      )}\n\n      {contextual.length > 0 && viewed[0] && (
+      {followedProducts.length > 0 && (
+        <section className="section personalized-section">
+          <div className="section-header">
+            <div>
+              <span className="eyebrow">STORES YOU FOLLOW</span>
+              <h2>New from stores you follow</h2>
+              <p>Fresh products from the sellers you chose to keep close.</p>
+            </div>
+            <a href="/shop">Browse marketplace →</a>
+          </div>
+          <div className="product-grid personalized-grid">
+            {followedProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+          </div>
+        </section>
+      )}\n\n      {contextual.length > 0 && viewed[0] && (
         <section className="section personalized-section">
           <div className="section-header">
             <div>

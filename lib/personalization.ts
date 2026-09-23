@@ -6,7 +6,11 @@ export type ViewedProduct = Pick<
 >;
 
 export const RECENTLY_VIEWED_KEY = "utech-recently-viewed-v1";
+export const RECENT_SEARCHES_KEY = "utech-recent-searches-v1";
+export const WISHLIST_KEY = "utech-wishlist-v1";
 export const MAX_RECENTLY_VIEWED = 12;
+export const MAX_RECENT_SEARCHES = 8;
+export const MAX_WISHLIST = 30;
 
 export function toViewedProduct(product: Product): ViewedProduct {
   return {
@@ -44,6 +48,53 @@ export function saveRecentlyViewed(product: Product) {
   window.dispatchEvent(new CustomEvent("utech-recently-viewed", { detail: next }));
 }
 
+export function readRecentSearches(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(RECENT_SEARCHES_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveRecentSearch(query: string) {
+  if (typeof window === "undefined") return;
+  const normalized = query.trim().replace(/\\s+/g, " ");
+  if (normalized.length < 2) return;
+  const next = [normalized, ...readRecentSearches().filter((item) => item.toLowerCase() !== normalized.toLowerCase())].slice(0, MAX_RECENT_SEARCHES);
+  window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent("utech-recent-searches", { detail: next }));
+}
+
+export function readWishlist(): ViewedProduct[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(WISHLIST_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function isWishlisted(productId: string) {
+  return readWishlist().some((product) => product.id === productId);
+}
+
+export function toggleWishlist(product: Product) {
+  if (typeof window === "undefined") return false;
+  const current = readWishlist();
+  const exists = current.some((item) => item.id === product.id);
+  const next = exists
+    ? current.filter((item) => item.id !== product.id)
+    : [toViewedProduct(product), ...current].slice(0, MAX_WISHLIST);
+  window.localStorage.setItem(WISHLIST_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent("utech-wishlist", { detail: next }));
+  return !exists;
+}
+
 export function getRecommendedProducts(products: Product[], viewed: ViewedProduct[], limit = 8): Product[] {
   const viewedIds = new Set(viewed.map((item) => item.id));
   const categoryWeight = new Map<string, number>();
@@ -64,6 +115,22 @@ export function getRecommendedProducts(products: Product[], viewed: ViewedProduc
       score += categoryWeight.get(product.category) ?? 0;
       score += typeWeight.get(product.type) ?? 0;
       if (product.sellerId) score += sellerWeight.get(product.sellerId) ?? 0;
+      return { product, score };
+    })
+    .sort((a, b) => b.score - a.score || Number(Boolean(b.product.featured)) - Number(Boolean(a.product.featured)))
+    .slice(0, limit)
+    .map(({ product }) => product);
+}
+
+export function getContextualRecommendations(products: Product[], viewed: ViewedProduct, limit = 6): Product[] {
+  return products
+    .filter((product) => product.id !== viewed.id)
+    .map((product) => {
+      let score = 0;
+      if (product.category === viewed.category) score += 8;
+      if (product.type === viewed.type) score += 5;
+      if (product.sellerId && viewed.sellerId && product.sellerId === viewed.sellerId) score += 4;
+      if (product.featured) score += 1;
       return { product, score };
     })
     .sort((a, b) => b.score - a.score || Number(Boolean(b.product.featured)) - Number(Boolean(a.product.featured)))

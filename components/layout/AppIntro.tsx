@@ -19,7 +19,6 @@ function playIntroSound(context?: AudioContext) {
     master.gain.exponentialRampToValueAtTime(0.0001, now + 1.55);
     master.connect(audio.destination);
 
-    // Soft cinematic "air" sweep: a quick rise that leads into the brand reveal.
     const sweep = audio.createOscillator();
     const sweepGain = audio.createGain();
     const filter = audio.createBiquadFilter();
@@ -40,7 +39,6 @@ function playIntroSound(context?: AudioContext) {
     sweep.start(now);
     sweep.stop(now + 0.9);
 
-    // UTECH signature: three clean tones, spaced like a short sonic logo.
     const notes = [
       { frequency: 261.63, start: 0.42, duration: 0.48 },
       { frequency: 329.63, start: 0.64, duration: 0.52 },
@@ -64,7 +62,6 @@ function playIntroSound(context?: AudioContext) {
       oscillator.stop(now + start + duration + 0.04);
     });
 
-    // A very short high harmonic gives the final UTECH reveal a polished "spark".
     const sparkle = audio.createOscillator();
     const sparkleGain = audio.createGain();
     sparkle.type = "sine";
@@ -83,4 +80,100 @@ function playIntroSound(context?: AudioContext) {
   } catch {
     // Audio is optional and never blocks the visual intro.
   }
+}
+
+export default function AppIntro() {
+  const [visible, setVisible] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const soundPlayedRef = useRef(false);
+
+  useEffect(() => {
+    const seen = window.sessionStorage.getItem("utech-app-intro");
+    if (seen) return;
+
+    setVisible(true);
+
+    const unlockAndPlay = () => {
+      if (soundPlayedRef.current) return;
+
+      try {
+        const AudioContextClass =
+          window.AudioContext ||
+          (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        const context =
+          audioContextRef.current ?? new AudioContextClass();
+
+        audioContextRef.current = context;
+
+        const startSound = () => {
+          if (soundPlayedRef.current) return;
+          soundPlayedRef.current = true;
+          playIntroSound(context);
+        };
+
+        if (context.state === "suspended") {
+          void context.resume().then(startSound);
+        } else {
+          startSound();
+        }
+      } catch {
+        // Keep the intro usable when audio is unavailable.
+      }
+    };
+
+    const handleInteraction = () => unlockAndPlay();
+
+    window.addEventListener("pointerdown", handleInteraction, { once: true });
+    window.addEventListener("keydown", handleInteraction, { once: true });
+
+    unlockAndPlay();
+
+    const hideTimer = window.setTimeout(() => {
+      setVisible(false);
+      window.sessionStorage.setItem("utech-app-intro", "1");
+    }, 3000);
+
+    return () => {
+      window.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+      window.clearTimeout(hideTimer);
+      if (audioContextRef.current) {
+        void audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div className="utech-app-intro" role="status" aria-label="Opening UTECH">
+      <div className="utech-intro-grid" aria-hidden="true" />
+      <div className="utech-intro-orbit utech-intro-orbit-one" aria-hidden="true" />
+      <div className="utech-intro-orbit utech-intro-orbit-two" aria-hidden="true" />
+      <div className="utech-intro-node utech-intro-node-one" aria-hidden="true" />
+      <div className="utech-intro-node utech-intro-node-two" aria-hidden="true" />
+      <div className="utech-intro-node utech-intro-node-three" aria-hidden="true" />
+
+      <div className="utech-intro-core">
+        <div className="utech-intro-kicker">THE MARKETPLACE</div>
+        <div className="utech-intro-word" aria-hidden="true">
+          <span>U</span>
+          <span>T</span>
+          <span>E</span>
+          <span>C</span>
+          <span>H</span>
+        </div>
+        <div className="utech-intro-tagline">DISCOVER · BUILD · CONNECT</div>
+        <div className="utech-intro-progress" aria-hidden="true">
+          <span />
+        </div>
+      </div>
+
+      <span className="sr-only">Opening UTECH Marketplace</span>
+    </div>
+  );
 }

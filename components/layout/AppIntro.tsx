@@ -2,183 +2,137 @@
 
 import { useEffect, useRef, useState } from "react";
 
-function createNoiseBuffer(audio: AudioContext, duration: number) {
-  const buffer = audio.createBuffer(
-    1,
-    Math.floor(audio.sampleRate * duration),
-    audio.sampleRate,
-  );
-  const data = buffer.getChannelData(0);
-
-  for (let index = 0; index < data.length; index += 1) {
-    data[index] = Math.random() * 2 - 1;
-  }
-
-  return buffer;
-}
-
 function playIntroSound(context: AudioContext) {
   const now = context.currentTime;
 
-  // UTECH Sonic Logo — concept 2:
-  // deep impact -> glass pulse -> rising 3-note identity -> warm lock -> sparkle.
-  // Kept intentionally short so it feels like a brand signature, not background music.
+  // UTECH Sonic Logo — concept 3:
+  // a different direction: cinematic pulse -> rhythmic ticks -> airy sweep -> clean signature chime.
+  // No spoken line. Designed to feel modern, confident and instantly recognizable.
   const compressor = context.createDynamicsCompressor();
-  compressor.threshold.setValueAtTime(-24, now);
-  compressor.knee.setValueAtTime(6, now);
-  compressor.ratio.setValueAtTime(12, now);
-  compressor.attack.setValueAtTime(0.003, now);
-  compressor.release.setValueAtTime(0.22, now);
+  compressor.threshold.setValueAtTime(-22, now);
+  compressor.knee.setValueAtTime(5, now);
+  compressor.ratio.setValueAtTime(10, now);
+  compressor.attack.setValueAtTime(0.002, now);
+  compressor.release.setValueAtTime(0.28, now);
 
   const master = context.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(1.05, now + 0.018);
-  master.gain.setValueAtTime(1.05, now + 2.58);
+  master.gain.exponentialRampToValueAtTime(1.18, now + 0.035);
+  master.gain.setValueAtTime(1.18, now + 2.42);
   master.gain.exponentialRampToValueAtTime(0.0001, now + 2.9);
   master.connect(compressor);
   compressor.connect(context.destination);
 
-  // 1. Deep identity hit.
-  const sub = context.createOscillator();
-  const subGain = context.createGain();
-  sub.type = "sine";
-  sub.frequency.setValueAtTime(96, now);
-  sub.frequency.exponentialRampToValueAtTime(48, now + 0.34);
-  subGain.gain.setValueAtTime(0.0001, now);
-  subGain.gain.exponentialRampToValueAtTime(0.9, now + 0.012);
-  subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.46);
-  sub.connect(subGain);
-  subGain.connect(master);
-  sub.start(now);
-  sub.stop(now + 0.5);
+  // 1. Cinematic pulse — short, wide and physical.
+  const pulse = context.createOscillator();
+  const pulseGain = context.createGain();
+  pulse.type = "sine";
+  pulse.frequency.setValueAtTime(72, now);
+  pulse.frequency.exponentialRampToValueAtTime(38, now + 0.5);
+  pulseGain.gain.setValueAtTime(0.0001, now);
+  pulseGain.gain.exponentialRampToValueAtTime(0.95, now + 0.015);
+  pulseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.58);
+  pulse.connect(pulseGain);
+  pulseGain.connect(master);
+  pulse.start(now);
+  pulse.stop(now + 0.62);
 
-  // 2. Short metallic/glass transient.
-  const glass = context.createOscillator();
-  const glassGain = context.createGain();
-  const glassFilter = context.createBiquadFilter();
-  glass.type = "sine";
-  glass.frequency.setValueAtTime(1568, now + 0.035);
-  glass.frequency.exponentialRampToValueAtTime(3136, now + 0.18);
-  glassFilter.type = "highpass";
-  glassFilter.frequency.setValueAtTime(900, now);
-  glassGain.gain.setValueAtTime(0.0001, now + 0.035);
-  glassGain.gain.exponentialRampToValueAtTime(0.42, now + 0.055);
-  glassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
-  glass.connect(glassFilter);
-  glassFilter.connect(glassGain);
-  glassGain.connect(master);
-  glass.start(now + 0.035);
-  glass.stop(now + 0.4);
+  // 2. Rhythmic digital ticks — a subtle mechanical identity.
+  [0.16, 0.29, 0.43].forEach((offset, index) => {
+    const tick = context.createOscillator();
+    const tickGain = context.createGain();
+    tick.type = "square";
+    tick.frequency.setValueAtTime(1500 + index * 420, now + offset);
+    tickGain.gain.setValueAtTime(0.0001, now + offset);
+    tickGain.gain.exponentialRampToValueAtTime(0.12 + index * 0.025, now + offset + 0.006);
+    tickGain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.075);
+    tick.connect(tickGain);
+    tickGain.connect(master);
+    tick.start(now + offset);
+    tick.stop(now + offset + 0.09);
+  });
 
-  // 3. UTECH's new three-note signature.
-  const motif = [
-    { frequency: 261.63, start: 0.42, length: 0.34 },
-    { frequency: 329.63, start: 0.72, length: 0.36 },
-    { frequency: 493.88, start: 1.04, length: 0.62 },
+  // 3. Airy upward sweep — creates the transition into the brand reveal.
+  const sweep = context.createOscillator();
+  const sweepGain = context.createGain();
+  const sweepFilter = context.createBiquadFilter();
+  sweep.type = "sawtooth";
+  sweep.frequency.setValueAtTime(180, now + 0.48);
+  sweep.frequency.exponentialRampToValueAtTime(980, now + 1.28);
+  sweepFilter.type = "lowpass";
+  sweepFilter.frequency.setValueAtTime(700, now + 0.48);
+  sweepFilter.frequency.exponentialRampToValueAtTime(5200, now + 1.28);
+  sweepGain.gain.setValueAtTime(0.0001, now + 0.48);
+  sweepGain.gain.exponentialRampToValueAtTime(0.18, now + 0.92);
+  sweepGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.38);
+  sweep.connect(sweepFilter);
+  sweepFilter.connect(sweepGain);
+  sweepGain.connect(master);
+  sweep.start(now + 0.48);
+  sweep.stop(now + 1.45);
+
+  // 4. Clean UTECH signature: two bright notes followed by a resolving third.
+  const signature = [
+    { frequency: 392, start: 1.22, length: 0.32, level: 0.42 },
+    { frequency: 523.25, start: 1.48, length: 0.34, level: 0.48 },
+    { frequency: 783.99, start: 1.78, length: 0.72, level: 0.54 },
   ];
 
-  motif.forEach(({ frequency, start, length }, index) => {
+  signature.forEach(({ frequency, start, length, level }) => {
     const tone = context.createOscillator();
-    const harmonic = context.createOscillator();
+    const overtone = context.createOscillator();
     const gain = context.createGain();
-    const filter = context.createBiquadFilter();
 
     tone.type = "triangle";
     tone.frequency.setValueAtTime(frequency, now + start);
 
-    harmonic.type = "sine";
-    harmonic.frequency.setValueAtTime(frequency * 2, now + start);
-    harmonic.detune.setValueAtTime(index === 1 ? -4 : 4, now + start);
-
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(2400, now + start);
-    filter.frequency.exponentialRampToValueAtTime(
-      7200,
-      now + start + 0.16,
-    );
+    overtone.type = "sine";
+    overtone.frequency.setValueAtTime(frequency * 2, now + start);
 
     gain.gain.setValueAtTime(0.0001, now + start);
-    gain.gain.exponentialRampToValueAtTime(
-      0.46 + index * 0.08,
-      now + start + 0.025,
-    );
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + start + length,
-    );
+    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.025);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
 
-    tone.connect(filter);
-    harmonic.connect(filter);
-    filter.connect(gain);
+    tone.connect(gain);
+    overtone.connect(gain);
     gain.connect(master);
 
     tone.start(now + start);
-    harmonic.start(now + start);
+    overtone.start(now + start);
     tone.stop(now + start + length + 0.03);
-    harmonic.stop(now + start + length + 0.03);
+    overtone.stop(now + start + length + 0.03);
   });
 
-  // 4. Premium brand lock: a two-tone chord that lands after the motif.
-  const lockNotes = [
-    { frequency: 329.63, level: 0.48 },
-    { frequency: 493.88, level: 0.36 },
-    { frequency: 659.25, level: 0.22 },
-  ];
-
-  lockNotes.forEach(({ frequency, level }) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(frequency, now + 1.48);
-    gain.gain.setValueAtTime(0.0001, now + 1.48);
-    gain.gain.exponentialRampToValueAtTime(level, now + 1.53);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.62);
-
-    oscillator.connect(gain);
-    gain.connect(master);
-    oscillator.start(now + 1.48);
-    oscillator.stop(now + 2.66);
+  // 5. Final brand resolve — warm chord + tiny high-end glint.
+  [523.25, 659.25, 783.99].forEach((frequency, index) => {
+    const resolve = context.createOscillator();
+    const resolveGain = context.createGain();
+    resolve.type = "sine";
+    resolve.frequency.setValueAtTime(frequency, now + 2.02);
+    resolveGain.gain.setValueAtTime(0.0001, now + 2.02);
+    resolveGain.gain.exponentialRampToValueAtTime(0.28 - index * 0.035, now + 2.08);
+    resolveGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.68);
+    resolve.connect(resolveGain);
+    resolveGain.connect(master);
+    resolve.start(now + 2.02);
+    resolve.stop(now + 2.72);
   });
 
-  // 5. Final upward sparkle.
-  const sparkle = context.createOscillator();
-  const sparkleGain = context.createGain();
-  sparkle.type = "sine";
-  sparkle.frequency.setValueAtTime(987.77, now + 2.08);
-  sparkle.frequency.exponentialRampToValueAtTime(1975.53, now + 2.48);
-  sparkleGain.gain.setValueAtTime(0.0001, now + 2.08);
-  sparkleGain.gain.exponentialRampToValueAtTime(0.28, now + 2.16);
-  sparkleGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.86);
-  sparkle.connect(sparkleGain);
-  sparkleGain.connect(master);
-  sparkle.start(now + 2.08);
-  sparkle.stop(now + 2.9);
+  const glint = context.createOscillator();
+  const glintGain = context.createGain();
+  glint.type = "sine";
+  glint.frequency.setValueAtTime(1568, now + 2.32);
+  glint.frequency.exponentialRampToValueAtTime(3136, now + 2.58);
+  glintGain.gain.setValueAtTime(0.0001, now + 2.32);
+  glintGain.gain.exponentialRampToValueAtTime(0.24, now + 2.4);
+  glintGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.88);
+  glint.connect(glintGain);
+  glintGain.connect(master);
+  glint.start(now + 2.32);
+  glint.stop(now + 2.9);
 }
 function speakBrandLine() {
-  try {
-    if (!("speechSynthesis" in window)) return;
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(
-      "UTECH. Shop with ease.",
-    );
-    utterance.rate = 0.9;
-    utterance.pitch = 0.72;
-    utterance.volume = 1;
-
-    const voices = window.speechSynthesis.getVoices();
-    const preferred =
-      voices.find((voice) => /en-US|en-GB/i.test(voice.lang)) ??
-      voices.find((voice) => /^en/i.test(voice.lang));
-
-    if (preferred) utterance.voice = preferred;
-
-    window.speechSynthesis.speak(utterance);
-  } catch {
-    // Spoken branding is optional and never blocks the intro.
-  }
+  // Concept 3 intentionally has no spoken brand line.
 }
 
 export default function AppIntro() {

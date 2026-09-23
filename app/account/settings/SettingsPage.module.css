@@ -1,22 +1,47 @@
 .page{padding-top:72px}
 .header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:30px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:1000px}
-.card{display:grid;gap:18px;padding:26px;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 10px 30px rgba(11,31,58,.045)}
+.card,.notificationCard{display:grid;gap:18px;padding:26px;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 10px 30px rgba(11,31,58,.045)}
 .cardHeading{display:flex;align-items:center;gap:13px}
 .cardHeading h2{margin-top:5px;font-size:1.25rem;letter-spacing:-.03em}
 .icon,.dangerIcon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#eef5fb;color:var(--blue)}
 .dangerIcon{background:#fff1f2;color:#be123c}
 .card label{display:grid;gap:7px;color:var(--navy);font-size:.78rem;font-weight:700}
 .card input{width:100%;min-height:46px;padding:12px 13px;border:1px solid var(--border);border-radius:9px;background:var(--white);color:var(--navy);outline:none}
-.card input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(18,58,99,.08)}
+.card input:focus,.notificationCard input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(18,58,99,.08)}
 .card input[readonly]{background:#f7f9fc;color:var(--muted)}
 .help{color:var(--muted);font-size:.7rem;font-weight:500;line-height:1.5}
-.success{padding:11px 13px;border-radius:9px;background:#ecfdf5;color:#047857;font-size:.76rem;font-weight:700}
+.success{grid-column:1/-1;padding:11px 13px;border-radius:9px;background:#ecfdf5;color:#047857;font-size:.76rem;font-weight:700}
 .danger{grid-column:1/-1;border-color:#f3d5da}
-.danger p,.card>p{margin:0;color:var(--muted);font-size:.78rem;line-height:1.65}
+.danger p,.card>p,.notificationCard>p{margin:0;color:var(--muted);font-size:.78rem;line-height:1.65}
 .confirm{display:grid;gap:10px;padding:16px;border:1px solid #f3d5da;border-radius:12px;background:#fff8f9}
 .confirm span{color:var(--muted);font-size:.76rem}
 .confirm input{background:#fff}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
 .actions button{min-width:150px}
-@media(max-width:700px){.page{padding-top:45px}.header{align-items:stretch;flex-direction:column}.grid{grid-template-columns:1fr}.danger{grid-column:auto}.card{padding:20px}.actions{flex-direction:column}.actions button{width:100%}}
+.preferencePreview{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px;border:1px solid var(--border);border-radius:12px;background:#f8fafc}
+.preferencePreview span{font-size:.75rem;color:var(--muted)}
+.preferencePreview b{color:var(--navy)}
+.notificationCard{grid-column:1/-1}
+.sectionDescription{max-width:760px}
+.preferenceList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--border)}
+.preferenceRow{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 4px;border-bottom:1px solid var(--border);cursor:pointer}
+.preferenceRow span{display:grid;gap:4px}
+.preferenceRow strong{font-size:.8rem;color:var(--navy)}
+.preferenceRow small{max-width:390px;color:var(--muted);font-size:.7rem;line-height:1.5}
+.preferenceRow input{appearance:none;width:42px;height:24px;min-width:42px;border-radius:999px;border:1px solid #cbd5e1;background:#e2e8f0;position:relative;cursor:pointer;transition:.18s}
+.preferenceRow input::after{content:"";position:absolute;width:18px;height:18px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.16);transition:.18s}
+.preferenceRow input:checked{background:var(--blue);border-color:var(--blue)}
+.preferenceRow input:checked::after{transform:translateX(18px)}
+@media(max-width:700px){
+  .page{padding-top:45px}
+  .header{align-items:stretch;flex-direction:column}
+  .grid{grid-template-columns:1fr}
+  .danger,.notificationCard,.success{grid-column:auto}
+  .card,.notificationCard{padding:20px}
+  .actions{flex-direction:column}
+  .actions button{width:100%}
+  .preferenceList{grid-template-columns:1fr}
+  .preferencePreview{align-items:stretch;flex-direction:column}
+  .preferencePreview .button{width:100%}
+}

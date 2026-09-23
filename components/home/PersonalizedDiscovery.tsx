@@ -26,7 +26,8 @@ export default function PersonalizedDiscovery({ products }: { products: Product[
   useEffect(() => {
     const refresh = () => {
       setViewed(readRecentlyViewed());
-      setWishlist(readWishlist());\n      setFollowedStores(readFollowedStores());
+      setWishlist(readWishlist());
+      setFollowedStores(readFollowedStores());
     };
     refresh();
     window.addEventListener(RECENT_EVENT, refresh);
@@ -118,7 +119,9 @@ export default function PersonalizedDiscovery({ products }: { products: Product[
             {followedProducts.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         </section>
-      )}\n\n      {contextual.length > 0 && viewed[0] && (
+      )}
+
+      {contextual.length > 0 && viewed[0] && (
         <section className="section personalized-section">
           <div className="section-header">
             <div>

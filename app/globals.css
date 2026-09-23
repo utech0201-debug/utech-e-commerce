@@ -1324,7 +1324,7 @@ html, body { overflow-x: hidden; }
 
 
 /* Personalized marketplace discovery */
-.personalized-section { padding-top: 54px; padding-bottom: 54px; }
+.personalized-section { padding-top: 54px; padding-bottom: 54px; padding-left: max(20px, calc((100vw - var(--max)) / 2)); padding-right: max(20px, calc((100vw - var(--max)) / 2)); }
 .personalized-section .section-header p { margin-top: 7px; color: var(--muted); font-size: .82rem; }
 .personalized-section .section-header > a { color: var(--blue); font-size: .78rem; font-weight: 800; white-space: nowrap; }
 .personalized-grid { margin-top: 22px; }

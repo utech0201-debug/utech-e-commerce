@@ -20,112 +20,87 @@ function createNoiseBuffer(audio: AudioContext, duration: number) {
 function playIntroSound(context: AudioContext) {
   const now = context.currentTime;
 
-  // Loud, compressed 3-second sonic bed:
-  // impact -> motion -> spoken brand line -> signature finish.
+  // UTECH Sonic Logo — concept 2:
+  // deep impact -> glass pulse -> rising 3-note identity -> warm lock -> sparkle.
+  // Kept intentionally short so it feels like a brand signature, not background music.
   const compressor = context.createDynamicsCompressor();
-  compressor.threshold.setValueAtTime(-20, now);
-  compressor.knee.setValueAtTime(5, now);
-  compressor.ratio.setValueAtTime(16, now);
-  compressor.attack.setValueAtTime(0.002, now);
-  compressor.release.setValueAtTime(0.18, now);
+  compressor.threshold.setValueAtTime(-24, now);
+  compressor.knee.setValueAtTime(6, now);
+  compressor.ratio.setValueAtTime(12, now);
+  compressor.attack.setValueAtTime(0.003, now);
+  compressor.release.setValueAtTime(0.22, now);
 
   const master = context.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(1.25, now + 0.025);
-  master.gain.setValueAtTime(1.25, now + 2.72);
-  master.gain.exponentialRampToValueAtTime(0.0001, now + 3.0);
+  master.gain.exponentialRampToValueAtTime(1.05, now + 0.018);
+  master.gain.setValueAtTime(1.05, now + 2.58);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + 2.9);
   master.connect(compressor);
   compressor.connect(context.destination);
 
-  // Heavy opening hit.
-  const impact = context.createOscillator();
-  const impactGain = context.createGain();
-  impact.type = "sine";
-  impact.frequency.setValueAtTime(132, now);
-  impact.frequency.exponentialRampToValueAtTime(42, now + 0.32);
-  impactGain.gain.setValueAtTime(0.0001, now);
-  impactGain.gain.exponentialRampToValueAtTime(1.05, now + 0.012);
-  impactGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
-  impact.connect(impactGain);
-  impactGain.connect(master);
-  impact.start(now);
-  impact.stop(now + 0.53);
+  // 1. Deep identity hit.
+  const sub = context.createOscillator();
+  const subGain = context.createGain();
+  sub.type = "sine";
+  sub.frequency.setValueAtTime(96, now);
+  sub.frequency.exponentialRampToValueAtTime(48, now + 0.34);
+  subGain.gain.setValueAtTime(0.0001, now);
+  subGain.gain.exponentialRampToValueAtTime(0.9, now + 0.012);
+  subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.46);
+  sub.connect(subGain);
+  subGain.connect(master);
+  sub.start(now);
+  sub.stop(now + 0.5);
 
-  // Bright transient layered over the impact.
-  const click = context.createBufferSource();
-  const clickGain = context.createGain();
-  const clickFilter = context.createBiquadFilter();
-  click.buffer = createNoiseBuffer(context, 0.2);
-  clickFilter.type = "bandpass";
-  clickFilter.frequency.setValueAtTime(2400, now);
-  clickFilter.Q.setValueAtTime(0.8, now);
-  clickGain.gain.setValueAtTime(0.0001, now);
-  clickGain.gain.exponentialRampToValueAtTime(0.58, now + 0.006);
-  clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.17);
-  click.connect(clickFilter);
-  clickFilter.connect(clickGain);
-  clickGain.connect(master);
-  click.start(now);
-  click.stop(now + 0.2);
+  // 2. Short metallic/glass transient.
+  const glass = context.createOscillator();
+  const glassGain = context.createGain();
+  const glassFilter = context.createBiquadFilter();
+  glass.type = "sine";
+  glass.frequency.setValueAtTime(1568, now + 0.035);
+  glass.frequency.exponentialRampToValueAtTime(3136, now + 0.18);
+  glassFilter.type = "highpass";
+  glassFilter.frequency.setValueAtTime(900, now);
+  glassGain.gain.setValueAtTime(0.0001, now + 0.035);
+  glassGain.gain.exponentialRampToValueAtTime(0.42, now + 0.055);
+  glassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+  glass.connect(glassFilter);
+  glassFilter.connect(glassGain);
+  glassGain.connect(master);
+  glass.start(now + 0.035);
+  glass.stop(now + 0.4);
 
-  // Futuristic movement underneath the voice.
-  const rise = context.createOscillator();
-  const riseGain = context.createGain();
-  const riseFilter = context.createBiquadFilter();
-  rise.type = "sawtooth";
-  rise.frequency.setValueAtTime(72, now + 0.12);
-  rise.frequency.exponentialRampToValueAtTime(620, now + 1.35);
-  riseFilter.type = "lowpass";
-  riseFilter.frequency.setValueAtTime(360, now + 0.12);
-  riseFilter.frequency.exponentialRampToValueAtTime(4800, now + 1.35);
-  riseGain.gain.setValueAtTime(0.0001, now + 0.12);
-  riseGain.gain.exponentialRampToValueAtTime(0.28, now + 0.65);
-  riseGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.5);
-  rise.connect(riseFilter);
-  riseFilter.connect(riseGain);
-  riseGain.connect(master);
-  rise.start(now + 0.12);
-  rise.stop(now + 1.55);
-
-  // Original UTECH three-hit signature begins underneath the spoken line.
-  const signature = [
-    { frequency: 196, start: 0.72, length: 0.38, level: 0.5 },
-    { frequency: 293.66, start: 0.98, length: 0.42, level: 0.56 },
-    { frequency: 440, start: 1.25, length: 0.55, level: 0.66 },
+  // 3. UTECH's new three-note signature.
+  const motif = [
+    { frequency: 261.63, start: 0.42, length: 0.34 },
+    { frequency: 329.63, start: 0.72, length: 0.36 },
+    { frequency: 493.88, start: 1.04, length: 0.62 },
   ];
 
-  signature.forEach(({ frequency, start, length, level }, index) => {
+  motif.forEach(({ frequency, start, length }, index) => {
     const tone = context.createOscillator();
-    const upper = context.createOscillator();
+    const harmonic = context.createOscillator();
     const gain = context.createGain();
     const filter = context.createBiquadFilter();
 
     tone.type = "triangle";
-    tone.frequency.setValueAtTime(frequency * 0.82, now + start);
-    tone.frequency.exponentialRampToValueAtTime(
-      frequency,
-      now + start + 0.08,
-    );
+    tone.frequency.setValueAtTime(frequency, now + start);
 
-    upper.type = "sawtooth";
-    upper.frequency.setValueAtTime(frequency * 2, now + start);
-    upper.detune.setValueAtTime(index % 2 === 0 ? -6 : 6, now + start);
+    harmonic.type = "sine";
+    harmonic.frequency.setValueAtTime(frequency * 2, now + start);
+    harmonic.detune.setValueAtTime(index === 1 ? -4 : 4, now + start);
 
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1800, now + start);
+    filter.frequency.setValueAtTime(2400, now + start);
     filter.frequency.exponentialRampToValueAtTime(
-      6200,
-      now + start + 0.18,
+      7200,
+      now + start + 0.16,
     );
 
     gain.gain.setValueAtTime(0.0001, now + start);
     gain.gain.exponentialRampToValueAtTime(
-      level,
-      now + start + 0.02,
-    );
-    gain.gain.exponentialRampToValueAtTime(
-      level * 0.3,
-      now + start + 0.14,
+      0.46 + index * 0.08,
+      now + start + 0.025,
     );
     gain.gain.exponentialRampToValueAtTime(
       0.0001,
@@ -133,61 +108,53 @@ function playIntroSound(context: AudioContext) {
     );
 
     tone.connect(filter);
-    upper.connect(filter);
+    harmonic.connect(filter);
     filter.connect(gain);
     gain.connect(master);
 
     tone.start(now + start);
-    upper.start(now + start);
+    harmonic.start(now + start);
     tone.stop(now + start + length + 0.03);
-    upper.stop(now + start + length + 0.03);
+    harmonic.stop(now + start + length + 0.03);
   });
 
-  // Big UTECH finish after the voice line.
-  const finish = context.createOscillator();
-  const finishGain = context.createGain();
-  finish.type = "sine";
-  finish.frequency.setValueAtTime(392, now + 1.72);
-  finish.frequency.exponentialRampToValueAtTime(329.63, now + 2.05);
-  finishGain.gain.setValueAtTime(0.0001, now + 1.72);
-  finishGain.gain.exponentialRampToValueAtTime(0.95, now + 1.76);
-  finishGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.72);
-  finish.connect(finishGain);
-  finishGain.connect(master);
-  finish.start(now + 1.72);
-  finish.stop(now + 2.75);
+  // 4. Premium brand lock: a two-tone chord that lands after the motif.
+  const lockNotes = [
+    { frequency: 329.63, level: 0.48 },
+    { frequency: 493.88, level: 0.36 },
+    { frequency: 659.25, level: 0.22 },
+  ];
 
-  const finishOctave = context.createOscillator();
-  const finishOctaveGain = context.createGain();
-  finishOctave.type = "triangle";
-  finishOctave.frequency.setValueAtTime(783.99, now + 1.74);
-  finishOctave.frequency.exponentialRampToValueAtTime(
-    659.25,
-    now + 2.08,
-  );
-  finishOctaveGain.gain.setValueAtTime(0.0001, now + 1.74);
-  finishOctaveGain.gain.exponentialRampToValueAtTime(0.38, now + 1.79);
-  finishOctaveGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
-  finishOctave.connect(finishOctaveGain);
-  finishOctaveGain.connect(master);
-  finishOctave.start(now + 1.74);
-  finishOctave.stop(now + 2.65);
+  lockNotes.forEach(({ frequency, level }) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
 
-  // High-end signature sparkle.
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, now + 1.48);
+    gain.gain.setValueAtTime(0.0001, now + 1.48);
+    gain.gain.exponentialRampToValueAtTime(level, now + 1.53);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.62);
+
+    oscillator.connect(gain);
+    gain.connect(master);
+    oscillator.start(now + 1.48);
+    oscillator.stop(now + 2.66);
+  });
+
+  // 5. Final upward sparkle.
   const sparkle = context.createOscillator();
   const sparkleGain = context.createGain();
   sparkle.type = "sine";
-  sparkle.frequency.setValueAtTime(1318.51, now + 2.08);
-  sparkle.frequency.exponentialRampToValueAtTime(2093, now + 2.42);
+  sparkle.frequency.setValueAtTime(987.77, now + 2.08);
+  sparkle.frequency.exponentialRampToValueAtTime(1975.53, now + 2.48);
   sparkleGain.gain.setValueAtTime(0.0001, now + 2.08);
-  sparkleGain.gain.exponentialRampToValueAtTime(0.25, now + 2.14);
-  sparkleGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.9);
+  sparkleGain.gain.exponentialRampToValueAtTime(0.28, now + 2.16);
+  sparkleGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.86);
   sparkle.connect(sparkleGain);
   sparkleGain.connect(master);
   sparkle.start(now + 2.08);
-  sparkle.stop(now + 2.95);
+  sparkle.stop(now + 2.9);
 }
-
 function speakBrandLine() {
   try {
     if (!("speechSynthesis" in window)) return;

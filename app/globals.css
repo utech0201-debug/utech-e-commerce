@@ -1333,3 +1333,64 @@ html, body { overflow-x: hidden; }
   .personalized-section .section-header { align-items: flex-start; }
   .personalized-section .section-header > a { margin-top: 4px; }
 }
+
+
+/* Marketplace wishlist + search intelligence */
+.product-card-media { position: relative; }
+.wishlist-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--navy);
+  font-size: .76rem;
+  font-weight: 800;
+  transition: .18s ease;
+}
+.wishlist-button:hover { border-color: var(--navy); transform: translateY(-1px); }
+.wishlist-button[aria-pressed="true"] { color: #b91c1c; border-color: #fecaca; background: #fff7f7; }
+.wishlist-button-compact {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 38px;
+  min-height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  box-shadow: 0 7px 18px rgba(11,31,58,.12);
+}
+.detail-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.detail-title-row h1 { margin-bottom: 0; }
+.search-box-history { position: relative; min-width: 0; }
+.search-box-history > label { position: relative; display: flex; align-items: center; }
+.search-box-history > label > svg { position: absolute; left: 13px; color: var(--muted); pointer-events: none; }
+.search-box-history input { padding-left: 40px; padding-right: 40px; }
+.search-clear { position: absolute; right: 10px; width: 30px; height: 30px; display: grid; place-items: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); }
+.search-clear:hover { background: var(--bg); color: var(--navy); }
+.search-history-menu {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 7px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 18px 45px rgba(11,31,58,.14);
+}
+.search-history-title { padding: 11px 13px 8px; color: var(--muted); font-size: .67rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.search-history-menu button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px 13px; border: 0; background: transparent; color: var(--navy); text-align: left; font-size: .8rem; }
+.search-history-menu button:hover { background: var(--bg); }
+.search-history-menu button svg { color: var(--muted); flex: 0 0 auto; }
+@media (max-width: 760px) {
+  .detail-title-row { align-items: flex-start; }
+  .detail-title-row .wishlist-button span { display: none; }
+  .detail-title-row .wishlist-button { width: 42px; padding: 0; flex: 0 0 42px; }
+}

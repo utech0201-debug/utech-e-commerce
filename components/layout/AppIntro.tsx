@@ -226,8 +226,7 @@ export default function AppIntro() {
     setVisible(true);
 
     const startIntro = async () => {
-      if (playedRef.current) return;
-      playedRef.current = true;
+      if (playedRef.current) return false;
 
       try {
         const AudioContextClass =
@@ -246,25 +245,41 @@ export default function AppIntro() {
             try {
               await context.resume();
             } catch {
-              // Browser autoplay policy may require a later user gesture.
+              // Audible autoplay can be blocked until the browser receives
+              // a user gesture. The fallback listener below retries silently.
             }
           }
 
           if (context.state === "running") {
             playIntroSound(context);
+            playedRef.current = true;
           }
         }
       } catch {
         // Keep the visual intro usable if audio is unavailable.
       }
 
-      // Speak the actual brand promise. No click is required by our code.
-      speakBrandLine();
+      if (playedRef.current) {
+        speakBrandLine();
+        return true;
+      }
+
+      return false;
     };
 
-    // Attempt immediately on page load. We deliberately no longer require
-    // pointerdown/keydown just to start the intro.
+    // Try immediately. When the browser allows audible autoplay, there is
+    // no interaction at all. If the browser blocks it, the first normal
+    // interaction with the page transparently unlocks the same intro sound.
     void startIntro();
+
+    const unlockAudio = () => {
+      if (playedRef.current) return;
+      void startIntro();
+    };
+
+    window.addEventListener("pointerdown", unlockAudio, { passive: true });
+    window.addEventListener("touchstart", unlockAudio, { passive: true });
+    window.addEventListener("keydown", unlockAudio);
 
     const hideTimer = window.setTimeout(() => {
       setVisible(false);
@@ -273,6 +288,9 @@ export default function AppIntro() {
 
     return () => {
       window.clearTimeout(hideTimer);
+      window.removeEventListener("pointerdown", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
       window.speechSynthesis?.cancel();
 
       if (audioContextRef.current) {

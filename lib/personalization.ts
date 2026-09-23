@@ -61,7 +61,7 @@ export function readRecentSearches(): string[] {
 
 export function saveRecentSearch(query: string) {
   if (typeof window === "undefined") return;
-  const normalized = query.trim().replace(/\\s+/g, " ");
+  const normalized = query.trim().replace(/\s+/g, " ");
   if (normalized.length < 2) return;
   const next = [normalized, ...readRecentSearches().filter((item) => item.toLowerCase() !== normalized.toLowerCase())].slice(0, MAX_RECENT_SEARCHES);
   window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(next));

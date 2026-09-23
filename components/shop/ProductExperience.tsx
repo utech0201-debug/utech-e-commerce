@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "@/components/shop/AddToCart";
 import WishlistButton from "@/components/shop/WishlistButton";
+import ProductAlerts from "@/components/shop/ProductAlerts";
 import type { Product } from "@/data/products";
 import { saveRecentlyViewed } from "@/lib/personalization";
 
@@ -64,6 +65,8 @@ export default function ProductExperience({ product, gallery }: { product: Produ
           </div>
 
           <p className="product-long-description">{product.description}</p>
+
+          {product.sellerId && <ProductAlerts productId={product.id.replace(/^seller-/, "")} inventory={product.inventory ?? 0} />}
 
           <div className="purchase-panel">
             {product.sellerId && product.orderMethod !== "utech_checkout" ? (

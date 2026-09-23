@@ -5,134 +5,119 @@ import { useEffect, useRef, useState } from "react";
 function playIntroSound(context: AudioContext) {
   const now = context.currentTime;
 
-  // UTECH Sonic Logo — concept 3:
-  // a different direction: cinematic pulse -> rhythmic ticks -> airy sweep -> clean signature chime.
-  // No spoken line. Designed to feel modern, confident and instantly recognizable.
+  // UTECH Sonic Logo — concept 4:
+  // clean electronic pulse -> rising tonal identity -> memorable three-note lock -> soft digital tail.
+  // Deliberately no voice and no cinematic boom.
   const compressor = context.createDynamicsCompressor();
-  compressor.threshold.setValueAtTime(-22, now);
-  compressor.knee.setValueAtTime(5, now);
-  compressor.ratio.setValueAtTime(10, now);
-  compressor.attack.setValueAtTime(0.002, now);
-  compressor.release.setValueAtTime(0.28, now);
+  compressor.threshold.setValueAtTime(-20, now);
+  compressor.knee.setValueAtTime(7, now);
+  compressor.ratio.setValueAtTime(8, now);
+  compressor.attack.setValueAtTime(0.003, now);
+  compressor.release.setValueAtTime(0.3, now);
 
   const master = context.createGain();
   master.gain.setValueAtTime(0.0001, now);
-  master.gain.exponentialRampToValueAtTime(1.18, now + 0.035);
-  master.gain.setValueAtTime(1.18, now + 2.42);
+  master.gain.exponentialRampToValueAtTime(1.12, now + 0.025);
+  master.gain.setValueAtTime(1.12, now + 2.35);
   master.gain.exponentialRampToValueAtTime(0.0001, now + 2.9);
   master.connect(compressor);
   compressor.connect(context.destination);
 
-  // 1. Cinematic pulse — short, wide and physical.
+  // 1. Clean electronic pulse.
   const pulse = context.createOscillator();
   const pulseGain = context.createGain();
   pulse.type = "sine";
-  pulse.frequency.setValueAtTime(72, now);
-  pulse.frequency.exponentialRampToValueAtTime(38, now + 0.5);
+  pulse.frequency.setValueAtTime(110, now);
+  pulse.frequency.exponentialRampToValueAtTime(62, now + 0.3);
   pulseGain.gain.setValueAtTime(0.0001, now);
-  pulseGain.gain.exponentialRampToValueAtTime(0.95, now + 0.015);
-  pulseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.58);
+  pulseGain.gain.exponentialRampToValueAtTime(0.68, now + 0.012);
+  pulseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
   pulse.connect(pulseGain);
   pulseGain.connect(master);
   pulse.start(now);
-  pulse.stop(now + 0.62);
+  pulse.stop(now + 0.42);
 
-  // 2. Rhythmic digital ticks — a subtle mechanical identity.
-  [0.16, 0.29, 0.43].forEach((offset, index) => {
-    const tick = context.createOscillator();
-    const tickGain = context.createGain();
-    tick.type = "square";
-    tick.frequency.setValueAtTime(1500 + index * 420, now + offset);
-    tickGain.gain.setValueAtTime(0.0001, now + offset);
-    tickGain.gain.exponentialRampToValueAtTime(0.12 + index * 0.025, now + offset + 0.006);
-    tickGain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.075);
-    tick.connect(tickGain);
-    tickGain.connect(master);
-    tick.start(now + offset);
-    tick.stop(now + offset + 0.09);
+  // 2. Three precision clicks that form the rhythmic fingerprint.
+  [0.18, 0.34, 0.52].forEach((offset, index) => {
+    const click = context.createOscillator();
+    const clickGain = context.createGain();
+    click.type = "triangle";
+    click.frequency.setValueAtTime(1100 + index * 280, now + offset);
+    clickGain.gain.setValueAtTime(0.0001, now + offset);
+    clickGain.gain.exponentialRampToValueAtTime(0.17, now + offset + 0.006);
+    clickGain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.06);
+    click.connect(clickGain);
+    clickGain.connect(master);
+    click.start(now + offset);
+    click.stop(now + offset + 0.075);
   });
 
-  // 3. Airy upward sweep — creates the transition into the brand reveal.
-  const sweep = context.createOscillator();
-  const sweepGain = context.createGain();
-  const sweepFilter = context.createBiquadFilter();
-  sweep.type = "sawtooth";
-  sweep.frequency.setValueAtTime(180, now + 0.48);
-  sweep.frequency.exponentialRampToValueAtTime(980, now + 1.28);
-  sweepFilter.type = "lowpass";
-  sweepFilter.frequency.setValueAtTime(700, now + 0.48);
-  sweepFilter.frequency.exponentialRampToValueAtTime(5200, now + 1.28);
-  sweepGain.gain.setValueAtTime(0.0001, now + 0.48);
-  sweepGain.gain.exponentialRampToValueAtTime(0.18, now + 0.92);
-  sweepGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.38);
-  sweep.connect(sweepFilter);
-  sweepFilter.connect(sweepGain);
-  sweepGain.connect(master);
-  sweep.start(now + 0.48);
-  sweep.stop(now + 1.45);
+  // 3. Smooth rising tonal bridge.
+  const rise = context.createOscillator();
+  const riseGain = context.createGain();
+  const riseFilter = context.createBiquadFilter();
+  rise.type = "triangle";
+  rise.frequency.setValueAtTime(220, now + 0.58);
+  rise.frequency.exponentialRampToValueAtTime(880, now + 1.3);
+  riseFilter.type = "lowpass";
+  riseFilter.frequency.setValueAtTime(900, now + 0.58);
+  riseFilter.frequency.exponentialRampToValueAtTime(5000, now + 1.3);
+  riseGain.gain.setValueAtTime(0.0001, now + 0.58);
+  riseGain.gain.exponentialRampToValueAtTime(0.2, now + 1.02);
+  riseGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.42);
+  rise.connect(riseFilter);
+  riseFilter.connect(riseGain);
+  riseGain.connect(master);
+  rise.start(now + 0.58);
+  rise.stop(now + 1.48);
 
-  // 4. Clean UTECH signature: two bright notes followed by a resolving third.
-  const signature = [
-    { frequency: 392, start: 1.22, length: 0.32, level: 0.42 },
-    { frequency: 523.25, start: 1.48, length: 0.34, level: 0.48 },
-    { frequency: 783.99, start: 1.78, length: 0.72, level: 0.54 },
-  ];
-
-  signature.forEach(({ frequency, start, length, level }) => {
+  // 4. Memorable UTECH signature: G -> B -> E, with a bright final lock.
+  [
+    { frequency: 392, start: 1.22, length: 0.28, level: 0.42 },
+    { frequency: 493.88, start: 1.48, length: 0.32, level: 0.5 },
+    { frequency: 659.25, start: 1.78, length: 0.7, level: 0.58 },
+  ].forEach(({ frequency, start, length, level }) => {
     const tone = context.createOscillator();
-    const overtone = context.createOscillator();
+    const harmonic = context.createOscillator();
     const gain = context.createGain();
 
-    tone.type = "triangle";
+    tone.type = "sine";
     tone.frequency.setValueAtTime(frequency, now + start);
 
-    overtone.type = "sine";
-    overtone.frequency.setValueAtTime(frequency * 2, now + start);
+    harmonic.type = "triangle";
+    harmonic.frequency.setValueAtTime(frequency * 2, now + start);
 
     gain.gain.setValueAtTime(0.0001, now + start);
-    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.025);
+    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.018);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
 
     tone.connect(gain);
-    overtone.connect(gain);
+    harmonic.connect(gain);
     gain.connect(master);
 
     tone.start(now + start);
-    overtone.start(now + start);
+    harmonic.start(now + start);
     tone.stop(now + start + length + 0.03);
-    overtone.stop(now + start + length + 0.03);
+    harmonic.stop(now + start + length + 0.03);
   });
 
-  // 5. Final brand resolve — warm chord + tiny high-end glint.
-  [523.25, 659.25, 783.99].forEach((frequency, index) => {
-    const resolve = context.createOscillator();
-    const resolveGain = context.createGain();
-    resolve.type = "sine";
-    resolve.frequency.setValueAtTime(frequency, now + 2.02);
-    resolveGain.gain.setValueAtTime(0.0001, now + 2.02);
-    resolveGain.gain.exponentialRampToValueAtTime(0.28 - index * 0.035, now + 2.08);
-    resolveGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.68);
-    resolve.connect(resolveGain);
-    resolveGain.connect(master);
-    resolve.start(now + 2.02);
-    resolve.stop(now + 2.72);
-  });
-
-  const glint = context.createOscillator();
-  const glintGain = context.createGain();
-  glint.type = "sine";
-  glint.frequency.setValueAtTime(1568, now + 2.32);
-  glint.frequency.exponentialRampToValueAtTime(3136, now + 2.58);
-  glintGain.gain.setValueAtTime(0.0001, now + 2.32);
-  glintGain.gain.exponentialRampToValueAtTime(0.24, now + 2.4);
-  glintGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.88);
-  glint.connect(glintGain);
-  glintGain.connect(master);
-  glint.start(now + 2.32);
-  glint.stop(now + 2.9);
+  // 5. Soft digital tail instead of a sparkle.
+  const tail = context.createOscillator();
+  const tailGain = context.createGain();
+  tail.type = "sine";
+  tail.frequency.setValueAtTime(1318.51, now + 2.02);
+  tail.frequency.exponentialRampToValueAtTime(880, now + 2.72);
+  tailGain.gain.setValueAtTime(0.0001, now + 2.02);
+  tailGain.gain.exponentialRampToValueAtTime(0.2, now + 2.14);
+  tailGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.88);
+  tail.connect(tailGain);
+  tailGain.connect(master);
+  tail.start(now + 2.02);
+  tail.stop(now + 2.9);
 }
+
 function speakBrandLine() {
-  // Concept 3 intentionally has no spoken brand line.
+  // Concept 4 intentionally has no spoken brand line.
 }
 
 export default function AppIntro() {

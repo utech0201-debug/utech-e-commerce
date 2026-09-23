@@ -1321,3 +1321,15 @@ html, body { overflow-x: hidden; }
 @media (prefers-color-scheme: dark) {
   .cart-seller-group-head { background: #101c2c; }
 }
+
+
+/* Personalized marketplace discovery */
+.personalized-section { padding-top: 54px; padding-bottom: 54px; }
+.personalized-section .section-header p { margin-top: 7px; color: var(--muted); font-size: .82rem; }
+.personalized-section .section-header > a { color: var(--blue); font-size: .78rem; font-weight: 800; white-space: nowrap; }
+.personalized-grid { margin-top: 22px; }
+@media (max-width: 700px) {
+  .personalized-section { padding-top: 42px; padding-bottom: 42px; }
+  .personalized-section .section-header { align-items: flex-start; }
+  .personalized-section .section-header > a { margin-top: 4px; }
+}

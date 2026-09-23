@@ -10,6 +10,8 @@ export const RECENT_SEARCHES_KEY = "utech-recent-searches-v1";
 export const WISHLIST_KEY = "utech-wishlist-v1";
 export const MAX_RECENTLY_VIEWED = 12;
 export const MAX_RECENT_SEARCHES = 8;
+export const FOLLOWED_STORES_KEY = "utech-followed-stores-v1";
+export const MAX_FOLLOWED_STORES = 20;
 export const MAX_WISHLIST = 30;
 
 export function toViewedProduct(product: Product): ViewedProduct {
@@ -66,6 +68,31 @@ export function saveRecentSearch(query: string) {
   const next = [normalized, ...readRecentSearches().filter((item) => item.toLowerCase() !== normalized.toLowerCase())].slice(0, MAX_RECENT_SEARCHES);
   window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(next));
   window.dispatchEvent(new CustomEvent("utech-recent-searches", { detail: next }));
+}
+
+export type FollowedStore = { slug: string; name: string; logoUrl?: string | null };
+
+export function readFollowedStores(): FollowedStore[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(FOLLOWED_STORES_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch { return []; }
+}
+
+export function isStoreFollowed(slug: string) {
+  return readFollowedStores().some((store) => store.slug === slug);
+}
+
+export function toggleFollowedStore(store: FollowedStore) {
+  if (typeof window === "undefined") return false;
+  const current = readFollowedStores();
+  const exists = current.some((item) => item.slug === store.slug);
+  const next = exists ? current.filter((item) => item.slug !== store.slug) : [store, ...current].slice(0, MAX_FOLLOWED_STORES);
+  window.localStorage.setItem(FOLLOWED_STORES_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent("utech-followed-stores", { detail: next }));
+  return !exists;
 }
 
 export function readWishlist(): ViewedProduct[] {

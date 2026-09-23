@@ -1,13 +1,10 @@
 import { redirect } from "next/navigation";
+import { isAdminEmail } from "@/lib/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
 
-function isAdminEmail(email?: string | null) {
-  const allowed = (process.env.UTECH_ADMIN_EMAILS ?? "").split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
-  return !!email && allowed.includes(email.toLowerCase());
-}
 
 export default async function MarketplaceAdsAdminPage() {
   const supabase = await createSupabaseServerClient();

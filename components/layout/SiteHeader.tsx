@@ -12,6 +12,7 @@ const links = [
   ["Home", "/"],
   ["Shop", "/shop"],
   ["Sell", "/sell"],
+  ["Guide", "/marketplace-guide"],
   ["Contact", "/contact"],
 ];
 

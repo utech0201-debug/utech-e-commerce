@@ -1,14 +1,8 @@
 import { NextResponse } from "next/server";
+import { isAdminEmail } from "@/lib/admin";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-function isAdminEmail(email?: string | null) {
-  const allowed = (process.env.UTECH_ADMIN_EMAILS ?? "")
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return !!email && allowed.includes(email.toLowerCase());
-}
 
 export async function POST(request: Request) {
   const supabase = await createSupabaseServerClient();

@@ -1,7 +1,7 @@
 .page{padding-top:72px}
 .header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
-.card{max-width:1000px;overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 10px 30px rgba(11,31,58,.045)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;max-width:1000px;margin-bottom:14px}.filter,.filterActive{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid var(--border);border-radius:999px;background:var(--white);color:var(--muted);font-size:.64rem;font-weight:800;cursor:pointer}.filter span,.filterActive span{padding:2px 6px;border-radius:999px;background:#eef5fb;color:var(--blue);font-size:.55rem}.filterActive{border-color:#b9d3ea;background:#eef6ff;color:var(--blue)}.filterActive span{background:var(--blue);color:var(--white)}.card{max-width:1000px;overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 10px 30px rgba(11,31,58,.045)}
 .row{display:flex;align-items:flex-start;gap:14px;padding:19px 20px;border-bottom:1px solid var(--border);background:var(--white)}
 .row:last-child{border-bottom:0}
 .row.unread{background:#f7fbff}

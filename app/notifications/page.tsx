@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Bell, CheckCheck } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import styles from "./NotificationsPage.module.css";
@@ -26,6 +26,7 @@ export default function NotificationsPage() {
   const [items, setItems] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     let active = true;
@@ -90,6 +91,25 @@ export default function NotificationsPage() {
   }
 
   const unread = items.filter((item) => !item.read_at).length;
+  const filteredItems = useMemo(() => {
+    if (filter === "unread") return items.filter((item) => !item.read_at);
+    if (filter === "orders") return items.filter((item) => item.type === "order");
+    if (filter === "products") return items.filter((item) => item.type === "product");
+    if (filter === "promotions") return items.filter((item) => item.type === "promotion");
+    if (filter === "messages") return items.filter((item) => item.type === "seller_message");
+    if (filter === "news") return items.filter((item) => item.type === "marketplace_news");
+    return items;
+  }, [filter, items]);
+
+  const filters = [
+    { id: "all", label: "All", count: items.length },
+    { id: "unread", label: "Unread", count: unread },
+    { id: "orders", label: "Orders", count: items.filter((item) => item.type === "order").length },
+    { id: "products", label: "Products", count: items.filter((item) => item.type === "product").length },
+    { id: "promotions", label: "Promotions", count: items.filter((item) => item.type === "promotion").length },
+    { id: "messages", label: "Seller messages", count: items.filter((item) => item.type === "seller_message").length },
+    { id: "news", label: "Marketplace news", count: items.filter((item) => item.type === "marketplace_news").length },
+  ];
 
   if (loading) {
     return <section className="section"><div className="container"><p className="section-copy">Loading notifications...</p></div></section>;
@@ -131,7 +151,7 @@ export default function NotificationsPage() {
             <div className={styles.empty}>
               <Bell size={28} />
               <h2>No notifications yet</h2>
-              <p>You're all caught up. When UTECH has something important for your account, it will appear here.</p>
+              <p>You're all caught up. When UTECH has something important for your account, it will appear here.</p>}
               <Link href="/shop" className="button button-primary">Explore the marketplace</Link>
             </div>
           )}

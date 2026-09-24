@@ -130,8 +130,16 @@ export default function NotificationsPage() {
           </div>
         </div>
 
+        <div className={styles.toolbar} aria-label="Notification filters">
+          {filters.map((item) => (
+            <button key={item.id} type="button" className={filter === item.id ? styles.filterActive : styles.filter} onClick={() => setFilter(item.id)}>
+              {item.label}<span>{item.count}</span>
+            </button>
+          ))}
+        </div>
+
         <div className={styles.card}>
-          {items.length ? items.map((item) => (
+          {filteredItems.length ? filteredItems.map((item) => (
             <article key={item.id} className={item.read_at ? styles.row : `${styles.row} ${styles.unread}`}>
               <div className={styles.icon}><Bell size={17} /></div>
               <div className={styles.content}>
@@ -150,12 +158,12 @@ export default function NotificationsPage() {
           )) : (
             <div className={styles.empty}>
               <Bell size={28} />
-              <h2>No notifications yet</h2>
-              <p>You're all caught up. When UTECH has something important for your account, it will appear here.</p>}
-              <Link href="/shop" className="button button-primary">Explore the marketplace</Link>
+              <h2>{items.length ? "Nothing in this filter yet" : "No notifications yet"}</h2>
+              <p>{items.length ? "Try another notification category to see more activity." : "You're all caught up. When UTECH has something important for your account, it will appear here."}</p>
+              {!items.length && <Link href="/shop" className="button button-primary">Explore the marketplace</Link>}
             </div>
           )}
-        </div>
+        </div>        </div>
       </div>
     </section>
   );

@@ -81,7 +81,7 @@ export default async function MarketplaceHome({ products, ads = [] }: Props) {
 
       <section className={styles.flashSection}>
         <div className={styles.flashHeader}>
-          <div><span className={styles.flashKicker}>LIMITED-TIME DEALS</span><h2>Flash deals</h2><p>Fresh marketplace offers while stock lasts.</p></div>
+          <div><span className={styles.flashKicker}>EVERYDAY DEALS</span><h2>Marketplace deals</h2><p>Great prices from sellers across the marketplace.</p></div>
           <Link href="/shop" className={styles.flashLink}>See all deals →</Link>
         </div>
         {deals.length ? (

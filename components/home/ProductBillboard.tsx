@@ -85,16 +85,18 @@ export default function ProductBillboard({ products }: Props) {
         <div className={styles.glow} />
         <div className={`${styles.orbit} ${styles.orbitOne}`} />
         <div className={`${styles.orbit} ${styles.orbitTwo}`} />
-        <Image
-          key={product.id}
-          src={product.image}
-          alt={product.name}
-          width={560}
-          height={360}
-          sizes="(max-width: 760px) 72vw, 40vw"
-          className={styles.image}
-          priority={active === 0}
-        />
+        <div className={styles.imageFrame}>
+          <Image
+            key={product.id}
+            src={product.image}
+            alt={product.name}
+            width={560}
+            height={360}
+            sizes="(max-width: 760px) 40vw, 32vw"
+            className={styles.image}
+            priority={active === 0}
+          />
+        </div>
       </div>
 
       {slides.length > 1 ? (

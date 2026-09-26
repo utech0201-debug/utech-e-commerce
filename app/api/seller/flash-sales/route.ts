@@ -41,6 +41,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "One or more selected products are not eligible for this sale." }, { status: 400 });
   }
 
+  const { data: variants } = await admin.from("seller_product_variants").select("id,product_id").in("product_id", productIds).eq("is_active", true);
+  if (variants?.length) {
+    return NextResponse.json({ error: "Flash sales currently support base-price products only. Remove products with active variants from this campaign." }, { status: 400 });
+  }
+
   const { data: existingItems } = await admin.from("marketplace_flash_sale_items")
     .select("product_id,flash_sale_id,marketplace_flash_sales!inner(status,starts_at,ends_at)")
     .in("product_id", productIds);

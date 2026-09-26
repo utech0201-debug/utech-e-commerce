@@ -3,47 +3,48 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Product } from "@/data/products";
+import type { MarketplaceFlashSaleItem } from "@/lib/marketplace";
 
-const saleProducts = (products: Product[]) => products.slice(0, 6);
-
-function SaleCard({ product, index }: { product: Product; index: number }) {
-  const discount = [20, 25, 15, 30, 18, 22][index] ?? 20;
-  const salePrice = product.price * (1 - discount / 100);
-
+function SaleCard({ item }: { item: MarketplaceFlashSaleItem }) {
+  const discount = item.originalPrice > 0 ? Math.round((1 - item.salePrice / item.originalPrice) * 100) : 0;
   return (
     <article className="flash-sale-card">
-      <Link href={"/products/" + product.slug} className="flash-sale-image">
+      <Link href={"/products/" + item.product.slug} className="flash-sale-image">
         <span className="flash-sale-badge">-{discount}%</span>
-        <Image src={product.image} alt={product.name} fill sizes="(max-width:700px) 44vw, 190px" />
+        <Image src={item.product.image} alt={item.product.name} fill sizes="(max-width:700px) 44vw, 190px" />
       </Link>
       <div className="flash-sale-body">
-        <span className="flash-sale-type">{product.type}</span>
-        <h3><Link href={"/products/" + product.slug}>{product.name}</Link></h3>
+        <span className="flash-sale-type">{item.product.type}</span>
+        <h3><Link href={"/products/" + item.product.slug}>{item.product.name}</Link></h3>
         <div className="flash-sale-prices">
-          <strong>${salePrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
-          <del>${product.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</del>
+          <strong>GH₵{item.salePrice.toLocaleString("en-GH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+          <del>GH₵{item.originalPrice.toLocaleString("en-GH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</del>
         </div>
-        <div className="flash-sale-stock"><span><i style={{ width: `${Math.max(24, 76 - index * 8)}%` }} /></span> Selling fast</div>
+        <div className="flash-sale-stock"><span><i style={{ width: "68%" }} /></span> Limited-time offer</div>
       </div>
     </article>
   );
 }
 
-export default function FlashSale({ products }: { products: Product[] }) {
-  const [seconds, setSeconds] = useState(2 * 60 * 60 + 47 * 60 + 18);
+export default function FlashSale({ items }: { items: MarketplaceFlashSaleItem[] }) {
+  const [seconds, setSeconds] = useState(0);
+  const endAt = items[0]?.endsAt ?? null;
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setSeconds((value) => (value > 0 ? value - 1 : 2 * 60 * 60 + 47 * 60 + 18));
-    }, 1000);
+    if (!endAt) return;
+    const tick = () => setSeconds(Math.max(0, Math.floor((new Date(endAt).getTime() - Date.now()) / 1000)));
+    tick();
+    const timer = window.setInterval(tick, 1000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [endAt]);
+
+  if (!items.length) return null;
 
   const hours = String(Math.floor(seconds / 3600)).padStart(2, "0");
   const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
   const secs = String(seconds % 60).padStart(2, "0");
-  const items = saleProducts(products);
+  const title = items[0].title;
+  const uniqueItems = items.filter((item, index, all) => all.findIndex((other) => other.product.id === item.product.id) === index).slice(0, 8);
 
   return (
     <section className="flash-sale" aria-label="Flash sale">
@@ -52,24 +53,19 @@ export default function FlashSale({ products }: { products: Product[] }) {
           <div className="flash-sale-title-row">
             <span className="flash-sale-lightning">⚡</span>
             <h2>Flash Sale</h2>
-            <span className="flash-sale-preview">PREVIEW</span>
+            <span className="flash-sale-preview">LIVE</span>
           </div>
-          <p>Limited-time offers. Grab them before the timer runs out.</p>
+          <p>{title} · Limited-time marketplace offers.</p>
         </div>
-        <div className="flash-sale-countdown" aria-label={`${hours} hours ${minutes} minutes ${secs} seconds remaining`}>
+        <div className="flash-sale-countdown" aria-label={hours + " hours " + minutes + " minutes " + secs + " seconds remaining"}>
           <span>ENDS IN</span>
           <strong>{hours}:{minutes}:{secs}</strong>
         </div>
         <Link href="/shop" className="flash-sale-view">View all →</Link>
       </div>
-
-      {items.length ? (
-        <div className="flash-sale-grid">
-          {items.map((product, index) => <SaleCard key={product.id} product={product} index={index} />)}
-        </div>
-      ) : (
-        <div className="flash-sale-empty">Flash-sale products will appear here.</div>
-      )}
+      <div className="flash-sale-grid">
+        {uniqueItems.map((item) => <SaleCard key={item.id} item={item} />)}
+      </div>
     </section>
   );
 }

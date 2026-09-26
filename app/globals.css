@@ -1531,3 +1531,122 @@ html, body { overflow-x: hidden; }
 
 .flash-price{font-weight:900}
 .flash-original-price{font-size:.8em;color:#718099;margin-left:8px}
+
+
+/* UTECH mobile marketplace grid
+   Keep product cards compact enough for a true two-column shopping layout. */
+@media (max-width: 760px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product-card {
+    min-width: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .product-card .product-image {
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  .product-card .product-body {
+    min-width: 0;
+    padding: 10px;
+  }
+
+  .product-card .product-type {
+    font-size: .58rem;
+    line-height: 1.2;
+  }
+
+  .product-card .marketplace-seller-link {
+    display: block;
+    max-width: 100%;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .6rem;
+  }
+
+  .product-card h3 {
+    margin-top: 5px;
+    font-size: .82rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-card p {
+    margin-top: 5px;
+    font-size: .65rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-card .product-footer {
+    margin-top: 9px;
+    gap: 7px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .product-card .product-footer strong {
+    min-width: 0;
+    font-size: .78rem;
+  }
+
+  .product-card .product-footer .button {
+    min-height: 34px;
+    padding: 0 9px;
+    font-size: .62rem;
+    flex: 1 1 auto;
+  }
+
+  .product-card .wishlist-button-compact {
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    min-height: 32px;
+  }
+
+  .product-card .game-card-badge {
+    font-size: .48rem;
+    padding: 4px 5px;
+  }
+}
+
+@media (max-width: 380px) {
+  .product-grid {
+    gap: 8px;
+  }
+
+  .product-card .product-body {
+    padding: 8px;
+  }
+
+  .product-card h3 {
+    font-size: .76rem;
+  }
+
+  .product-card p {
+    font-size: .6rem;
+  }
+
+  .product-card .product-footer strong {
+    font-size: .7rem;
+  }
+
+  .product-card .product-footer .button {
+    width: 100%;
+    flex-basis: 100%;
+  }
+}

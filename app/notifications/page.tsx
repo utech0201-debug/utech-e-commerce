@@ -163,7 +163,7 @@ export default function NotificationsPage() {
               {!items.length && <Link href="/shop" className="button button-primary">Explore the marketplace</Link>}
             </div>
           )}
-        </div>        </div>
+        </div>
       </div>
     </section>
   );

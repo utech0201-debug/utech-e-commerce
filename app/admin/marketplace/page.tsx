@@ -54,6 +54,7 @@ export default async function MarketplaceAdminPage() {
             <a className="button button-secondary" href="/admin/marketplace/verification">Verification</a>
             <a className="button button-secondary" href="/admin/marketplace/messages">Contact Inbox</a>
             <a className="button button-secondary" href="/admin/marketplace/ads">Advertising</a>
+            <a className="button button-secondary" href="/admin/marketplace/flash-sales">Flash Sales</a>
           </div>
           <div>
             <span className="eyebrow">UTECH ADMIN</span>

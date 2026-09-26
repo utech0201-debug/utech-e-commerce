@@ -114,6 +114,7 @@ export default async function SellerDashboardPage() {
               <Link className="button button-secondary" href="/seller/earnings">View Earnings</Link>
               <Link className="button button-secondary" href="/seller/settings">Order Settings</Link>
               <Link className="button button-secondary" href="/seller/ads">Advertising</Link>
+              <Link className="button button-secondary" href="/seller/flash-sales">Flash Sales</Link>
             </div>
           </div>
 

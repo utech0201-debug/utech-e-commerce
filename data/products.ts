@@ -20,6 +20,8 @@ export type Product = {
   orderInstructions?: string | null;
   inventory?: number;
   variants?: ProductVariant[];
+  flashSalePrice?: number;
+  flashSaleEndsAt?: string;
 };
 
 const gameImage = (file: string) =>

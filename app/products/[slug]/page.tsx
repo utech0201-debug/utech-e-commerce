@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getProduct, products } from "@/data/products";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import ProductExperience from "@/components/shop/ProductExperience";
+import { getActiveFlashSaleForProduct } from "@/lib/marketplace";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +54,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       orderInstructions: seller.order_instructions,
       variants,
     };
+  }
+
+  if (product.sellerId && !(product.variants?.length)) {
+    const sale = await getActiveFlashSaleForProduct(product.id.replace(/^seller-/, ""));
+    if (sale) product = { ...product, flashSalePrice: sale.salePrice, flashSaleEndsAt: sale.endsAt };
   }
 
   return <ProductExperience product={product} gallery={gallery} />;

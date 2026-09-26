@@ -26,7 +26,7 @@ type Props = { products: Product[]; ads?: Ad[] };
 
 export default function MarketplaceHome({ products, ads = [] }: Props) {
   const featured = products.filter((product) => product.featured).slice(0, 4);
-  const deals = products.filter((product) => product.compareAtPrice && product.compareAtPrice > product.price).slice(0, 8);
+  const deals = products.filter((product) => product.variants?.some((variant) => variant.compareAtPrice && variant.compareAtPrice > variant.price)).slice(0, 8);
   const newArrivals = products.slice(0, 8);
   const essentials = [
     { label: "Gaming", query: "games", icon: "🎮", note: "Games & consoles" },

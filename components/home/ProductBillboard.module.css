@@ -44,25 +44,163 @@
 @keyframes billboardProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media(max-width:1050px){.billboard{grid-template-columns:minmax(0,1fr) minmax(240px,.9fr)}.copy{padding-left:28px}.copy h1{font-size:34px}.image{width:88%}}
 @media(max-width:760px){
-  .billboard{min-height:0;grid-template-columns:1fr;border-radius:14px}
-  .copy{padding:25px 22px 8px}
-  .copy h1{font-size:31px}
-  .description{font-size:12px}
-  .price{margin-top:13px}
-  .actions{margin-top:14px}
-  .visual{min-height:205px;height:205px}
-  .image{width:min(72%,310px);max-height:190px}
-  .glow{width:180px;height:180px}
-  .orbitOne{width:260px;height:130px}
-  .orbitTwo{width:220px;height:105px}
-  .dots{left:22px;bottom:10px}
-  .arrow{width:31px;height:31px}
+  /* Mobile is a true marketplace billboard: wide, shallow and image-led. */
+  .billboard{
+    min-height:0;
+    height:clamp(188px,52vw,226px);
+    display:block;
+    border-radius:16px;
+    background:linear-gradient(112deg,#061a35 0%,#0b315d 58%,#1970c4 100%);
+  }
+  .copy{
+    position:absolute;
+    inset:0 auto 0 0;
+    z-index:4;
+    width:57%;
+    padding:22px 8px 30px 20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .kicker,
+  .eyebrow{
+    display:none;
+  }
+  .copy h1{
+    max-width:205px;
+    margin:0 0 7px;
+    font-size:clamp(22px,6vw,29px);
+    line-height:1.02;
+    letter-spacing:-.04em;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  .description{
+    max-width:190px;
+    margin:0;
+    color:#d9e9f8;
+    font-size:10px;
+    line-height:1.35;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  .price{
+    margin-top:9px;
+    gap:7px;
+  }
+  .price strong{
+    font-size:18px;
+  }
+  .price span{
+    font-size:8px;
+  }
+  .actions{
+    margin-top:9px;
+    gap:8px;
+  }
+  .actions .button{
+    min-height:30px;
+    padding:6px 11px;
+    font-size:10px;
+  }
+  .link{
+    display:none;
+  }
+  .visual{
+    position:absolute;
+    inset:0 0 0 auto;
+    width:55%;
+    min-height:0;
+    height:100%;
+    display:grid;
+    place-items:center;
+    pointer-events:none;
+  }
+  .image{
+    width:92%;
+    height:auto;
+    max-height:88%;
+    object-fit:contain;
+    filter:drop-shadow(0 18px 18px rgba(0,0,0,.34));
+  }
+  .glow{
+    width:150px;
+    height:150px;
+    background:rgba(102,190,255,.28);
+  }
+  .orbitOne{
+    width:210px;
+    height:105px;
+  }
+  .orbitTwo{
+    width:175px;
+    height:86px;
+  }
+  .arrow{
+    width:29px;
+    height:29px;
+    font-size:21px;
+    background:rgba(4,17,34,.56);
+  }
+  .prev{left:7px}
+  .next{right:7px}
+  .dots{
+    left:50%;
+    bottom:7px;
+    transform:translateX(-50%);
+    gap:5px;
+  }
+  .dots button{
+    width:5px;
+    height:5px;
+  }
+  .dots button.active{
+    width:17px;
+  }
+  .progress{
+    display:none;
+  }
 }
 @media(max-width:430px){
-  .copy{padding:22px 18px 6px}
-  .copy h1{font-size:28px}
-  .eyebrow{font-size:8px}
-  .link{font-size:10px}
-  .visual{min-height:175px;height:175px}
-  .image{max-height:165px}
+  .billboard{
+    height:205px;
+    border-radius:15px;
+  }
+  .copy{
+    width:59%;
+    padding:19px 4px 28px 18px;
+  }
+  .copy h1{
+    max-width:180px;
+    font-size:24px;
+  }
+  .description{
+    max-width:165px;
+    font-size:9px;
+  }
+  .price{
+    margin-top:8px;
+  }
+  .price strong{
+    font-size:17px;
+  }
+  .actions{
+    margin-top:8px;
+  }
+  .actions .button{
+    min-height:29px;
+    padding:5px 10px;
+    font-size:9px;
+  }
+  .visual{
+    width:53%;
+  }
+  .image{
+    width:94%;
+    max-height:86%;
+  }
 }

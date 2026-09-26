@@ -5,6 +5,7 @@ import ProductBillboard from "@/components/home/ProductBillboard";
 import PersonalizedDiscovery from "@/components/home/PersonalizedDiscovery";
 import FlashSale from "@/components/home/FlashSale";
 import type { Product } from "@/data/products";
+import { getActiveFlashSaleItems } from "@/lib/marketplace";
 import styles from "./MarketplaceHome.module.css";
 
 const categories = [
@@ -25,7 +26,8 @@ type Ad = {
 
 type Props = { products: Product[]; ads?: Ad[] };
 
-export default function MarketplaceHome({ products, ads = [] }: Props) {
+export default async function MarketplaceHome({ products, ads = [] }: Props) {
+  const flashSaleItems = await getActiveFlashSaleItems(products);
   const featured = products.filter((product) => product.featured).slice(0, 4);
   const deals = products.filter((product) => product.variants?.some((variant) => variant.compareAtPrice && variant.compareAtPrice > variant.price)).slice(0, 8);
   const newArrivals = products.slice(0, 8);
@@ -75,7 +77,7 @@ export default function MarketplaceHome({ products, ads = [] }: Props) {
 
       <PersonalizedDiscovery products={products} />
 
-      <FlashSale products={products} />
+      <FlashSale items={flashSaleItems} />
 
       <section className={styles.flashSection}>
         <div className={styles.flashHeader}>

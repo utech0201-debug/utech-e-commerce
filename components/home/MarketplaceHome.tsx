@@ -3,6 +3,7 @@ import ProductCard from "@/components/shop/ProductCard";
 import SponsoredAd from "@/components/ads/SponsoredAd";
 import ProductBillboard from "@/components/home/ProductBillboard";
 import PersonalizedDiscovery from "@/components/home/PersonalizedDiscovery";
+import FlashSale from "@/components/home/FlashSale";
 import type { Product } from "@/data/products";
 import styles from "./MarketplaceHome.module.css";
 
@@ -73,6 +74,8 @@ export default function MarketplaceHome({ products, ads = [] }: Props) {
       </section>
 
       <PersonalizedDiscovery products={products} />
+
+      <FlashSale products={products} />
 
       <section className={styles.flashSection}>
         <div className={styles.flashHeader}>

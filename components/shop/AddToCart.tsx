@@ -15,7 +15,7 @@ export default function AddToCart({ product }: { product: Product }) {
 
   function addItem(variant?: ProductVariant) {
     if (variant && variant.inventory < 1) return;
-    add(product, variant);
+    add(product, variant ? variant : product.flashSalePrice !== undefined ? { ...product, price: product.flashSalePrice } as ProductVariant : undefined);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1400);
     setOpen(false);

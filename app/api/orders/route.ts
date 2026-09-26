@@ -78,6 +78,16 @@ export async function POST(request: Request) {
       const sellerMap = new Map((sellers ?? []).map((seller) => [seller.id, seller]));
       const productMap = new Map((sellerProducts ?? []).map((product) => [product.id, product]));
 
+      const { data: flashSaleItems } = await supabaseAdmin
+        .from("marketplace_flash_sale_items")
+        .select("product_id,sale_price,marketplace_flash_sales!inner(status,starts_at,ends_at)")
+        .in("product_id", (sellerProducts ?? []).map((product) => product.id));
+      const flashSaleMap = new Map(
+        (flashSaleItems ?? [])
+          .filter((item: any) => item.marketplace_flash_sales?.status === "approved" && new Date(item.marketplace_flash_sales.starts_at) <= new Date() && new Date(item.marketplace_flash_sales.ends_at) > new Date())
+          .map((item: any) => [item.product_id, Number(item.sale_price)]),
+      );
+
       marketplaceLines = marketplaceItems.map((item) => {
         const id = item.id.match(sellerProductIdPattern)?.[1];
         const product = id ? productMap.get(id) : undefined;
@@ -98,7 +108,7 @@ export async function POST(request: Request) {
           sellerId: product.seller_id,
           slug: product.slug,
           name: product.name,
-          price: variant ? Number(variant.price) : Number(product.price),
+          price: variant ? Number(variant.price) : (flashSaleMap.get(product.id) ?? Number(product.price)),
           quantity: item.quantity,
           commissionRate,
           inventory: availableInventory,

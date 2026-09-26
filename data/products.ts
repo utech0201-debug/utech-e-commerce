@@ -122,17 +122,6 @@ export const products: Product[] = [
     description: "A slim gaming machine designed for demanding workloads.",
   },
   {
-    id: "naruto-shippuden",
-    slug: "naruto-shippuden",
-    name: "Naruto Shippuden",
-    price: 19.99,
-    category: "games",
-    type: "Action Game",
-    image: gameImage("1.jpg"),
-    description: "Fast combat, powerful techniques and legendary ninja battles.",
-    featured: true,
-  },
-  {
     id: "spider-man",
     slug: "spider-man",
     name: "Spider-Man",

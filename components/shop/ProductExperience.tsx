@@ -60,7 +60,7 @@ export default function ProductExperience({ product, gallery }: { product: Produ
           )}
 
           <div className="marketplace-price-row">
-            <div className="price">{product.variants?.length ? "From $" + Math.min(...product.variants.map((variant) => variant.price)).toLocaleString("en-US", { minimumFractionDigits: 2 }) : "$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</div>
+            <div className="price">{product.flashSalePrice !== undefined ? <><strong className="flash-price">GH₵{product.flashSalePrice.toLocaleString("en-GH", { minimumFractionDigits: 2 })}</strong> <del className="flash-original-price">GH₵{product.price.toLocaleString("en-GH", { minimumFractionDigits: 2 })}</del></> : product.variants?.length ? "From $" + Math.min(...product.variants.map((variant) => variant.price)).toLocaleString("en-US", { minimumFractionDigits: 2 }) : "$" + product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</div>
             <span className="marketplace-availability">Available to order</span>
           </div>
 

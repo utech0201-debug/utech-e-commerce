@@ -143,3 +143,19 @@ export async function getActiveFlashSaleItems(products: Product[]): Promise<Mark
     }];
   });
 }
+
+export async function getActiveFlashSaleForProduct(productId: string) {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("marketplace_flash_sale_items")
+    .select("sale_price,flash_sale_id,marketplace_flash_sales!inner(ends_at,status,starts_at)")
+    .eq("product_id", productId)
+    .eq("marketplace_flash_sales.status", "approved")
+    .lte("marketplace_flash_sales.starts_at", new Date().toISOString())
+    .gt("marketplace_flash_sales.ends_at", new Date().toISOString())
+    .limit(1)
+    .maybeSingle();
+  if (!data) return null;
+  const campaign = data.marketplace_flash_sales as unknown as { ends_at: string };
+  return { salePrice: Number(data.sale_price), endsAt: campaign.ends_at };
+}

@@ -48,6 +48,11 @@ export async function POST(request: Request) {
     .select("id,price,seller_id,status").in("id", productIds).eq("status","approved");
   if (productError || !products?.length || products.length !== productIds.length) return NextResponse.json({ error: "One or more selected products are not approved." }, { status: 400 });
 
+  const { data: variants } = await admin.from("seller_product_variants").select("id,product_id").in("product_id", productIds).eq("is_active", true);
+  if (variants?.length) {
+    return NextResponse.json({ error: "Flash sales currently support base-price products only. Remove products with active variants from this campaign." }, { status: 400 });
+  }
+
   const { data: existingItems } = await admin.from("marketplace_flash_sale_items")
     .select("product_id,marketplace_flash_sales!inner(status,starts_at,ends_at)").in("product_id", productIds);
   const conflict = (existingItems ?? []).some((row: any) => {

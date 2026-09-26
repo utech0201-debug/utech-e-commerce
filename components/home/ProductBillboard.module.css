@@ -28,7 +28,30 @@
 .orbit{position:absolute;border:1px solid rgba(155,214,255,.18);border-radius:50%;transform:rotate(-18deg)}
 .orbitOne{width:330px;height:180px}
 .orbitTwo{width:280px;height:145px;transform:rotate(25deg)}
-.image{position:relative;z-index:2;width:min(78%,430px);height:auto;max-height:285px;object-fit:contain;filter:drop-shadow(0 22px 25px rgba(0,0,0,.38));animation:billboardIn .5s ease both}
+.imageFrame{
+  position:relative;
+  z-index:3;
+  width:min(62%,330px);
+  aspect-ratio:1.28;
+  display:grid;
+  place-items:center;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:16px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 18px 30px rgba(3,16,34,.28);
+  overflow:hidden;
+  animation:billboardIn .5s ease both;
+}
+.image{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  max-height:none;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 12px rgba(0,0,0,.16));
+}
 .arrow{position:absolute;z-index:6;top:50%;width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(4,17,34,.5);backdrop-filter:blur(8px);color:#fff;font-size:25px;line-height:1;transform:translateY(-50%);transition:background .2s,transform .2s}
 .arrow:hover{background:rgba(255,255,255,.16);transform:translateY(-50%) scale(1.04)}
 .prev{left:12px}.next{right:12px}
@@ -42,7 +65,7 @@
 .empty p{color:#d5e5f5;margin-bottom:18px}
 @keyframes billboardIn{from{opacity:0;transform:translateX(22px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes billboardProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:1050px){.billboard{grid-template-columns:minmax(0,1fr) minmax(240px,.9fr)}.copy{padding-left:28px}.copy h1{font-size:34px}.image{width:88%}}
+@media(max-width:1050px){.billboard{grid-template-columns:minmax(0,1fr) minmax(240px,.9fr)}.copy{padding-left:28px}.copy h1{font-size:34px}.imageFrame{width:min(68%,315px)}}
 @media(max-width:760px){
   /* Mobile is a true marketplace billboard: wide, shallow and image-led. */
   .billboard{
@@ -120,12 +143,19 @@
     place-items:center;
     pointer-events:none;
   }
+  .imageFrame{
+    width:min(44%,168px);
+    aspect-ratio:1.12;
+    padding:9px;
+    border-radius:12px;
+    box-shadow:0 12px 22px rgba(3,16,34,.25);
+  }
   .image{
-    width:92%;
-    height:auto;
-    max-height:88%;
+    width:100%;
+    height:100%;
+    max-height:none;
     object-fit:contain;
-    filter:drop-shadow(0 18px 18px rgba(0,0,0,.34));
+    filter:drop-shadow(0 7px 9px rgba(0,0,0,.14));
   }
   .glow{
     width:150px;
@@ -199,8 +229,14 @@
   .visual{
     width:53%;
   }
+  .imageFrame{
+    width:min(45%,160px);
+    padding:8px;
+    border-radius:11px;
+  }
   .image{
-    width:94%;
-    max-height:86%;
+    width:100%;
+    height:100%;
+    max-height:none;
   }
 }

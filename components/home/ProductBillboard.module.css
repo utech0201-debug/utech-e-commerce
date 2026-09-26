@@ -144,8 +144,8 @@
     pointer-events:none;
   }
   .imageFrame{
-    width:min(44%,168px);
-    aspect-ratio:1.12;
+    width:min(72%,190px);
+    aspect-ratio:1.08;
     padding:9px;
     border-radius:12px;
     box-shadow:0 12px 22px rgba(3,16,34,.25);
@@ -230,7 +230,7 @@
     width:53%;
   }
   .imageFrame{
-    width:min(45%,160px);
+    width:min(72%,185px);
     padding:8px;
     border-radius:11px;
   }

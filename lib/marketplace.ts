@@ -93,3 +93,53 @@ export async function getApprovedMarketplaceProducts(): Promise<Product[]> {
 
   return products.filter((product): product is Product => product !== null);
 }
+
+export type MarketplaceFlashSaleItem = {
+  id: string;
+  title: string;
+  description: string;
+  endsAt: string;
+  product: Product;
+  originalPrice: number;
+  salePrice: number;
+};
+
+export async function getActiveFlashSaleItems(products: Product[]): Promise<MarketplaceFlashSaleItem[]> {
+  const supabase = await createSupabaseServerClient();
+  const { data: campaigns } = await supabase
+    .from("marketplace_flash_sales")
+    .select("id,title,description,ends_at")
+    .eq("status", "approved")
+    .lte("starts_at", new Date().toISOString())
+    .gt("ends_at", new Date().toISOString())
+    .in("placement", ["homepage", "both"])
+    .order("ends_at", { ascending: true })
+    .limit(4);
+
+  if (!campaigns?.length) return [];
+
+  const campaignIds = campaigns.map((campaign) => campaign.id);
+  const { data: items } = await supabase
+    .from("marketplace_flash_sale_items")
+    .select("id,flash_sale_id,product_id,original_price,sale_price")
+    .in("flash_sale_id", campaignIds)
+    .order("created_at", { ascending: true });
+
+  const productMap = new Map(products.map((product) => [product.id.replace(/^seller-/, ""), product]));
+  const campaignMap = new Map(campaigns.map((campaign) => [campaign.id, campaign]));
+
+  return (items ?? []).flatMap((item) => {
+    const product = productMap.get(item.product_id);
+    const campaign = campaignMap.get(item.flash_sale_id);
+    if (!product || !campaign) return [];
+    return [{
+      id: item.id,
+      title: campaign.title,
+      description: campaign.description,
+      endsAt: campaign.ends_at,
+      product,
+      originalPrice: Number(item.original_price),
+      salePrice: Number(item.sale_price),
+    }];
+  });
+}

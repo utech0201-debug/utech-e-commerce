@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 function isAdmin(email: string | undefined) {
-  const allowlist = (process.env.UTECH_ADMIN_EMAILS ?? "").split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
+  const allowlist = (process.env.MARKETPLACE_ADMIN_EMAILS ?? process.env.UTECH_ADMIN_EMAILS ?? "").split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
   return !!email && allowlist.includes(email.toLowerCase());
 }
 

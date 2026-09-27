@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { marketplaceConfig } from "@/lib/marketplace-config";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "UTECH Store",
-    short_name: "UTECH Store",
-    description: "Gaming systems, consoles, laptops, hardware and technology.",
+    name: marketplaceConfig.name,
+    short_name: marketplaceConfig.name,
+    description: marketplaceConfig.description,
     start_url: "/",
     scope: "/",
     display: "standalone",
@@ -12,7 +13,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#0B1F3A",
     icons: [
       {
-        src: "/favicon.png",
+        src: marketplaceConfig.logoUrl,
         type: "image/png",
         purpose: "any",
       },

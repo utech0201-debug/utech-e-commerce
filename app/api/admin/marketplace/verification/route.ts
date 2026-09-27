@@ -7,7 +7,7 @@ const decisions = ["under_review", "verified", "needs_more_info", "rejected"] as
 type Decision = (typeof decisions)[number];
 
 function isAdmin(email?: string | null) {
-  const allowlist = (process.env.UTECH_ADMIN_EMAILS ?? "").split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
+  const allowlist = (process.env.MARKETPLACE_ADMIN_EMAILS ?? process.env.UTECH_ADMIN_EMAILS ?? "").split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
   return !!email && allowlist.includes(email.toLowerCase());
 }
 

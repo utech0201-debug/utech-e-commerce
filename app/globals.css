@@ -1538,7 +1538,8 @@ html, body { overflow-x: hidden; }
 @media (max-width: 760px) {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    column-gap: 12px;
+    row-gap: 18px;
   }
 
   .product-card {
@@ -1554,7 +1555,7 @@ html, body { overflow-x: hidden; }
 
   .product-card .product-body {
     min-width: 0;
-    padding: 10px;
+    padding: 12px;
   }
 
   .product-card .product-type {
@@ -1593,8 +1594,8 @@ html, body { overflow-x: hidden; }
   }
 
   .product-card .product-footer {
-    margin-top: 9px;
-    gap: 7px;
+    margin-top: 12px;
+    gap: 8px;
     align-items: center;
     flex-wrap: wrap;
   }
@@ -1626,11 +1627,12 @@ html, body { overflow-x: hidden; }
 
 @media (max-width: 380px) {
   .product-grid {
-    gap: 8px;
+    column-gap: 10px;
+    row-gap: 14px;
   }
 
   .product-card .product-body {
-    padding: 8px;
+    padding: 10px;
   }
 
   .product-card h3 {
@@ -1648,5 +1650,50 @@ html, body { overflow-x: hidden; }
   .product-card .product-footer .button {
     width: 100%;
     flex-basis: 100%;
+  }
+
+  .flash-sale {
+    margin-inline: 10px;
+    padding-inline: 10px;
+  }
+
+  .flash-sale-grid {
+    gap: 10px;
+  }
+}
+
+/* Final responsive breathing-room pass */
+@media (max-width: 760px) {
+  .section-header {
+    gap: 12px;
+  }
+
+  .results-count {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .games-grid .product-card .product-image {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .personalized-grid {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .section-header {
+    gap: 10px;
+  }
+
+  .product-grid {
+    column-gap: 10px;
+    row-gap: 16px;
+  }
+
+  .flash-sale {
+    margin-top: 18px;
   }
 }

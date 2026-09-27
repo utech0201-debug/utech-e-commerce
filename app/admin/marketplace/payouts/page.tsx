@@ -13,7 +13,7 @@ export default async function AdminPayoutsPage({ searchParams }: { searchParams:
   const supabase = await createSupabaseServerClient();
   const { data: claimsData } = await supabase.auth.getClaims();
   const email = claimsData?.claims?.email as string | undefined;
-  const allowed = (process.env.UTECH_ADMIN_EMAILS ?? "")
+  const allowed = (process.env.MARKETPLACE_ADMIN_EMAILS ?? process.env.UTECH_ADMIN_EMAILS ?? "")
     .split(",")
     .map((item) => item.trim().toLowerCase())
     .filter(Boolean);

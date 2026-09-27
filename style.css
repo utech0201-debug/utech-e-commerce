@@ -4145,11 +4145,37 @@ input {
   }
 
   .laptop-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
 
   .laptop-card-image {
-    height: 240px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .laptop-card-body {
+    padding: 14px;
+  }
+
+  .laptop-card-body h3 {
+    font-size: .88rem;
+  }
+
+  .laptop-card-body p {
+    min-height: 0;
+    font-size: .68rem;
+  }
+
+  .laptop-card-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .laptop-card-footer a {
+    flex: 1 1 auto;
   }
 
   .laptop-cta {
